@@ -38,7 +38,7 @@ resource "google_compute_instance" "webserver" {
     server-type = "web"
   }
 
-  metadata_startup_script = file("scripts/webserver-startup.sh")
+  metadata_startup_script = file("${path.module}/../../scripts/webserver-startup.sh")
 
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
