@@ -18,11 +18,11 @@
 # PLANS OUTPUTS
 ############################################################################################
 
-output "Firewall Management IP" {
+output "firewall_mgmt_ip" {
   value = module.firewall.firewall-public-ip
 }
 
-output "Firewall Untrust IP" {
+output "firewall_untrust_ip" {
   value = module.firewall.web-public-ip
 }
 
