@@ -1,0 +1,105 @@
+resources:
+- name: launchpad
+  type: compute.v1.instance
+  properties:
+    zone: us-central1-b
+    machineType: zones/us-central1-b/machineTypes/n1-standard-1
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: projects/debian-cloud/global/images/family/debian-9
+    networkInterfaces:
+    - network: global/networks/default
+      accessConfigs:
+        - name: External NAT
+          type: ONE_TO_ONE_NAT
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/usr/bin/env bash
+
+          # Copyright 2019 Palo Alto Networks.
+          #
+          # Licensed under the Apache License, Version 2.0 (the "License");
+          # you may not use this file except in compliance with the License.
+          # You may obtain a copy of the License at
+          #
+          #   http://www.apache.org/licenses/LICENSE-2.0
+          #
+          # Unless required by applicable law or agreed to in writing, software
+          # distributed under the License is distributed on an "AS IS" BASIS,
+          # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+          # See the License for the specific language governing permissions and
+          # limitations under the License.
+
+          # For use on Debian 9 (Stretch) servers
+
+          echo "Setting up student account ..."
+          useradd -m -s /bin/bash student
+          echo 'student:Ignite2019!' | chpasswd
+          usermod -aG sudo student
+
+          echo "Configuring SSH server for password authentication ..."
+          mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
+          cat /etc/ssh/sshd_config.orig | sed 's/^PasswordAuthentication no/PasswordAuthentication yes/g' > /etc/ssh/sshd_config
+          service sshd restart
+
+          echo "Updating GO vars in .bashrc ..."
+          echo "" >> /home/student/.bashrc
+          echo "export PATH=$PATH:/usr/local/go/bin" >> /home/student/.bashrc
+          echo "export GOPATH=/home/student/go" >> /home/student/.bashrc
+
+          echo "Creating .vimrc ..."
+          cat > /home/student/.vimrc << EOF
+          set paste
+          set ruler
+          set showmode
+          set showmatch
+          set tabstop=4
+          set shiftwidth=4
+          set expandtab
+          set laststatus=2
+          syntax enable
+          EOF
+
+          echo "Installing required packages ..."
+          apt update -y -q
+          apt-get install unzip git jq python-pip -y -q
+
+          echo "Installing Ansible ..."
+          pip -q install pan-python pandevice xmltodict ansible
+          /usr/local/bin/ansible-galaxy install PaloAltoNetworks.paloaltonetworks
+          mv /root/.ansible /home/student
+
+          echo "Installing Terraform ..."
+          terraform_url="https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip"
+          #terraform_url=$(curl https://releases.hashicorp.com/index.json | jq '{terraform}' | egrep "linux.*amd64" | sort --version-sort -r | grep -Ev 'alpha|beta|rc' | head -1 | awk -F[\"] '{print $4}')
+          cd /tmp
+          curl -o terraform.zip $terraform_url
+          unzip terraform.zip
+          mv terraform /usr/local/bin/
+          rm -f terraform.zip
+
+          echo "Installing Go ..."
+          golang_url="https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz"
+          cd /tmp
+          curl -o golang.zip $golang_url
+          tar zxf golang.zip
+          mv go /usr/local/
+          chown -R root:root /usr/local/go
+          rm -f golang.zip
+
+          echo "Fixing all permissions ..."
+          chown -R student:student /home/student
+
+          echo "Done with user data init!"
+    serviceAccounts:
+    - scopes:
+        - https://www.googleapis.com/auth/cloud-platform
+outputs:
+- name: Launchpad IP
+  value: $(ref.launchpad.networkInterfaces[0].accessConfigs[0].natIP)
