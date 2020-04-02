@@ -14,17 +14,15 @@
 # limitations under the License.
 ############################################################################################
 
-variable "ssh_key_name" {}
+############################################################################################
+# PLANS OUTPUTS
+############################################################################################
 
-variable "subnet_id" {}
-
-variable "private_ip" {}
-
-variable "name" {
-  default = "Web01"
+output "Firewall Management IP" {
+  value = module.firewall.firewall-public-ip
 }
 
-variable "tags" {
-  description = "A map of tags to add to all resources"
-  default     = {}
+output "Firewall Untrust IP" {
+  value = module.firewall.web-public-ip
 }
+

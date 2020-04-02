@@ -14,38 +14,37 @@
 # limitations under the License.
 ############################################################################################
 
-
 ############################################################################################
 # PROJECT VARIABLES
 ############################################################################################
 variable "project" {
   description = "Your GCP project ID"
-  type = "string"
+  type        = string
 }
 
 variable "region" {
   description = "The GCP region in which to deploy"
-  type = "string"
+  type        = string
 }
 
 variable "zone" {
   description = "The GCP zone in which to deploy"
-  type = "string"
+  type        = string
 }
 
 variable "credentials_file" {
   description = "Full path to the JSON credentials file"
-  type = "string"
+  type        = string
 }
 
 variable "public_key_file" {
   description = "Full path to the SSH public key file"
-  type = "string"
+  type        = string
 }
 
 variable "allowed_mgmt_cidr" {
   description = "The source address that will be allowed to access the lab environment"
-  type = "string"
-  default = "0.0.0.0/0"
+  type        = string
+  default     = "0.0.0.0/0"
 }
 
