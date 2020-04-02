@@ -21,32 +21,32 @@
 
 resource "google_storage_bucket" "bootstrap" {
   name          = "bootstrap-bucket-${var.bootstrap_project}"
-  location      = "${var.bootstrap_region}"
+  location      = var.bootstrap_region
   storage_class = "REGIONAL"
   force_destroy = true
 }
 resource "google_storage_bucket_object" "bootstrap_xml_path" {
   name   = "config/bootstrap.xml"
-  source = "${var.bootstrap_xml_path}"
-  bucket = "${google_storage_bucket.bootstrap.name}"
+  source = var.bootstrap_xml_path
+  bucket = google_storage_bucket.bootstrap.name
 }
 resource "google_storage_bucket_object" "init_cfg_path" {
   name   = "config/init-cfg.txt"
-  source = "${var.bootstrap_init_cfg_path}"
-  bucket = "${google_storage_bucket.bootstrap.name}"
+  source = var.bootstrap_init_cfg_path
+  bucket = google_storage_bucket.bootstrap.name
 }
 resource "google_storage_bucket_object" "content" {
   name   = "content/"
   source = "/dev/null"
-  bucket = "${google_storage_bucket.bootstrap.name}"
+  bucket = google_storage_bucket.bootstrap.name
 }
 resource "google_storage_bucket_object" "software" {
   name   = "software/"
   source = "/dev/null"
-  bucket = "${google_storage_bucket.bootstrap.name}"
+  bucket = google_storage_bucket.bootstrap.name
 }
 resource "google_storage_bucket_object" "license" {
   name   = "license/"
   source = "/dev/null"
-  bucket = "${google_storage_bucket.bootstrap.name}"
+  bucket = google_storage_bucket.bootstrap.name
 }

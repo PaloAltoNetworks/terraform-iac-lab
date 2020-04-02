@@ -20,37 +20,37 @@
 ############################################################################################
 
 resource "google_compute_instance" "dbserver" {
-  name                      = "${var.db_name}"
-  machine_type              = "${var.db_machine_type}"
-  zone                      = "${var.db_zone}"
+  name                      = var.db_name
+  machine_type              = var.db_machine_type
+  zone                      = var.db_zone
   can_ip_forward            = true
   allow_stopping_for_update = true
   count                     = 1
 
-  metadata {
+  metadata = {
     serial-port-enable     = true
     block-project-ssh-keys = false
-    ssh-keys               = "${var.db_ssh_key}"
+    ssh-keys               = var.db_ssh_key
   }
 
   labels = {
     server-type = "database"
   }
 
-  metadata_startup_script = "${file("scripts/dbserver-startup.sh")}"
+  metadata_startup_script = file("scripts/dbserver-startup.sh")
 
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 
   network_interface {
-    subnetwork = "${var.db_subnet_id}"
-    network_ip = "${var.db_ip}"
+    subnetwork = var.db_subnet_id
+    network_ip = var.db_ip
   }
 
   boot_disk {
     initialize_params {
-      image = "${var.db_image}"
+      image = var.db_image
     }
   }
 }

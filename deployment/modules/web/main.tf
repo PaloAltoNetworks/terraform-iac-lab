@@ -20,38 +20,38 @@
 ############################################################################################
 
 resource "google_compute_instance" "webserver" {
-  name                      = "${var.web_name}"
-  zone                      = "${var.web_zone}"
-  machine_type              = "${var.web_machine_type}"
+  name                      = var.web_name
+  zone                      = var.web_zone
+  machine_type              = var.web_machine_type
   can_ip_forward            = true
   allow_stopping_for_update = true
   count                     = 1
 
   // Adding METADATA Key Value pairs to WEB SERVER 
-  metadata {
+  metadata = {
     serial-port-enable     = true
     block-project-ssh-keys = false
-    ssh-keys               = "${var.web_ssh_key}"
+    ssh-keys               = var.web_ssh_key
   }
 
   labels = {
     server-type = "web"
   }
 
-  metadata_startup_script = "${file("scripts/webserver-startup.sh")}"
+  metadata_startup_script = file("scripts/webserver-startup.sh")
 
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 
   network_interface {
-    subnetwork = "${var.web_subnet_id}"
-    network_ip = "${var.web_ip}"
+    subnetwork = var.web_subnet_id
+    network_ip = var.web_ip
   }
 
   boot_disk {
     initialize_params {
-      image = "${var.web_image}"
+      image = var.web_image
     }
   }
 }
