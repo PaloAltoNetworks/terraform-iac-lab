@@ -33,8 +33,8 @@ module "bootstrap" {
 
   bootstrap_project       = var.project
   bootstrap_region        = var.region
-  bootstrap_xml_path      = "../../common/bootstrap/config/bootstrap.xml"
-  bootstrap_init_cfg_path = "../../common/bootstrap/config/init-cfg.txt"
+  bootstrap_xml_path      = "../common/bootstrap/config/bootstrap.xml"
+  bootstrap_init_cfg_path = "../common/bootstrap/config/init-cfg.txt"
 }
 
 module "vpc" {
