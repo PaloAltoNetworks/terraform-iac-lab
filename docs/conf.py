@@ -19,8 +19,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'multicloud-automation-lab'
-copyright = '2019, Palo Alto Networks'
+project = 'terraform-iac-lab'
+copyright = '2020, Palo Alto Networks'
 author = 'Palo Alto Networks'
 
 # The short X.Y version
@@ -101,7 +101,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'multicloud-automation-labdoc'
+htmlhelp_basename = 'terraform-iac-labdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'multicloud-automation-lab.tex', 'Multi-Cloud Security Automation Lab Documentation',
+    (master_doc, 'terraform.iac-lab.tex', 'Terraform IaC Lab Documentation',
      author, 'manual'),
 ]
 
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'multicloud-automation-lab', 'Multi-Cloud Security Automation Lab Documentation',
+    (master_doc, 'terraform-iac-lab', 'Terraform IaC Lab Documentation',
      [author], 1)
 ]
 
@@ -149,8 +149,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'multicloud-automation-lab', 'Multi-Cloud Security Automation Lab Documentation',
-     author, 'multicloud-automation-lab', 'One line description of project.',
+    (master_doc, 'terraform-iac-lab', 'Terraform IaC Lab Documentation',
+     author, 'terraform-iac-lab', 'One line description of project.',
      'Miscellaneous'),
 ]
 

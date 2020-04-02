@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Multi-Cloud Security Automation Lab Guide
+Terraform Infrastructure as Code Lab Guide
 =========================================
 
 .. image:: panw-logo-bw.png
