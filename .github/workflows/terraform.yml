@@ -1,0 +1,35 @@
+---
+name: terraform validate
+on:
+  push:
+
+jobs:
+  validate:
+    name: terraform validate
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:latest
+      options: --entrypoint /bin/sh
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v2
+
+      - name: terraform validate
+        run: |
+          cd ${GITHUB_WORKSPACE}/deployment/modules
+          for dir in $(find . -type d -not \( -name ".?*" \) -maxdepth 1 -mindepth 1);
+          do
+            echo "Checking module ${dir}..."
+            cd ${GITHUB_WORKSPACE}/deployment/modules/${dir}
+            terraform init
+            terraform validate
+          done
+          cd ${GITHUB_WORKSPACE}/deployment
+          terraform init
+          terraform validate
+
+      - name: terraform fmt
+        run: |
+          cd ${GITHUB_WORKSPACE}/deployment
+          terraform fmt -check -recursive
