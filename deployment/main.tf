@@ -57,6 +57,8 @@ module "vpc" {
   vpc_db_network_name = "database-network"
   vpc_db_subnet_cidr  = "10.5.3.0/24"
   vpc_db_subnet_name  = "database-subnet"
+
+  allowed_mgmt_cidr = var.allowed_mgmt_cidr
 }
 
 module "web" {

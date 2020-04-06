@@ -86,7 +86,7 @@ resource "google_compute_firewall" "mgmt-allow-inbound" {
     ports    = ["443", "22"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = [var.allowed_mgmt_cidr]
 }
 
 resource "google_compute_firewall" "untrust-allow-inbound" {
