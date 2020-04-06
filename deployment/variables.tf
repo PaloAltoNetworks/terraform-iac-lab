@@ -48,3 +48,22 @@ variable "allowed_mgmt_cidr" {
   default     = "0.0.0.0/0"
 }
 
+variable "panorama" {
+  description = "Panorama hostname for bootstrap config"
+  type        = string
+}
+
+variable "tplname" {
+  description = "Panorama template for bootstrap config"
+  type        = string
+}
+
+variable "dgname" {
+  description = "Panorama device group for bootstrap config"
+  type        = string
+}
+
+variable "vm_auth_key" {
+  description = "Panorama VM auth key for bootstrap config"
+  type        = string
+}
