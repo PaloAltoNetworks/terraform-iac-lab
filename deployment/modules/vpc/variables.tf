@@ -65,3 +65,9 @@ variable "vpc_db_subnet_cidr" {
 variable "vpc_db_subnet_name" {
   description = "Database subnet name"
 }
+
+variable "allowed_mgmt_cidr" {
+  description = "The source address that will be allowed to access the lab environment"
+  type        = string
+  default     = "0.0.0.0/0"
+}
