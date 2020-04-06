@@ -15,7 +15,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v2
 
-      - name: terraform validate
+      - name: terraform validate - deployment
         run: |
           cd ${GITHUB_WORKSPACE}/deployment/modules
           for dir in $(find . -type d -not \( -name ".?*" \) -maxdepth 1 -mindepth 1);
@@ -29,7 +29,26 @@ jobs:
           terraform init
           terraform validate
 
-      - name: terraform fmt
+      - name: terraform fmt - deployment
         run: |
           cd ${GITHUB_WORKSPACE}/deployment
+          terraform fmt -check -recursive
+
+      - name: terraform validate - configuration
+        run: |
+          cd ${GITHUB_WORKSPACE}/configuration
+          for dir in $(find . -type d -not \( -name ".?*" \) -maxdepth 1 -mindepth 1);
+          do
+            echo "Checking module ${dir}..."
+            cd ${GITHUB_WORKSPACE}/configuration/${dir}
+            terraform init
+            terraform validate
+          done
+          cd ${GITHUB_WORKSPACE}/configuration
+          terraform init
+          terraform validate
+
+      - name: terraform fmt - configuration
+        run: |
+          cd ${GITHUB_WORKSPACE}/configuration
           terraform fmt -check -recursive
