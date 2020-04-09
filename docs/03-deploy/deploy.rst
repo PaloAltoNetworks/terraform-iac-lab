@@ -1,8 +1,6 @@
-====================
-Lab Deployment (GCP)
-====================
-
-.. warning:: If you are working on the AWS lab, skip this page and proceed to the :doc:`deploy-aws`.
+==============
+Lab Deployment
+==============
 
 In this activity you will:
 
@@ -72,7 +70,7 @@ Change into the GCP deployment directory.
 
 .. code-block:: bash
 
-    $ cd ~/multicloud-automation-lab/deployment/gcp
+    $ cd ~/terraform-iac-lab/deployment/gcp
 
 In this directory you will find the three main files associated with a
 Terraform plan: ``main.tf``, ``variables.tf``, and ``outputs.tf``.  View the

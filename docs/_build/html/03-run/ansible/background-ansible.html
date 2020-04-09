@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ansible Background &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Ansible Configuration" href="activities-ansible.html" />
+    <link rel="prev" title="Terraform Configuration" href="../terraform/activities-terraform.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">build</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../02-build/deploy-gcp.html">Lab Deployment (GCP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02-build/deploy-aws.html">Lab Deployment (AWS)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">run</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../terraform/background-terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../terraform/activities-terraform.html">Terraform Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ansible Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ansible-at-a-glance">Ansible At a Glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-overview">Configuration Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#playbooks">Playbooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#no-local-state">No Local State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules-are-use-case-focused">Modules Are Use Case Focused</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-ansible-configuration">Example Ansible Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terminology">Terminology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hosts">Hosts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gather-facts">Gather Facts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roles">Roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="activities-ansible.html">Ansible Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">respond</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/monitor.html">Cloud Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/dag.html">Dynamic Address Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/scale-out.html">Compute Scaling</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/comparison.html">Tool Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Ansible Background</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/03-run/ansible/background-ansible.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ansible-background">
+<h1>Ansible Background<a class="headerlink" href="#ansible-background" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ansible-at-a-glance">
+<h2>Ansible At a Glance<a class="headerlink" href="#ansible-at-a-glance" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Company: <a class="reference external" href="https://www.ansible.com/">RedHat</a></li>
+<li>Integration First Available: January 2015</li>
+<li>Configuration: YAML (Yet Another Markup Language)</li>
+<li><a class="reference external" href="http://ansible-pan.readthedocs.io/en/latest/">Documentation</a></li>
+<li><a class="reference external" href="https://github.com/PaloAltoNetworks/ansible-pan">GitHub Repo</a></li>
+<li>Implementation Language: python</li>
+</ul>
+</div>
+<div class="section" id="configuration-overview">
+<h2>Configuration Overview<a class="headerlink" href="#configuration-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="playbooks">
+<h3>Playbooks<a class="headerlink" href="#playbooks" title="Permalink to this headline">¶</a></h3>
+<p>Though Ansible allows you to execute ad hoc commands against your desired
+inventory, the better way to use Ansible is with Ansible playbooks.
+Ansible playbooks are a list of configuration operations, or plays, to be
+performed.  Ansible playbooks are written in YAML, which you can find out
+more about
+<a class="reference external" href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html">here</a>.
+Playbooks are run from top to bottom, which means that if one configuration
+depends on another being present, you simply put the dependency higher in the
+playbook.  You can even tell Ansible to run another playbook from within the
+first playbook by importing it in.</p>
+</div>
+<div class="section" id="no-local-state">
+<h3>No Local State<a class="headerlink" href="#no-local-state" title="Permalink to this headline">¶</a></h3>
+<p>Unlike Terraform, Ansible does not keep a local state of what is configured.</p>
+</div>
+<div class="section" id="modules-are-use-case-focused">
+<h3>Modules Are Use Case Focused<a class="headerlink" href="#modules-are-use-case-focused" title="Permalink to this headline">¶</a></h3>
+<p>Also unlike the Terraform provider, Ansible modules tend to be more use case
+focused as opposed to trying to be a single, atomic component controller.  The
+<a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/modules/panos_interface_module.html">panos_interface</a>
+module is probably the best example of this to date, as it not only creates
+interfaces, but can also create zones, place the interface into that zone,
+then finally put the interface into a virtual router.  That same workflow in
+Terraform would require three separate resources using dependencies.</p>
+</div>
+</div>
+<div class="section" id="example-ansible-configuration">
+<h2>Example Ansible Configuration<a class="headerlink" href="#example-ansible-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Here’s an example of an Ansible playbook.  We will discuss the various
+parts of this below.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">My Ansible Playbook</span>
+  <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-fw</span>
+  <span class="nt">connection</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+  <span class="nt">roles</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">role</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PaloAltoNetworks.paloaltonetworks</span>
+
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Grab auth creds</span>
+      <span class="nt">include_vars</span><span class="p">:</span> <span class="s">&#39;fw_creds.yml&#39;</span>
+      <span class="nt">no_log</span><span class="p">:</span> <span class="s">&#39;yes&#39;</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Add interface management profile</span>
+      <span class="nt">panos_management_profile</span><span class="p">:</span>
+        <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;allow</span><span class="nv"> </span><span class="s">ssh&#39;</span>
+        <span class="nt">ssh</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">commit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Configure eth1/1 and put it in zone L3-in</span>
+      <span class="nt">panos_interface</span><span class="p">:</span>
+        <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+        <span class="nt">if_name</span><span class="p">:</span> <span class="s">&#39;ethernet1/1&#39;</span>
+        <span class="nt">zone_name</span><span class="p">:</span> <span class="s">&#39;L3-in&#39;</span>
+        <span class="nt">commit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hosts">
+<h3>Hosts<a class="headerlink" href="#hosts" title="Permalink to this headline">¶</a></h3>
+<p>Ansible executes actions against an inventory.  If you’re going to run Ansible
+in production, you’ll probably want to use the inventory file to organize your
+firewalls and Panoramas into groups to make management easier.  For the
+purposes of our lab, however, we just want to run the playbooks against a
+single host.  So instead of putting the host in a hosts file, we’re going to
+use variables instead.</p>
+<p>If you desire, you can read more about Ansible inventory
+<a class="reference external" href="http://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html">here</a>.</p>
+</div>
+<div class="section" id="connection">
+<h3>Connection<a class="headerlink" href="#connection" title="Permalink to this headline">¶</a></h3>
+<p>Typically Ansible will ssh to a remote machine and perform commands as the
+specified user account.  However, we don’t want this for the Palo Alto Networks
+Ansible modules, as the modules connect to our API.  Thus this should be set to
+“local” as we want Ansible to initiate the connection locally.</p>
+</div>
+<div class="section" id="gather-facts">
+<h3>Gather Facts<a class="headerlink" href="#gather-facts" title="Permalink to this headline">¶</a></h3>
+<p>Ansible facts are just information about remote nodes.  In our case, we aren’t
+going to use facts for anything, so we’re disabling them to ensure that our
+Ansible invocations are run in a timely manner (this is would probably not be
+disabled in production).</p>
+<p>If you want to read more about facts, you can find that info
+<a class="reference external" href="https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html#term-facts">here</a>.</p>
+</div>
+<div class="section" id="roles">
+<h3>Roles<a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h3>
+<p>Let’s discuss the <strong>PaloAltoNetworks.paloaltonetworks</strong> role that our playbook
+is using.  Ansible comes with various Palo Alto Networks packages when you
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ansible</span></code>, but updating these packages takes a lot of time and
+effort.  In an effort to get new features to customers sooner, we’ve made
+newer features available as an Ansible galaxy role.  Including this role in
+our playbook means that Ansible will use the role’s code (the newest released
+code) for the Ansible plays instead of the older code that’s merged upstream
+with Ansible.</p>
+</div>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+<p>Each playbook contains a list of tasks to perform.  These are executed in
+order, one at a time against the inventory.  Each task will have a “name”,
+and this name is what shows up on the CLI when executing the Ansible playbook.
+Besides the name, you will specify the module to execute, and then an
+indented list of the values you want to pass in to that module.</p>
+<p>Knowing what you know about tasks, let’s take a look at that “include_vars”
+task.  At this point, knowing what the format of tasks is, you can now
+identify “include_vars” as a module invocation (documentation for
+“include_vars” is <a class="reference external" href="https://docs.ansible.com/ansible/latest/modules/include_vars_module.html">here</a>.</p>
+<p>So what’s that <code class="docutils literal notranslate"><span class="pre">no_log</span></code> part?  This is simply to keep the authentication
+credentials safe without compromising the verbosity of our Ansible output.
+You can read more about that
+<a class="reference external" href="https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-keep-secret-data-in-my-playbook">here</a>
+in the Ansible FAQs.</p>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned previously, if you’re using Ansible playbooks, then when you
+have dependencies, simply place those further up in the playbook.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="activities-ansible.html" class="btn btn-neutral float-right" title="Ansible Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../terraform/activities-terraform.html" class="btn btn-neutral float-left" title="Terraform Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

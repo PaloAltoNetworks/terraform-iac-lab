@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cloud Monitoring &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dynamic Address Groups" href="dag.html" />
+    <link rel="prev" title="Validation Testing" href="../03-run/validation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">build</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-gcp.html">Lab Deployment (GCP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-aws.html">Lab Deployment (AWS)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">run</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/background-terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/activities-terraform.html">Terraform Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/background-ansible.html">Ansible Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/activities-ansible.html">Ansible Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">respond</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cloud Monitoring</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-vm-information-source-gcp">Create a VM Information Source (GCP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-vm-information-source-aws">Create a VM Information Source (AWS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify-cloud-api-connectivity">Verify cloud API connectivity</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dag.html">Dynamic Address Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale-out.html">Compute Scaling</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/comparison.html">Tool Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Cloud Monitoring</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/04-respond/monitor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cloud-monitoring">
+<h1>Cloud Monitoring<a class="headerlink" href="#cloud-monitoring" title="Permalink to this headline">¶</a></h1>
+<p>In this activity you will:</p>
+<ul class="simple">
+<li>Create a VM Information Source (GCP)</li>
+<li>Create a VM Information Source (AWS)</li>
+<li>Verify cloud API connectivity</li>
+</ul>
+<p>The automation tasks we’ve accomplished thus far have focused on deploying the VM-Series firewall and making changes to it externally via the API.  We’ll now shift our focus to how PAN-OS can leverage third-party APIs to monitor its environment and automatically respond to changes it observes.</p>
+<div class="section" id="create-a-vm-information-source-gcp">
+<h2>Create a VM Information Source (GCP)<a class="headerlink" href="#create-a-vm-information-source-gcp" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are working on the AWS deployment you should skip ahead to <a class="reference internal" href="#aws-source"><span class="std std-ref">Create a VM Information Source (AWS)</span></a>.</p>
+</div>
+<p>We will be creating a VM Information Source on the firewall to monitor the GCP Compute Engine environment for meta-data about the running VM instances.  Open a web browser and go to <code class="docutils literal notranslate"><span class="pre">https://&lt;your-firewall-ip&gt;</span></code>.  You will log in with the following credentials.</p>
+<ul class="simple">
+<li><strong>Username:</strong> <code class="docutils literal notranslate"><span class="pre">admin</span></code></li>
+<li><strong>Password:</strong> <code class="docutils literal notranslate"><span class="pre">Ignite2019!</span></code></li>
+</ul>
+<p>Once you have logged into the firewall, go to the <strong>VM Information Sources</strong> under the <strong>Device</strong> tab and click <strong>Add</strong>.</p>
+<div class="figure align-center">
+<img alt="../_images/add-source-gcp.png" src="../_images/add-source-gcp.png" />
+</div>
+<ul class="simple">
+<li>Provide a name for your monitored source in the <strong>Name</strong> field.</li>
+<li>Ensure that <em>Google Compute Engine</em> is selected from the <strong>Type</strong> field selection.</li>
+<li>(optional) Provide a description of the monitored source in the <strong>Description</strong> field.</li>
+<li>Ensure that the <strong>Enabled</strong> button is selected.</li>
+<li>Select <em>VM-Series running in GCE</em> from the <strong>Service Authorization Type</strong> selector.</li>
+<li>The <strong>Project ID</strong> field will contain the Access Key ID provided in the Qwiklabs portal.</li>
+<li>The <strong>Zone Name</strong> field will contain the GCP zone in which the lab has been deployed.</li>
+<li>The <strong>Update Interval</strong>, and timeout fields can keep their default values.</li>
+</ul>
+<p>Click <strong>OK</strong> to accept the configuration.</p>
+</div>
+<div class="section" id="create-a-vm-information-source-aws">
+<span id="aws-source"></span><h2>Create a VM Information Source (AWS)<a class="headerlink" href="#create-a-vm-information-source-aws" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are working on the GCP deployment you should skip ahead to <a class="reference internal" href="#verify-api"><span class="std std-ref">Verify cloud API connectivity</span></a>.</p>
+</div>
+<p>We will be creating a VM Information Source on the firewall to monitor the AWS EC2 environment for meta-data about the running VM instances.  Open a web browser and go to <code class="docutils literal notranslate"><span class="pre">https://&lt;your-firewall-ip&gt;</span></code>.  You will log in with the following credentials.</p>
+<ul class="simple">
+<li><strong>Username:</strong> <code class="docutils literal notranslate"><span class="pre">admin</span></code></li>
+<li><strong>Password:</strong> <code class="docutils literal notranslate"><span class="pre">Ignite2019!</span></code></li>
+</ul>
+<p>Once you have logged into the firewall, go to the <strong>VM Information Sources</strong> under the <strong>Device</strong> tab and click <strong>Add</strong>.</p>
+<div class="figure align-center">
+<img alt="../_images/add-source-aws.png" src="../_images/add-source-aws.png" />
+</div>
+<ul class="simple">
+<li>Provide a name for your monitored source in the <strong>Name</strong> field.</li>
+<li>(optional) Provide a description of the monitored source in the <strong>Description</strong> field.</li>
+<li>Ensure that <em>AWS VPC</em> is selected from the <strong>Type</strong> field selection.</li>
+<li>Ensure that the <strong>Enabled</strong> button is selected.</li>
+<li>The <strong>Source</strong> field will contain the URI of the AWS region in which the lab is deployed.  The format for this is <em>ec2.&lt;your_AWS_region&gt;.amazonaws.com</em>. For example, if the region is <em>us-west-2</em> then the URI will be <em>ec2.us-west-2.amazonaws.com</em>.</li>
+<li>The <strong>Access Key ID</strong> field will contain the Access Key ID provided in the Qwiklabs portal.</li>
+<li>The <strong>Secret Access Key</strong> field (and confirmation field) will contain the Secret Access Key provided in the Qwiklabs portal.</li>
+<li>The <strong>Update Interval</strong>, and timeout fields can keep their default values.</li>
+<li>The <strong>VPC ID</strong> field will contain the AWS VPC value that was output during the deployment phase.  You can change into the AWS deployment directory and display the Terraform output values with the following commands.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/multicloud-automation-lab/deployment/aws
+$ terraform output
+</pre></div>
+</div>
+<p>Click <strong>OK</strong> to accept the configuration.</p>
+</div>
+<div class="section" id="verify-cloud-api-connectivity">
+<span id="verify-api"></span><h2>Verify cloud API connectivity<a class="headerlink" href="#verify-cloud-api-connectivity" title="Permalink to this headline">¶</a></h2>
+<p>Click <strong>Commit</strong> and commit the candidate configuration.</p>
+<p>If the VM Information Source configuration was correct, you should see the status indicator for your source turn green.</p>
+<div class="figure align-center">
+<img alt="../_images/working.png" src="../_images/working.png" />
+</div>
+<p>If the status indicator is green, you can proceed to the next section.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dag.html" class="btn btn-neutral float-right" title="Dynamic Address Groups" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../03-run/validation.html" class="btn btn-neutral float-left" title="Validation Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ansible Configuration &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">respond</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/monitor.html">Cloud Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/dag.html">Dynamic Address Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04-respond/scale-out.html">Compute Scaling</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/comparison.html">Tool Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Ansible Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/03-deploy/ansible/activities-ansible.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ansible-configuration">
+<h1>Ansible Configuration<a class="headerlink" href="#ansible-configuration" title="Permalink to this headline">¶</a></h1>
+<p>In this activity you will:</p>
+<ul class="simple">
+<li>Define Module Communications</li>
+<li>Define Address Objects</li>
+<li>Define Service Objects</li>
+<li>Define Security Rules</li>
+<li>Define NAT Rules</li>
+<li>Commit the Configuration</li>
+<li>Run the Playbook</li>
+</ul>
+<p>For this portion of the lab, you’re going to be using the Palo Alto Networks
+<a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/">Ansible modules</a>.</p>
+<p>First, let’s change to the Ansible configuration directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/multicloud-automation-lab/configuration/ansible
+</pre></div>
+</div>
+<div class="section" id="module-communications">
+<h2>Module Communications<a class="headerlink" href="#module-communications" title="Permalink to this headline">¶</a></h2>
+<p>Just like with Terraform, your first task is setting up the communication with
+the firewall.  The IP address, username, and password (or API key) can be set
+as variables or specified on the command line.  However, since we’ve already
+got them as environment variables, we can just read them in.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">vars.yml</span></code> file contains the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">provider</span><span class="p">:</span>
+  <span class="nt">ip_address</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;env&#39;,</span><span class="nv"> </span><span class="s">&#39;PANOS_HOSTNAME&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+  <span class="nt">username</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;env&#39;,</span><span class="nv"> </span><span class="s">&#39;PANOS_USERNAME&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+  <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(&#39;env&#39;,</span><span class="nv"> </span><span class="s">&#39;PANOS_PASSWORD&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</pre></div>
+</div>
+<p>This code simply reads the content of the environment variables we set in the
+Terraform portion into the dictionary <code class="docutils literal notranslate"><span class="pre">provider</span></code>.  This is then referenced by
+our playbook file, <code class="docutils literal notranslate"><span class="pre">playbook.yml</span></code>.</p>
+<p>Similar to the Terraform portion of the lab, our firewall doesn’t have any
+objects or rules configured.  We’re going to implement that with an Ansible
+playbook.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You wouldn’t actually change tools in the middle of configuration
+like we’re doing here.  We just want you to get exposure to both tools and see
+that you can accomplish the same tasks with either one.</p>
+</div>
+</div>
+<div class="section" id="address-objects">
+<h2>Address Objects<a class="headerlink" href="#address-objects" title="Permalink to this headline">¶</a></h2>
+<p>Open the <code class="docutils literal notranslate"><span class="pre">playbook.yml</span></code> file in your text editor.  It will contain the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="nt">connection</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="nt">gather_facts</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">vars_files</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vars.yml</span>
+
+<span class="nt">roles</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">PaloAltoNetworks.paloaltonetworks</span>
+
+<span class="nt">tasks</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create web server object</span>
+    <span class="nt">panos_address_object</span><span class="p">:</span>
+      <span class="nt">provider</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;web-srv&quot;</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;10.5.2.5&quot;</span>
+      <span class="nt">commit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create DB server object</span>
+    <span class="nt">panos_address_object</span><span class="p">:</span>
+      <span class="nt">provider</span><span class="p">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;db-srv&quot;</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;10.5.3.5&quot;</span>
+      <span class="nt">commit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="nt">state</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+</pre></div>
+</div>
+<p>This playbook creates the following address objects by using the
+<a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/modules/panos_address_object_module.html">panos_address_object module</a>.
+Also notice the fact that <code class="docutils literal notranslate"><span class="pre">commit</span></code> is set to <strong>False</strong>, so that we don’t have
+to wait on a commit each time a module runs.</p>
+</div>
+<div class="section" id="service-objects">
+<h2>Service Objects<a class="headerlink" href="#service-objects" title="Permalink to this headline">¶</a></h2>
+<p>Next, create some service objects.  We want to allow SSH on some non-standard
+ports so we can easily communicate with web and DB servers behind our firewall.
+You’ll need to refer to the
+<a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/modules/panos_service_object_module.html">panos_service_object module</a>
+documentation.</p>
+<p>The example code for that module looks like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create service object &#39;ssh-tcp-22&#39;</span>
+  <span class="nt">panos_service_object</span><span class="p">:</span>
+    <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;ssh-tcp-22&#39;</span>
+    <span class="nt">destination_port</span><span class="p">:</span> <span class="s">&#39;22&#39;</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;SSH</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">tcp/22&#39;</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">panos_service_object</span></code> module to create two objects with the
+following definitions:</p>
+<div class="figure" id="id1">
+<img alt="../../_images/service-tcp-221.png" src="../../_images/service-tcp-221.png" />
+<p class="caption"><span class="caption-text"><strong>service-tcp-221</strong> service object.</span></p>
+</div>
+<div class="figure" id="id2">
+<img alt="../../_images/service-tcp-222.png" src="../../_images/service-tcp-222.png" />
+<p class="caption"><span class="caption-text"><strong>service-tcp-222</strong> service object.</span></p>
+</div>
+</div>
+<div class="section" id="security-rules">
+<h2>Security Rules<a class="headerlink" href="#security-rules" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to create security rules to allow traffic.  You’ll need to refer to
+the <a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/modules/panos_security_rule_module.html">panos_security_rule module</a>
+documentation.</p>
+<p>The example code for that module looks like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">add SSH inbound</span>
+  <span class="nt">panos_security_rule</span><span class="p">:</span>
+    <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+    <span class="nt">rule_name</span><span class="p">:</span> <span class="s">&#39;SSH</span><span class="nv"> </span><span class="s">permit&#39;</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="s">&#39;SSH</span><span class="nv"> </span><span class="s">rule</span><span class="nv"> </span><span class="s">test&#39;</span>
+    <span class="nt">source_zone</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;public&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">source_ip</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;any&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">destination_zone</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;private&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">destination_ip</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;1.1.1.1&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">application</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;ssh&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">action</span><span class="p">:</span> <span class="s">&#39;allow&#39;</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">panos_security_rule</span></code> module to create the following security rules:</p>
+<div class="figure" id="id3">
+<img alt="../../_images/security_rules.png" src="../../_images/security_rules.png" />
+<p class="caption"><span class="caption-text">Security rules to be created.</span></p>
+</div>
+</div>
+<div class="section" id="nat-rules">
+<h2>NAT Rules<a class="headerlink" href="#nat-rules" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to create the required NAT rules.  You’ll need to refer to the
+<a class="reference external" href="https://ansible-pan.readthedocs.io/en/latest/modules/panos_nat_rule_module.html">panos_nat_rule module</a>
+documentation.</p>
+<p>The example code for that module looks like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create NAT SSH rule for 10.0.1.101</span>
+  <span class="nt">panos_nat_rule</span><span class="p">:</span>
+    <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+    <span class="nt">rule_name</span><span class="p">:</span> <span class="s">&quot;Web</span><span class="nv"> </span><span class="s">SSH&quot;</span>
+    <span class="nt">source_zone</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;external&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">destination_zone</span><span class="p">:</span> <span class="s">&quot;external&quot;</span>
+    <span class="nt">source_ip</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;any&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">destination_ip</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;10.0.0.100&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">service</span><span class="p">:</span> <span class="s">&quot;service-tcp-221&quot;</span>
+    <span class="nt">snat_type</span><span class="p">:</span> <span class="s">&quot;dynamic-ip-and-port&quot;</span>
+    <span class="nt">snat_interface</span><span class="p">:</span> <span class="s">&quot;ethernet1/2&quot;</span>
+    <span class="nt">dnat_address</span><span class="p">:</span> <span class="s">&quot;10.0.1.101&quot;</span>
+    <span class="nt">dnat_port</span><span class="p">:</span> <span class="s">&quot;22&quot;</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">panos_nat_rule</span></code> module to create the following NAT rules:</p>
+<div class="figure" id="id4">
+<img alt="../../_images/nat_rules.png" src="../../_images/nat_rules.png" />
+<p class="caption"><span class="caption-text">NAT rules to be created.</span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Pay attention to the module arguments for <code class="docutils literal notranslate"><span class="pre">panos_nat_rule</span></code>.  <strong>destination_zone</strong>
+and <strong>service</strong> are strings here, not lists.  This is because you can’t
+write a NAT rule on PAN-OS with multiple destination zones or services.</p>
+</div>
+</div>
+<div class="section" id="commit-the-configuration">
+<h2>Commit the Configuration<a class="headerlink" href="#commit-the-configuration" title="Permalink to this headline">¶</a></h2>
+<p>If you have been writing your playbook with <code class="docutils literal notranslate"><span class="pre">commit</span></code> set to <strong>False</strong> each
+time, you have an uncommitted candidate configuration.  There’s a panos_commit
+module to perform a commit.</p>
+<p>The example code for the module should do what you need:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">commit candidate config on firewall</span>
+  <span class="nt">panos_commit</span><span class="p">:</span>
+    <span class="nt">provider</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">provider</span><span class="nv"> </span><span class="s">}}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-the-playbook">
+<h2>Run the Playbook<a class="headerlink" href="#run-the-playbook" title="Permalink to this headline">¶</a></h2>
+<p>Save and exit your <code class="docutils literal notranslate"><span class="pre">playbook.yml</span></code> file.  Then run your playbook with the
+following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ansible-playbook -i inventory playbook.yml
+</pre></div>
+</div>
+<p>Log in to the web UI of the firewall, and verify that the configuration matches
+what you want.  If you get errors, indentation is most likely the problem.
+Ansible is very particular about lines being indented with spaces and not with
+tabs.</p>
+<p>You’re now done with the Ansible portion of the lab!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

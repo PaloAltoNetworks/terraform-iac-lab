@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Terraform and Commits &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Further Reading" href="../05-summary/moreinfo.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">build</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-gcp.html">Lab Deployment (GCP)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-aws.html">Lab Deployment (AWS)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">run</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/background-terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/activities-terraform.html">Terraform Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/background-ansible.html">Ansible Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/activities-ansible.html">Ansible Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-run/validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">respond</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../04-respond/monitor.html">Cloud Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-respond/dag.html">Dynamic Address Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-respond/scale-out.html">Compute Scaling</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/comparison.html">Tool Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Terraform and Commits</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/06-appendix/terraform-commit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="terraform-and-commits">
+<h1>Terraform and Commits<a class="headerlink" href="#terraform-and-commits" title="Permalink to this headline">¶</a></h1>
+<p>One thing to know when working with Terraform is that it does not have
+support for committing your configuration.  To commit your configuration, you
+can use the following <a class="reference external" href="https://golang.org/">Golang</a> code.</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;encoding/json&quot;</span>
+    <span class="s">&quot;flag&quot;</span>
+    <span class="s">&quot;log&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+
+    <span class="s">&quot;github.com/PaloAltoNetworks/pango&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">Credentials</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Hostname</span> <span class="kt">string</span> <span class="s">`json:&quot;hostname&quot;`</span>
+    <span class="nx">Username</span> <span class="kt">string</span> <span class="s">`json:&quot;username&quot;`</span>
+    <span class="nx">Password</span> <span class="kt">string</span> <span class="s">`json:&quot;password&quot;`</span>
+    <span class="nx">ApiKey</span> <span class="kt">string</span> <span class="s">`json:&quot;api_key&quot;`</span>
+    <span class="nx">Protocol</span> <span class="kt">string</span> <span class="s">`json:&quot;protocol&quot;`</span>
+    <span class="nx">Port</span> <span class="kt">uint</span> <span class="s">`json:&quot;port&quot;`</span>
+    <span class="nx">Timeout</span> <span class="kt">int</span> <span class="s">`json:&quot;timeout&quot;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">getCredentials</span><span class="p">(</span><span class="nx">configFile</span><span class="p">,</span> <span class="nx">hostname</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">apiKey</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">Credentials</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">config</span> <span class="nx">Credentials</span>
+        <span class="nx">val</span> <span class="kt">string</span>
+        <span class="nx">ok</span> <span class="kt">bool</span>
+    <span class="p">)</span>
+
+    <span class="c1">// Auth from the config file.</span>
+    <span class="k">if</span> <span class="nx">configFile</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">fd</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">configFile</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;ERROR: %s&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">defer</span> <span class="nx">fd</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+
+        <span class="nx">dec</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">NewDecoder</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span>
+        <span class="nx">err</span> <span class="p">=</span> <span class="nx">dec</span><span class="p">.</span><span class="nx">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;ERROR: %s&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Auth from env variables.</span>
+    <span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">LookupEnv</span><span class="p">(</span><span class="s">&quot;PANOS_HOSTNAME&quot;</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Hostname</span> <span class="p">=</span> <span class="nx">val</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">LookupEnv</span><span class="p">(</span><span class="s">&quot;PANOS_USERNAME&quot;</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Username</span> <span class="p">=</span> <span class="nx">val</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">LookupEnv</span><span class="p">(</span><span class="s">&quot;PANOS_PASSWORD&quot;</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Password</span> <span class="p">=</span> <span class="nx">val</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ok</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">LookupEnv</span><span class="p">(</span><span class="s">&quot;PANOS_API_KEY&quot;</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">ApiKey</span> <span class="p">=</span> <span class="nx">val</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Auth from CLI args.</span>
+    <span class="k">if</span> <span class="nx">hostname</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Hostname</span> <span class="p">=</span> <span class="nx">hostname</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">username</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Username</span> <span class="p">=</span> <span class="nx">username</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">password</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">Password</span> <span class="p">=</span> <span class="nx">password</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">apiKey</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">ApiKey</span> <span class="p">=</span> <span class="nx">apiKey</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Hostname</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;ERROR: No hostname specified&quot;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Username</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">config</span><span class="p">.</span><span class="nx">ApiKey</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;ERROR: No username specified&quot;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Password</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">config</span><span class="p">.</span><span class="nx">ApiKey</span> <span class="o">==</span> <span class="s">&quot;&quot;</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;ERROR: No password specified&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">config</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">err</span> <span class="kt">error</span>
+        <span class="nx">configFile</span><span class="p">,</span> <span class="nx">hostname</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">apiKey</span> <span class="kt">string</span>
+        <span class="nx">job</span> <span class="kt">uint</span>
+    <span class="p">)</span>
+
+    <span class="nx">log</span><span class="p">.</span><span class="nx">SetFlags</span><span class="p">(</span><span class="nx">log</span><span class="p">.</span><span class="nx">Ldate</span> <span class="p">|</span> <span class="nx">log</span><span class="p">.</span><span class="nx">Ltime</span> <span class="p">|</span> <span class="nx">log</span><span class="p">.</span><span class="nx">Lmicroseconds</span><span class="p">)</span>
+
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">StringVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">configFile</span><span class="p">,</span> <span class="s">&quot;config&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;JSON config file with panos connection info&quot;</span><span class="p">)</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">StringVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">hostname</span><span class="p">,</span> <span class="s">&quot;host&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;PAN-OS hostname&quot;</span><span class="p">)</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">StringVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">username</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;PAN-OS username&quot;</span><span class="p">)</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">StringVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">password</span><span class="p">,</span> <span class="s">&quot;pass&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;PAN-OS password&quot;</span><span class="p">)</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">StringVar</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">apiKey</span><span class="p">,</span> <span class="s">&quot;key&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;PAN-OS API key&quot;</span><span class="p">)</span>
+    <span class="nx">flag</span><span class="p">.</span><span class="nx">Parse</span><span class="p">()</span>
+
+    <span class="nx">config</span> <span class="o">:=</span> <span class="nx">getCredentials</span><span class="p">(</span><span class="nx">configFile</span><span class="p">,</span> <span class="nx">hostname</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">apiKey</span><span class="p">)</span>
+
+    <span class="nx">fw</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pango</span><span class="p">.</span><span class="nx">Firewall</span><span class="p">{</span><span class="nx">Client</span><span class="p">:</span> <span class="nx">pango</span><span class="p">.</span><span class="nx">Client</span><span class="p">{</span>
+        <span class="nx">Hostname</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Hostname</span><span class="p">,</span>
+        <span class="nx">Username</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Username</span><span class="p">,</span>
+        <span class="nx">Password</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Password</span><span class="p">,</span>
+        <span class="nx">ApiKey</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">ApiKey</span><span class="p">,</span>
+        <span class="nx">Protocol</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Protocol</span><span class="p">,</span>
+        <span class="nx">Port</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Port</span><span class="p">,</span>
+        <span class="nx">Timeout</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">Timeout</span><span class="p">,</span>
+        <span class="nx">Logging</span><span class="p">:</span> <span class="nx">pango</span><span class="p">.</span><span class="nx">LogOp</span> <span class="p">|</span> <span class="nx">pango</span><span class="p">.</span><span class="nx">LogAction</span><span class="p">,</span>
+    <span class="p">}}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">fw</span><span class="p">.</span><span class="nx">Initialize</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;Failed: %s&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nx">job</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">fw</span><span class="p">.</span><span class="nx">Commit</span><span class="p">(</span><span class="nx">flag</span><span class="p">.</span><span class="nx">Arg</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Fatalf</span><span class="p">(</span><span class="s">&quot;Error in commit: %s&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">job</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;No commit needed&quot;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Committed config successfully&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This code reads the hostname, username, and password from the environment
+variables we set earlier.</p>
+<p>You will need to do the following to compile and run this code:</p>
+<ol class="arabic simple">
+<li>Open a text editor, add the code above to it and save the file as <code class="docutils literal notranslate"><span class="pre">commit.go</span></code>.</li>
+<li>Install the Go libraries for PAN-OS.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ go get github.com/PaloAltoNetworks/pango
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Compile the source code.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ go build commit.go
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Run the executable (using your existing environment variables).</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./commit &lt;optional commit comment&gt;
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../05-summary/moreinfo.html" class="btn btn-neutral float-left" title="Further Reading" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
