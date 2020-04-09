@@ -1,5 +1,5 @@
-# Multi-Cloud Security Automation Lab
+# Terraform IaC Lab
 
-This is the hands-on multi-cloud security automation workshop for the Palo Alto Networks Ignite 19 user conference.
+This is an infrastructure as code hands-on lab using Terraform and GCP.
 
-The lab guide can be found here https://multicloud-automation-lab.readthedocs.io
+The lab guide can be found here https://terraform-iac-lab.readthedocs.io
