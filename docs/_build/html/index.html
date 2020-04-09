@@ -88,10 +88,10 @@
 <li class="toctree-l1"><a class="reference internal" href="01-getting-started/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01-getting-started/setup.html">Setup</a></li>
 </ul>
-<p class="caption"><span class="caption-text">build</span></p>
+<p class="caption"><span class="caption-text">configure</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="02-configure/terraform.html">Terraform Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02-configure/configure.html">Terraform Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-configure/configure.html">Panorama Configuration</a></li>
 </ul>
 <p class="caption"><span class="caption-text">deploy</span></p>
 <ul>
@@ -184,22 +184,42 @@
 <div class="section" id="welcome">
 <h2>Welcome<a class="headerlink" href="#welcome" title="Permalink to this headline">¶</a></h2>
 <p>Welcome to the Terraform Infrastructure as Code Lab!</p>
-<p>In this lab we will be deploying a multi-tiered web application to the cloud.  To accomplish this we’ll first need need to define the infrastructure supporting our application as well as how we’re going to secure it.  Rather than doing this manually within the cloud provider portal, we’re going to define our infrastructure in code using Terraform’s declarative language.</p>
-<p>plans in Terraform, manage them in a version control system, and deploy the infrastructure using integrated build tools.  A key element of this infrastructure design is the Palo Alto Networks VM-Series firewall.</p>
-<p>Prior to deployment, we will define the VM-series firewall configuration using the Terraform provider for PAN-OS.  These configurations will be applied to Panorama rather than the VM-series firewall itself.  Once it is bootstrapped, the firewall will register to Panorama and learn it’s initial configuration.</p>
-<p>Lastly, we will ensure that the firewall is able to respond effectively to changes made to the application infrastructure.</p>
+<p>In this lab we will be deploying a multi-tiered web application to the cloud.
+To accomplish this we’ll first need need to define the infrastructure supporting
+our application as well as how we’re going to secure it.  Rather than doing this
+manually within the cloud provider portal, we’re going to define our infrastructure
+in code using Terraform’s declarative language.</p>
+<p>A key element of this infrastructure design is the Palo Alto Networks VM-Series
+firewall.  Using the Terraform provider for PAN-OS, we will define the configuration
+of the VM-Series firewall, but we’ll be using Panorama to manage that configuration.
+The PAN-OS bootstrapping feature will be used to initialize the VM-Series firewall
+and point it to Panorama.  Once it registers with Panorama, it will receive its
+runtime configuration.</p>
+<p>Lastly, we will ensure that the firewall is able to respond effectively to
+changes made to the application infrastructure.</p>
 </div>
 <div class="section" id="objective">
 <h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h2>
-<p>The objective of this workshop is to deploy and secure a <a class="reference external" href="https://wordpress.org">WordPress</a> content management system in Google Cloud Platform.  This web application will be supported by an <a class="reference external" href="https://httpd.apache.org">Apache</a> web server and a <a class="reference external" href="https://mariadb.org/">MariaDB</a> database server residing in two separate subnets.</p>
-<p>As part of our infrastructure deployment, a VM-Series virtual firewall will be inserted between the untrusted public subnet, the web subnet, and the database subnet.  Our goal is to define, deploy, and configure all cloud infrastructure elements including the VM-series firewall using Terraform exclusively.</p>
+<p>The objective of this workshop is to deploy and secure a
+<a class="reference external" href="https://wordpress.org">WordPress</a> content management system in Google Cloud
+Platform.  This web application will be supported by an
+<a class="reference external" href="https://httpd.apache.org">Apache</a> web server and a
+<a class="reference external" href="https://mariadb.org/">MariaDB</a> database server residing in two separate
+subnets.</p>
+<p>As part of our infrastructure deployment, a VM-Series virtual firewall will be
+inserted between the untrusted public subnet, the web subnet, and the database
+subnet.  Our goal is to define, deploy, and configure all cloud infrastructure
+elements including the VM-series firewall using Terraform exclusively.</p>
 </div>
 <div class="section" id="learning-outcomes">
 <h2>Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Understand the various methods for automating the deployment of Palo Alto Networks NGFW instances in cloud environments</li>
-<li>Learn to use industry-leading configuration management automation tools to implement changes to PAN-OS devices</li>
-<li>Learn how the Palo Alto Networks NGFW can automatically respond to changes in the network environment</li>
+<li>Learn how to use Terraform to define and deploy cloud infrastructure and
+implement changes to PAN-OS devices</li>
+<li>Learn best practices for managing infrastructure code environments</li>
+<li>Learn about bootstrapping best practices for VM-Series firewalls in the cloud</li>
+<li>Learn how the Palo Alto Networks NGFW can automatically respond to changes
+in the network environment</li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
