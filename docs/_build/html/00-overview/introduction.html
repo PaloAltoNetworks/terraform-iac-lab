@@ -83,7 +83,7 @@
               <p class="caption"><span class="caption-text">overview</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#infrastructure-as-code">infrastructure as Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-as-code-overview">Infrastructure as Code Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lab-topology">Lab Topology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lab-components">Lab Components</a></li>
 </ul>
@@ -103,12 +103,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
-</ul>
-<p class="caption"><span class="caption-text">respond</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../04-respond/monitor.html">Cloud Monitoring</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../04-respond/dag.html">Dynamic Address Groups</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../04-respond/scale-out.html">Compute Scaling</a></li>
 </ul>
 <p class="caption"><span class="caption-text">summary</span></p>
 <ul>
@@ -186,31 +180,59 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="infrastructure-as-code">
-<h2>infrastructure as Code<a class="headerlink" href="#infrastructure-as-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="infrastructure-as-code-overview">
+<h2>Infrastructure as Code Overview<a class="headerlink" href="#infrastructure-as-code-overview" title="Permalink to this headline">¶</a></h2>
 <p>This training lab provides hands-on exposure to Infrastructure as Code (IaC)
-concepts and practices.</p>
+concepts and practices.  IaC simply stated is the practice of defining, utilizing,
+and maintaining infrastructure definitions as one would application source code.</p>
 <img alt="../_images/iac.png" src="../_images/iac.png" />
 <dl class="docutils">
 <dt>Config Definitions</dt>
-<dd>TBD</dd>
+<dd>Infrastructure deployments and their configurations can be defined in various
+languages.  Terraform provides an infrastructure definition language called HCL
+that is multi-cloud in that it supports many different public and private cloud
+environments.  Most IaC languages are declarative in nature.  This means
+they define the desired state of the infrastructure rather than the steps
+necessary to achieve that state.</dd>
 <dt>Config Repository</dt>
 <dd>A version control system (VCS) is a key element in managing application source
 code.  Since infrastructure definitions are just another form of source code,
-a VCS It supports revision control, code checkout/checkin, team collaboration,
-code review, and automated build interfaces.</dd>
+a VCS is a key element of IaC environemts as well.  It supports revision
+control, code checkout/checkin, team collaboration, code review, and API hooks
+for automated build tools.</dd>
 <dt>Build Tools</dt>
-<dd>TBD</dd>
+<dd>Build tools act on the infrastructure definitions to build and configure the
+infrastructure components.  Often, this build process is incorporated
+into a larger Continuous Delivery (CD) pipeline with automated tests and gate
+factors that govern the build process.</dd>
 <dt>Platform APIs</dt>
-<dd>TBD</dd>
+<dd>In order to automate the deployment and configuration of infrastructure elements
+an API must be accessible to the build tool being used.  Cloud providers such as
+AWS, GCP, and Azure all have various APIs supporting different infrastructure
+components and services.  Third-party virtual appliances such as the VM-Series
+virtual firewall also has an API that may be used for configuration purposes.
+However, the use of a common infrastructure definition language and build tools
+all but eliminates the need to interact directly with any of these APIs.</dd>
 <dt>Deploy Infrastructure</dt>
-<dd>TBD</dd>
+<dd>The build tool is responsible for processing the infrastructure definition and
+leveraging the backend APIs and orchestrating the deployment the infrastructure
+components.  Terraform accomplishes this by first assessing the state of each
+infrastructure resource.  If nothing is instantiated, Terraform will take the
+necessary steps to deploy the resource and configure it based on the parameters
+that have been provided.</dd>
 <dt>Test and Validate</dt>
-<dd>TBD</dd>
+<dd>A set of tests may be performed to ensure that the deployed infrastructure aligns
+with the definitions provided in the infrastructure code.  Since Terraform
+maintains state files detailing the live environment, it is easy to run a
+<code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code> command to identify and resolve and disparties.</dd>
 </dl>
 </div>
 <div class="section" id="lab-topology">
 <h2>Lab Topology<a class="headerlink" href="#lab-topology" title="Permalink to this headline">¶</a></h2>
+<p>The following diagram details the infrastructure topology associated with the web
+application we will be deploying.  The VM-Series firewall will be used to inspect
+and protect “North-South” traffic between the <code class="docutils literal notranslate"><span class="pre">untrust</span></code> and <code class="docutils literal notranslate"><span class="pre">web</span></code> zones as well
+as “East-West” traffic between the <code class="docutils literal notranslate"><span class="pre">web</span></code> and <code class="docutils literal notranslate"><span class="pre">database</span></code> zones.</p>
 <div class="figure">
 <img alt="../_images/topology.png" src="../_images/topology.png" />
 </div>
@@ -254,11 +276,16 @@ code review, and automated build interfaces.</dd>
 that deploys and provides access to cloud-based lab environments.  Qwiklabs
 will establish a set of temporary set of credentials in the cloud provider
 in order to deploy and access the cloud infrastructure and services.</dd>
-<dt>Launchpad VM</dt>
-<dd>A Debian 9 Linux virtual machine will be deployed in each cloud environment
-for you to use as your primary workspace for the lab activities,  This VM
-will be provisioned with all the tools and libraries necessary for
-deploying and managing infrastructure in the cloud provider.</dd>
+<dt>Google Cloud Platform (GCP)</dt>
+<dd>Google Cloud Platform, offered by Google, is a suite of cloud computing
+services that runs on the same infrastructure that Google uses internally
+for its end-user products, such as Google Search and YouTube.</dd>
+<dt>Panorama</dt>
+<dd>Panorama is the centralized management and reporting platform for PAN-OS
+devices including firewall appliances, VM-Series virtual firewalls,
+WildFire appliances, and log collectors.  It serves as the configuration
+“source of truth” for a PAN-OS infrastructure deployment and supports the
+same XML and REST APIs as other PAN-OS devices.</dd>
 <dt>Hashicorp Terraform</dt>
 <dd>Each cloud provider offers a mechanism that allow you to define a set of
 infrastructure element or services and orchestrate their instantiation.
@@ -266,19 +293,6 @@ However, these tools and templates are specific to each cloud provider.
 We will be using Terraform to perform this function as it provides a
 common set of capabilities and a template formats acroos all cloud
 providers.</dd>
-<dt>Red Hat Ansible</dt>
-<dd>Whereas Terraform excels at orchestrating deployment activities, Ansible is
-more effective at automating configuration management tasks.  We will be
-using both Terraform and Ansible to make configuration changes to the
-VM-Series firewall in order to illustrate their different capabilities.</dd>
-<dt>Google Cloud Platform (GCP)</dt>
-<dd>Google Cloud Platform, offered by Google, is a suite of cloud computing
-services that runs on the same infrastructure that Google uses internally
-for its end-user products, such as Google Search and YouTube.</dd>
-<dt>Amazon Web Services (AWS)</dt>
-<dd>Amazon Web Services is a subsidiary of Amazon that provides on-demand cloud
-computing platforms to individuals, companies and governments, on a metered
-pay-as-you-go basis.</dd>
 </dl>
 </div>
 </div>

@@ -84,15 +84,6 @@ Learning Outcomes
 
     03-deploy/deploy
     03-deploy/validation
-
-.. toctree::
-    :maxdepth: 2
-    :hidden:
-    :caption: respond
-
-    04-respond/monitor
-    04-respond/dag
-    04-respond/scale-out
     
 
 .. toctree::
