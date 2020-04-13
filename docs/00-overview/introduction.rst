@@ -2,35 +2,36 @@
 Introduction
 ============
 
-Automation Overview
+infrastructure as Code
 -------------------
 
-This training workshop provides hands-on exposure to the three primary
-categories of infrastructure automation activities: **Build**, **Run**, and
-**Respond**.
+This training lab provides hands-on exposure to Infrastructure as Code (IaC) 
+concepts and practices.  
 
-.. image:: build-run-respond.png
+.. image:: iac.png
 
-Build
-    Build automation is the means by which a set of infrastructure elements are
-    declared, instantiated, and orchestrated using automation tools and
-    infrastructure APIs.  The result is a set of deployed infrastructure
-    elements that are in production (or production-ready) with a "day one"
-    configuration.
 
-Run
-    Run automation encompasses any API-based configuration management actions
-    that occur once the infrastructure element is in production.  These are
-    primarily scheduled changes that are made to support new requirements.  The
-    input to these changes is manually defined in a variety of formats such as
-    YAML, JSON, XML, etc.
+Config Definitions
+    TBD
 
-Respond
-    Response automation includes any automated actions that are triggered by an
-    event.  These may be operational events such as changes to the
-    infrastructure or security events such as of a new threat. Response actions
-    are defined in advance but only initiated when a event matching its trigger
-    criteria occurs.
+Config Repository
+    A version control system (VCS) is a key element in managing application source
+    code.  Since infrastructure definitions are just another form of source code, 
+    a VCS It supports revision control, code checkout/checkin, team collaboration, 
+    code review, and automated build interfaces.
+
+Build Tools
+    TBD
+
+Platform APIs
+    TBD
+
+Deploy Infrastructure
+    TBD
+
+Test and Validate
+    TBD
+
 
 
 Lab Topology

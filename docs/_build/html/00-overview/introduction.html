@@ -83,7 +83,7 @@
               <p class="caption"><span class="caption-text">overview</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#automation-overview">Automation Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#infrastructure-as-code">infrastructure as Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lab-topology">Lab Topology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lab-components">Lab Components</a></li>
 </ul>
@@ -94,18 +94,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
 </ul>
-<p class="caption"><span class="caption-text">build</span></p>
+<p class="caption"><span class="caption-text">configure</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-gcp.html">Lab Deployment (GCP)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../02-build/deploy-aws.html">Lab Deployment (AWS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/configure.html">Panorama Configuration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">run</span></p>
+<p class="caption"><span class="caption-text">deploy</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/background-terraform.html">Terraform Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03-run/terraform/activities-terraform.html">Terraform Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/background-ansible.html">Ansible Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03-run/ansible/activities-ansible.html">Ansible Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../03-run/validation.html">Validation Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
 </ul>
 <p class="caption"><span class="caption-text">respond</span></p>
 <ul>
@@ -189,31 +186,27 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="automation-overview">
-<h2>Automation Overview<a class="headerlink" href="#automation-overview" title="Permalink to this headline">¶</a></h2>
-<p>This training workshop provides hands-on exposure to the three primary
-categories of infrastructure automation activities: <strong>Build</strong>, <strong>Run</strong>, and
-<strong>Respond</strong>.</p>
-<img alt="../_images/build-run-respond.png" src="../_images/build-run-respond.png" />
+<div class="section" id="infrastructure-as-code">
+<h2>infrastructure as Code<a class="headerlink" href="#infrastructure-as-code" title="Permalink to this headline">¶</a></h2>
+<p>This training lab provides hands-on exposure to Infrastructure as Code (IaC)
+concepts and practices.</p>
+<img alt="../_images/iac.png" src="../_images/iac.png" />
 <dl class="docutils">
-<dt>Build</dt>
-<dd>Build automation is the means by which a set of infrastructure elements are
-declared, instantiated, and orchestrated using automation tools and
-infrastructure APIs.  The result is a set of deployed infrastructure
-elements that are in production (or production-ready) with a “day one”
-configuration.</dd>
-<dt>Run</dt>
-<dd>Run automation encompasses any API-based configuration management actions
-that occur once the infrastructure element is in production.  These are
-primarily scheduled changes that are made to support new requirements.  The
-input to these changes is manually defined in a variety of formats such as
-YAML, JSON, XML, etc.</dd>
-<dt>Respond</dt>
-<dd>Response automation includes any automated actions that are triggered by an
-event.  These may be operational events such as changes to the
-infrastructure or security events such as of a new threat. Response actions
-are defined in advance but only initiated when a event matching its trigger
-criteria occurs.</dd>
+<dt>Config Definitions</dt>
+<dd>TBD</dd>
+<dt>Config Repository</dt>
+<dd>A version control system (VCS) is a key element in managing application source
+code.  Since infrastructure definitions are just another form of source code,
+a VCS It supports revision control, code checkout/checkin, team collaboration,
+code review, and automated build interfaces.</dd>
+<dt>Build Tools</dt>
+<dd>TBD</dd>
+<dt>Platform APIs</dt>
+<dd>TBD</dd>
+<dt>Deploy Infrastructure</dt>
+<dd>TBD</dd>
+<dt>Test and Validate</dt>
+<dd>TBD</dd>
 </dl>
 </div>
 <div class="section" id="lab-topology">

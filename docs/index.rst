@@ -16,11 +16,12 @@ Welcome to the Terraform Infrastructure as Code Lab!
 
 In this lab we will be deploying a multi-tiered web application to the cloud.  
 To accomplish this we'll first need need to define the infrastructure supporting 
-our application as well as how we're going to secure it.  Rather than doing this 
-manually within the cloud provider portal, we're going to define our infrastructure 
-in code using Terraform's declarative language.
+our application as well as how we're going to secure the application.  Rather than 
+manually defining the infrastructure elements within the cloud provider portal, 
+we're going to define our infrastructure in code using Terraform's declarative 
+language and stateful build capabilities.
 
-A key element of this infrastructure design is the Palo Alto Networks VM-Series 
+A key element of our infrastructure design will be the Palo Alto Networks VM-Series 
 firewall.  Using the Terraform provider for PAN-OS, we will define the configuration
 of the VM-Series firewall, but we'll be using Panorama to manage that configuration.  
 The PAN-OS bootstrapping feature will be used to initialize the VM-Series firewall 
@@ -52,9 +53,6 @@ Learning Outcomes
   implement changes to PAN-OS devices
 - Learn best practices for managing infrastructure code environments
 - Learn about bootstrapping best practices for VM-Series firewalls in the cloud
-- Learn how the Palo Alto Networks NGFW can automatically respond to changes 
-  in the network environment
-
 
 .. toctree::
    :maxdepth: 2
