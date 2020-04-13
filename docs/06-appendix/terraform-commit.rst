@@ -1,3 +1,5 @@
+.. _terraform-commits:
+
 =============================
 Terraform and Commits
 =============================
