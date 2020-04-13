@@ -21,13 +21,12 @@ module "policies" {
   interface_db      = module.networking.interface_db
 }
 
-# resource "null_resource" "commit_panorama" {
-
-#   provisioner "local-exec" {
-#     command = "${path.module}/commit"
-#   }
-#   depends_on = [
-#     module.policies.security_rule_group,
-#     module.policies.nat_rule_group
-#   ]
-# }
+resource "null_resource" "commit_panorama" {
+  provisioner "local-exec" {
+    command = "go run commit.go"
+  }
+  depends_on = [
+    module.policies.security_rule_group,
+    module.policies.nat_rule_group
+  ]
+}

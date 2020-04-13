@@ -112,7 +112,10 @@ func main() {
 		log.Fatalf("Failed: %s", err)
 	}
 
-	job, err = fw.Commit(flag.Arg(0), true, true, false, true)
+	// Do a partial commit for the supplied username.
+	admins := []string{config.Username}
+
+	job, err = fw.Commit(flag.Arg(0), admins, true, true, false, true)
 	if err != nil {
 		log.Fatalf("Error in commit: %s", err)
 	} else if job == 0 {
