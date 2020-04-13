@@ -58,9 +58,9 @@ parts of this config below.
     }
 
     provider "panos" {
-        hostname = "${var.hostname}"
-        username = "${var.username}"
-        password = "${var.password}"
+        hostname = var.hostname
+        username = var.username
+        password = var.password
     }
 
     resource "panos_management_profile" "ssh" {
@@ -73,7 +73,7 @@ parts of this config below.
         vsys = "vsys1"
         mode = "layer3"
         enable_dhcp = true
-        management_profile = "${panos_management_profile.ssh.name}"
+        management_profile = panos_management_profile.ssh.name
     }
 
     resource "panos_zone" "zone1" {
@@ -171,7 +171,7 @@ attribute variable.  The first way, using *depends\_on*, is performed by
 adding the universal parameter "depends\_on" within the dependent
 resource.  The second way, using attribute variables, is performed by
 referencing a resource or data source attribute as a variable:
-``"${panos_management_profile.ssh.name}"``
+``panos_management_profile.ssh.name``
 
 Modules
 -------
@@ -182,40 +182,42 @@ that the resources they create can be accessed.  Both versions of this lab use
 modules to group together elements for the base networking components, the
 firewall, and the created instances.
 
-For example, the AWS firewall configuration is located in
-``deployment/aws/modules/firewall``.  Calling this module creates the firewall
+For example, the firewall configuration is located in
+``deployment/modules/firewall``.  Calling this module creates the firewall
 instance, the network interfaces, and various other resources.
 
 It can be used in another Terraform plan like this:
 
 .. code-block:: terraform
 
-   module "firewall" {
-     source = "./modules/firewall"
+    module "firewall" {
+        source = "./modules/firewall"
 
-     name = "vm-series"
+        fw_name             = "vm-series"
+        fw_zone             = var.zone
+        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
+        fw_machine_type     = "n1-standard-4"
+        fw_machine_cpu      = "Intel Skylake"
+        fw_bootstrap_bucket = module.bootstrap.bootstrap_name
 
-     ssh_key_name = "${aws_key_pair.ssh_key.key_name}"
-     vpc_id       = "${module.vpc.vpc_id}"
+        fw_ssh_key = "admin:${file(var.public_key_file)}"
 
-     fw_mgmt_subnet_id = "${module.vpc.mgmt_subnet_id}"
-     fw_mgmt_ip        = "10.5.0.4"
-     fw_mgmt_sg_id     = "${aws_security_group.firewall_mgmt_sg.id}"
+        fw_mgmt_subnet = module.vpc.mgmt_subnet
+        fw_mgmt_ip     = "10.5.0.4"
+        fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
 
-     fw_eth1_subnet_id = "${module.vpc.public_subnet_id}"
-     fw_eth2_subnet_id = "${module.vpc.web_subnet_id}"
-     fw_eth3_subnet_id = "${module.vpc.db_subnet_id}"
+        fw_untrust_subnet = module.vpc.untrust_subnet
+        fw_untrust_ip     = "10.5.1.4"
+        fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
 
-     fw_dataplane_sg_id = "${aws_security_group.public_sg.id}"
+        fw_web_subnet = module.vpc.web_subnet
+        fw_web_ip     = "10.5.2.4"
+        fw_web_rule   = module.vpc.web-allow-outbound-rule
 
-     fw_version          = "9.0"
-     fw_product_code     = "806j2of0qy5osgjjixq9gqc6g"
-     fw_bootstrap_bucket = "${module.bootstrap_bucket.bootstrap_bucket_name}"
-
-     tags {
-       Environment = "Multicloud-AWS"
-     }
-   }
+        fw_db_subnet = module.vpc.db_subnet
+        fw_db_ip     = "10.5.3.4"
+        fw_db_rule   = module.vpc.db-allow-outbound-rule
+    }
 
 This calls the firewall module, and passes in values for the variables it
 requires.

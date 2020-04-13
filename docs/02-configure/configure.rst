@@ -4,51 +4,49 @@ Panorama Configuration
 
 In this activity you will:
 
-- Initialize the Provider
-- Configure Network Interfaces 
-- Configure Virtual Router 
-- Configure Security Zones 
+- Initialize the Terraform provider
+- Customize configuration/variables.tf
+- Learn about the provided modules
+- Assemble configuration/main.tf
 
 
 For this portion of the lab, you will be using the Palo Alto Networks
-`Terraform for PAN-OS provider <https://www.terraform.io/docs/providers/panos/index.html>`_.
+`PAN-OS Terraform provider <https://www.terraform.io/docs/providers/panos/index.html>`_.
 
 First, change to the Terraform configuration directory.
 
 .. code-block:: bash
 
-    $ cd ~/multicloud-automation-lab/configuration/terraform
+    $ cd ~/terraform-iac-lab/configuration
 
 
 Provider Initialization
 -----------------------
-Your first task is to set up the communications between the provider and your
-lab firewall.  There's several ways this can be done.  The IP address,
-username, and password (or API key) can be set as variables in Terraform, and
-can be typed in manually each time the Terraform plan is run, or specified on
-the command line using the ``-var`` command line option to ``terraform plan``
-and ``terraform apply``.  You can also reference a JSON file in the provider
-configuration which can contain the configuration.
+Your first task is to set up the communications between the provider and the provided Panorama instance.  There's
+several ways this can be done.  The IP address, username, and password (or API key) can be set as variables in
+Terraform, and can be typed in manually each time the Terraform plan is run, or specified on the command line using
+the ``-var`` command line option to ``terraform plan`` and ``terraform apply``.  You can also reference a JSON file in
+the provider configuration which can contain the configuration.
 
-Another way you can accomplish this is by using environment variables.  Use the
-following commands to add the appropriate environment variables:
+Another way you can accomplish this is by using environment variables.  Use the following commands to add the
+appropriate environment variables, substituting in the values provided by the instructor:
 
 .. code-block:: bash
 
-    $ export PANOS_HOSTNAME="<YOUR FIREWALL MGMT IP GOES HERE>"
-    $ export PANOS_USERNAME="admin"
-    $ export PANOS_PASSWORD="Ignite2019!"
+    $ export PANOS_HOSTNAME="<YOUR PANORAMA MGMT IP GOES HERE>"
+    $ export PANOS_USERNAME="<YOUR STUDENT NAME>"
+    $ export PANOS_PASSWORD="Ignite2020!"
 
-.. note:: Replace the text ``<YOUR FIREWALL MGMT IP GOES HERE>`` with your firewall's management IP address.
+.. note:: Replace the text ``<YOUR PANORAMA MGMT IP GOES HERE>`` and ``<YOUR STUDENT NAME>`` with the values provided
+          to you by the instructor.
 
-Now, you should see the variables exported in your shell, which you can verify
-using the ``env | grep PANOS`` command:
+Now, you should see the variables exported in your shell, which you can verify using the ``env | grep PANOS`` command:
 
 .. code-block:: bash
 
-    PANOS_HOSTNAME=3.216.53.203
-    PANOS_USERNAME=admin
-    PANOS_PASSWORD=Ignite2019!
+    PANOS_HOSTNAME=panorama-tf-lab.panwlabs.net
+    PANOS_USERNAME=studentXX
+    PANOS_PASSWORD=Ignite2020!
 
 With these values defined, we can now initialize the Terraform panos provider with the following command.
 
@@ -56,156 +54,191 @@ With these values defined, we can now initialize the Terraform panos provider wi
 
     $ terraform init
 
-The provider is now ready to communicate with our firewall.
+The provider is now ready to communicate with our Panorama instance.
 
-Network Interfaces
-------------------
-Your firewall has been bootstrapped with an initial password and nothing else.
-We're going to be performing the initial networking configuration with
-Terraform.
 
-You've been provided with the following Terraform plan in ``main.tf``:
+Customize configuration/variables.tf
+------------------------------------
+
+Our Terraform plan in this directory will create a device group, template, and template stack on our shared Panorama.
+So we don't overwrite the configuration of other students in the class, edit the ``configuration/variables.tf`` file,
+and adjust the default values of the variables:
+
+.. code-block:: terraform
+
+    variable "device_group" {
+        description = "The name of the Panorama device group"
+        type        = string
+        default     = "StudentXX-DG"
+    }
+
+    variable "template" {
+        description = "The name of the Panorama template"
+        type        = string
+        default     = "StudentXX-Template"
+    }
+
+    variable "stack" {
+        description = "The name of the Panorama template stack"
+        type        = string
+        default     = "StudentXX-Stack"
+    }
+
+Replace the strings ``StudentXX-DG``, ``StudentXX-Template``, and ``StudentXX-Stack`` with the values provided by the
+instructor.
+
+
+Learn about the provided modules
+--------------------------------
+
+You have been provided with two Terraform modules in the ``configuration/modules`` directory that will build out our
+Panorama configuration.  Here's a snippet of the contents of 
+`main.tf <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/main.tf>`_
+in the ``configuration/modules/network`` directory:
+
+.. code-block:: terraform
+
+    resource "panos_panorama_template" "demo_template" {
+        name = var.template
+    }
+
+    resource "panos_panorama_template_stack" "demo_stack" {
+        name      = var.stack
+        templates = [panos_panorama_template.demo_template.name]
+    }
+
+    resource "panos_panorama_ethernet_interface" "untrust" {
+        name                      = "ethernet1/1"
+        comment                   = "untrust interface"
+        vsys                      = "vsys1"
+        mode                      = "layer3"
+        enable_dhcp               = true
+        create_dhcp_default_route = true
+        template                  = panos_panorama_template.demo_template.name
+    }
+
+    resource "panos_panorama_ethernet_interface" "web" {
+        name        = "ethernet1/2"
+        comment     = "web interface"
+        vsys        = "vsys1"
+        mode        = "layer3"
+        enable_dhcp = true
+        template    = panos_panorama_template.demo_template.name
+    }
+
+    resource "panos_panorama_ethernet_interface" "db" {
+        name        = "ethernet1/3"
+        comment     = "database interface"
+        vsys        = "vsys1"
+        mode        = "layer3"
+        enable_dhcp = true
+        template    = panos_panorama_template.demo_template.name
+    }
+
+Terraform will use this configuration to build out the contents of the template and template stack specified by the
+``template`` and ``stack`` variables.
+
+The ``network`` module also specifies some 
+`outputs <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/outputs.tf>`_
+that can be fed to other modules in the configuration:
+
+.. code-block:: terraform
+
+    output "zone_untrust" {
+        value = panos_panorama_zone.untrust.name
+    }
+
+    output "zone_web" {
+        value = panos_panorama_zone.web.name
+    }
+
+    output "zone_db" {
+        value = panos_panorama_zone.db.name
+    }
+
+    output "interface_untrust" {
+        value = panos_panorama_ethernet_interface.untrust.name
+    }
+
+    output "interface_web" {
+        value = panos_panorama_ethernet_interface.web.name
+    }
+
+    output "interface_db" {
+        value = panos_panorama_ethernet_interface.db.name
+    }
+
+The module to populate the 
+`device group <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/policies/main.tf>`_
+works in a similar fashion.
+
+Assemble configuration/main.tf
+------------------------------
+
+Add the following to ``configuration/main.tf`` to build out the template and template stack on our Panorama instance:
+
+.. code-block:: terraform
+
+    module "networking" {
+        source = "./modules/networking"
+
+        template = var.template
+        stack    = var.stack
+    }
+
+Now run ``terraform plan``.  You will see the Terraform provider determine what changes need to be made, and output all
+the changes that will be made to the configuration.  If you run ``terraform apply``, those changes will be added to the
+candidate configuration, but not committed (:ref:`why? <terraform-commits>`).
+
+Add the next section to ``configuration/main.tf`` to build out the device group:
+
+.. code-block:: terraform
+
+    module "policies" {
+        source = "./modules/policies"
+
+        device_group = var.device_group
+
+        zone_untrust = module.networking.zone_untrust
+        zone_web     = module.networking.zone_web
+        zone_db      = module.networking.zone_db
+
+        interface_untrust = module.networking.interface_untrust
+        interface_web     = module.networking.interface_web
+        interface_db      = module.networking.interface_db
+    }
+
+This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
+outputs those names from what it creates, so we can chain these two modules together.
+
+You can run ``terraform plan`` and ``terraform apply`` to populate the device group on Panorama.
+
+Your completed ``configuration/main.tf`` should look like this:
 
 .. code-block:: terraform
 
     provider "panos" {}
 
-    resource "panos_ethernet_interface" "untrust" {
-        name                      = "ethernet1/1"
-        vsys                      = "vsys1"
-        mode                      = "layer3"
-        enable_dhcp               = true
-        create_dhcp_default_route = true
+    module "networking" {
+        source = "./modules/networking"
+
+        template = var.template
+        stack    = var.stack
     }
 
-    resource "panos_ethernet_interface" "web" {
-        name        = "ethernet1/2"
-        vsys        = "vsys1"
-        mode        = "layer3"
-        enable_dhcp = true
+    module "policies" {
+        source = "./modules/policies"
+
+        device_group = var.device_group
+
+        zone_untrust = module.networking.zone_untrust
+        zone_web     = module.networking.zone_web
+        zone_db      = module.networking.zone_db
+
+        interface_untrust = module.networking.interface_untrust
+        interface_web     = module.networking.interface_web
+        interface_db      = module.networking.interface_db
     }
 
-    resource "panos_ethernet_interface" "db" {
-        name        = "ethernet1/3"
-        vsys        = "vsys1"
-        mode        = "layer3"
-        enable_dhcp = true
-    }
-
-This configuration creates your network interfaces.  The PAN-OS provider
-doesn't need any additional configuration specified because it is pulling that
-information from the environment variables we set earlier.
-
-Now, you can run ``terraform apply``, and the interfaces will be created on the
-firewall.
-
-
-Virtual Router
---------------
-Now, you'll have to assign those interfaces to the default virtual router.
-You will need the
-`panos_virtual_router <https://www.terraform.io/docs/providers/panos/r/virtual_router.html>`_
-resource.
-
-The example code from that page looks like this:
-
-.. code-block:: terraform
-
-    resource "panos_virtual_router" "example" {
-        name = "my virtual router"
-        static_dist = 15
-        interfaces = ["ethernet1/1", "ethernet1/2"]
-    }
-
-Your version will be similar, but it should have the following definition:
-
-.. figure:: vr.png
-
-   Virtual router **default**.
-
-Specifying the static distance isn't required.
-
-Define the virtual router resource in ``main.tf``, and run ``terraform apply``.
-
-.. warning:: AWS and GCP have slight differences in the way that routing has to
-   be configured.  **If you chose GCP as your cloud, you have an additional
-   step!**
-
-   If you chose AWS, please continue to `Security Zones <#security-zones>`_ section and skip the following.
-
-GCP requires static routes for each subnet to be defined on the virtual router.
-You will need the `panos_static_route_ipv4 <https://www.terraform.io/docs/providers/panos/r/static_route_ipv4.html>`_
-resource.
-
-The example code from that page looks like this:
-
-.. code-block:: terraform
-
-    resource "panos_static_route_ipv4" "example" {
-        name = "localnet"
-        virtual_router = "${panos_virtual_router.vr1.name}"
-        destination = "10.1.7.0/32"
-        next_hop = "10.1.7.4"
-    }
-
-    resource "panos_virtual_router" "vr1" {
-        name = "my virtual router"
-    }
-
-This code adds a static route named *localnet*, that routes traffic destined to
-the network *10.1.7.0/32* to the next hop of *10.1.7.4*.
-
-You will need to create three resources for the static routes depicted below:
-
-.. figure:: gcp_static_routes.png
-
-   Static routes needed in GCP.
-
-Define those resources in ``main.tf``, and run ``terraform apply``.
-
-
-Security Zones
---------------
-Next is creating the security zones for the firewall.  You will need the
-`panos_zone <https://www.terraform.io/docs/providers/panos/r/zone.html>`_ resource.
-
-The example code from that page looks like this:
-
-.. code-block:: terraform
-
-    resource "panos_zone" "example" {
-        name = "myZone"
-        mode = "layer3"
-        interfaces = ["${panos_ethernet_interface.e1.name}", "${panos_ethernet_interface.e5.name}"]
-        enable_user_id = true
-        exclude_acls = ["192.168.0.0/16"]
-    }
-
-    resource "panos_ethernet_interface" "e1" {
-        name = "ethernet1/1"
-        mode = "layer3"
-    }
-
-    resource "panos_ethernet_interface" "e5" {
-        name = "ethernet1/5"
-        mode = "layer3"
-    }
-
-You need to create three security zones (similar to ``e1`` or ``e5`` in this example),
-but they need to have the following definition:
-
-.. figure:: untrust_zone.png
-
-   Definition of **untrust-zone**.
-
-.. figure:: web_zone.png
-
-   Definition of **web-zone**.
-
-.. figure:: db_zone.png
-
-   Definition of **db-zone**.
-
-Define those resources in ``main.tf``, and run ``terraform apply``.
-
-You're done with the Terraform portion of the lab!
+Commit **your admin's** changes to Panorama using the UI.  You're now ready to deploy the environment and have your
+firewall bootstrap from this configuration.
