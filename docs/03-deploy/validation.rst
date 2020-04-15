@@ -23,18 +23,9 @@ The web server is using the firewall's untrust interface address in a
 destination NAT rule.  Run the following commands to determine the IP
 address of this interface.
 
-`For GCP:`
-
 .. code-block:: bash
 
-    $ cd ~/multicloud-automation-lab/deployment/gcp
-    $ terraform output
-
-`For AWS:`
-
-.. code-block:: bash
-
-    $ cd ~/multicloud-automation-lab/deployment/aws
+    $ cd ~/terraform-iac-lab/deployment
     $ terraform output
 
 Open a new tab in your web browser and go to ``http://<web-server-ip-address>``.
