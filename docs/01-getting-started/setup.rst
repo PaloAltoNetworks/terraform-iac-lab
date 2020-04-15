@@ -36,48 +36,53 @@ must use your corporate email address for the username.
 
 Launch the lab environment
 --------------------------
-Confirm that the course containing the phrase *"Multi-Cloud Automation"* is
+Confirm that the course containing the phrase **Terraform Infrastructure as Code** is
 listed under In Progress on the welcome screen.  Click on the this course in
 order to add it to your My Learning inventory.
 
 .. figure:: qwiklabs-main.png
 
-You will be presented with two lab environments within this course: one for GCP
-and the other for AWS.  You may choose either one depending on your learning
-objectives or platform familiarity.
+You will will be directed to a screen containing the available labs.  Click on the 
+**Terraform Infrastructure as Code Lab**.
 
-.. figure:: qwiklabs-labs.png
+.. figure:: qwiklabs-lab.png
 
-.. note:: If you finish all the activities for one lab environment, you are
-          free to launch the other (time permitting).  The lab activities are
-          similar, but there are instructions specific to each cloud provider.
-
-Once you've selected the lab evironment, you will need to click the
+You will be presented with a lab evironment screen, you will need to click the
 **Start Lab** button.  Qwiklabs will then provision a set of account
-credentials and instantiate a "launchpad" virtual machine that you will SSH
-into to perform the rest of the lab activities.
+credentials for GCP.
 
-.. figure:: qwiklabs-start-gcp.png
-
-    Provisioning the GCP lab environment
+.. figure:: qwiklabs-start.png
 
 The lab environment will take a few minutes to provision.  Once it is completed, a set of GCP credentials will be added to
 the lefthand panel.
 
+.. figure:: qwiklabs-go.png
 
-SSH into the Launchpad VM
--------------------------
-Once the lab environment has completed the provisioning process and the
-**Launchpad IP** field is displayed, you may SSH into that IP address using the
-following credentials.
 
-- **Username:** ``student``
-- **Password:** ``Ignite2020!``
+Log into Google Cloud
+---------------------
+Click on the **Open Google Console** to launch a new browser tab and log into GCP.  
+Be sure to use the credentials provided by Qwiklabs rather than your personal Google 
+account.  This will ensure that you are not charged for any infrastructure that you 
+deploy.
 
+Once you've authenticated, accept the user agreements and account recovery defaults.  
+You will then be presented with the Google Cloud dashboard.
+
+.. figure:: gcp-console.png
+
+Launch the Cloud Shell
+----------------------
+In the upper right corner of the dashboard, click on the shell prompt icon labeled 
+**Activate Cloud Shell** to launch a Cloud Shell instance.  This is an on-demand Linux 
+shell that contains many of the tools that will be used in this lab.  The Cloud Shell 
+instance is where you will be working throughout the lab.
+
+.. figure:: gcp-cloudshell.png
 
 Clone the lab software repository
 ---------------------------------
-Once you have successfully logged into the Launchpad VM you will need to clone
+Once you are presented with the Cloud Shell prompt you will need to clone
 the GitHub repository used in this lab.  This repository (or *repo*) contains
 the files needed to deploy the network and compute infrastructure we'll be
 working with.
@@ -85,7 +90,5 @@ working with.
 .. code-block:: bash
 
     $ git clone https://github.com/PaloAltoNetworks/terraform-iac-lab.git
-
-You are now ready to configure Panorama.
 
 
