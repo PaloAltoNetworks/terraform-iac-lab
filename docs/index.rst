@@ -92,7 +92,6 @@ Learning Outcomes
     :caption: summary
 
     05-summary/summary
-    05-summary/comparison
     05-summary/cleanup
     05-summary/moreinfo
 
