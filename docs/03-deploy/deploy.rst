@@ -6,22 +6,32 @@ In this activity you will:
 
 - Create a service account credential file
 - Create an SSH key-pair
-- Create the Terraform variables
-- Initialize the GCP Terraform provider
-- Deploy the lab infrastucture plan
-- Confirm firewall bootstrap completion
+- Create the terraform.tfvars file
+- Add the bootstrap module
+- Add the firewall module
+- Deploy the infrastructure
+
+
+Introduction
+------------
+
+The lab infrastructure will also be deployed in GCP using Terraform.  A Terraform plan has been provided that will
+initialize the GCP provider, and call most of the modules responsible for creating the network, compute, and storage
+resources needed.  You will add the modules for creating the bootstrap configuration as well as the VM-Series firewall.
+
+First, change to the Terraform deployment directory:
+
+.. code-block:: bash
+
+    $ cd ~/terraform-iac-lab/deployment
+
 
 Create a service account credential file
 ----------------------------------------
-We will be deploying the lab infrastucture in GCP using Terraform.  A
-predefined Terraform plan is provided that will initialize the GCP provider and
-call modules responsible for instantiating the network, compute, and storage
-resources needed.
 
-In order for Terraform to do this it will need to authenticate to GCP.  We
-*could* authenticate to GCP using the username presented in the Qwiklabs panel
-when the lab was started.  However, the Compute Engine default service account
-is typically used because it is certain to have all the neccesary permissions.
+Terraform will need to authenticate to GCP to perform the deployment.  We *could* authenticate to GCP using the
+username presented in the Qwiklabs panel when the lab was started.  However, the Compute Engine default service
+account is typically used because it is certain to have all the neccesary permissions.
 
 List the email address of the Compute Engine default service account.
 
@@ -29,9 +39,8 @@ List the email address of the Compute Engine default service account.
 
     $ gcloud iam service-accounts list
 
-Use the following ``gcloud`` command to download the credentials for the
-**Compute Engine default service account** using its associated email address
-(displayed in the output of the previous command).
+Use the following ``gcloud`` command to download the credentials for the **Compute Engine default service account**
+using its associated email address (displayed in the output of the previous command).
 
 .. code-block:: bash
 
@@ -46,12 +55,10 @@ Verify the JSON credentials file was successfully created.
 
 Create an SSH key-pair
 ----------------------
-All Compute Engine instances are required to have an SSH key-pair defined when
-the instance is created.  This is done to ensure secure access to the instance
-will be available once it is created.
+All Compute Engine instances are required to have an SSH key-pair defined when the instance is created.  This is done
+to ensure secure access to the instance will be available once it is created.
 
-Create an SSH key-pair with an empty passphrase and save them in the ``~/.ssh``
-directory.
+Create an SSH key-pair with an empty passphrase and save them in the ``~/.ssh`` directory.
 
 .. code-block:: bash
 
@@ -64,17 +71,11 @@ directory.
           configured Compute Engine to use our key exclusively.
 
 
-Create the Terraform variables
-------------------------------
-Change into the GCP deployment directory.
+Create the terraform.tfvars file
+--------------------------------
 
-.. code-block:: bash
-
-    $ cd ~/terraform-iac-lab/deployment/gcp
-
-In this directory you will find the three main files associated with a
-Terraform plan: ``main.tf``, ``variables.tf``, and ``outputs.tf``.  View the
-contents of these files to see what they contain and how they're structured.
+In this directory you will find the three main files associated with a Terraform plan: ``main.tf``, ``variables.tf``,
+and ``outputs.tf``.  View the contents of these files to see what they contain and how they're structured.
 
 .. code-block:: bash
 
@@ -82,17 +83,21 @@ contents of these files to see what they contain and how they're structured.
     $ more variables.tf
     $ more outputs.tf
 
-The file ``main.tf`` defines the providers that will be used and the resources
-that will be created (more on that shortly).  Since it is poor practice to hard
-code values into the plan, the file ``variables.tf`` will be used to declare
-the variables that will be used in the plan (but not necessarily their values).
-The ``outputs.tf`` file will define the values to display that result from
-applying the plan.
+The file ``main.tf`` defines the providers that will be used and the resources that will be created (more on that
+shortly).  Since it is poor practice to hard code values into the plan, the file ``variables.tf`` will be used to
+declare the variables that will be used in the plan (but not necessarily their values).  The ``outputs.tf`` file
+will define the values to display that result from applying the plan.
 
-Create a file called ``terraform.tfvars`` in the current directory that
-contains the following variables and their values.  Fill in the quotes with the
-GCP project ID, the GCP region, the GCP zone, the path to the JSON credentials
-file, and the path to your SSH public key file.
+Create a file called ``terraform.tfvars`` in the current directory that contains the following variables and their
+values.  You will need to add a number of things:
+
+- GCP configuration: The GCP project ID, region, and zone.
+- Authentication information: The paths to our JSON credentials and SSH public key files.
+- Panorama bootstrap information: The hostname/IP address of Panorama, the template stack and device group name, and
+  the VM auth key for our environment.
+- The hostname/IP address of Panorama we are bootstrapping from.
+
+Your file should look similar to the following, with the appropriate values replaced:
 
 .. code-block:: terraform
 
@@ -102,39 +107,216 @@ file, and the path to your SSH public key file.
     credentials_file    = "~/gcp_compute_key.json"
     public_key_file     = "~/.ssh/lab_ssh_key.pub"
 
+    panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
+    tplname     = "<FROM_PREVIOUS_STEP>"
+    dgname      = "<FROM_PREVIOUS_STEP>"
+    vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
 
-Initialize the GCP Terraform provider
--------------------------------------
-Once you've created the ``terraform.tfvars`` file and populated it with the
-variables and values you are now ready to initialize the Terraform providers.
-For this initial deployment we will only be using the
-`GCP Provider <https://www.terraform.io/docs/providers/google/index.html>`_.
-This initialization process will download all the software, modules, and
-plugins needed for working in a particular environment.
+
+Add the bootstrap module
+------------------------
+
+Add the following module definition to ``deployment/main.tf``:
+
+.. code-block:: terraform
+
+    module "bootstrap" {
+        source  = "stealthllama/panos-bootstrap/google"
+        version = "0.9.0"
+
+        bootstrap_project = var.project
+        bootstrap_region  = var.region
+
+        hostname        = "terraform-iac-fw"
+        panorama-server = var.panorama
+        tplname         = var.tplname
+        dgname          = var.dgname
+        vm-auth-key     = var.vm_auth_key
+    }
+
+This uses a module that has been published to the Terraform module registry for public use.  (If you'd like to review
+the code, it's on the
+`PaloAltoNetworks GitHub page <https://github.com/PaloAltoNetworks/terraform-google-panos-bootstrap>`_.) This will
+create the Google Storage bucket for holding a PAN-OS bootstrap configuration, as well as 
+`the required files <https://docs.paloaltonetworks.com/vm-series/9-0/vm-series-deployment/bootstrap-the-vm-series-firewall.html>`_.
+
+
+Add the firewall module
+-----------------------
+
+Now we need to add another module definition to ``deployment/main.tf`` to specify the firewall configuration:
+
+.. code-block:: terraform
+
+    module "firewall" {
+        source = "./modules/firewall"
+
+        fw_name             = "vm-series"
+        fw_zone             = var.zone
+        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
+        fw_machine_type     = "n1-standard-4"
+        fw_machine_cpu      = "Intel Skylake"
+        fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+
+        fw_ssh_key = "admin:${file(var.public_key_file)}"
+
+        fw_mgmt_subnet = module.vpc.mgmt_subnet
+        fw_mgmt_ip     = "10.5.0.4"
+        fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+
+        fw_untrust_subnet = module.vpc.untrust_subnet
+        fw_untrust_ip     = "10.5.1.4"
+        fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+
+        fw_web_subnet = module.vpc.web_subnet
+        fw_web_ip     = "10.5.2.4"
+        fw_web_rule   = module.vpc.web-allow-outbound-rule
+
+        fw_db_subnet = module.vpc.db_subnet
+        fw_db_ip     = "10.5.3.4"
+        fw_db_rule   = module.vpc.db-allow-outbound-rule
+    }
+
+`This module <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/deployment/modules/firewall/main.tf>`_
+creates the VM-Series instance.  Notice how the outputs from the *bootstrap* and *vpc* modules are used as inputs to
+this one.
+
+
+Deploy the infrastructure
+-------------------------
+
+Your completed ``deployment/main.tf`` file should look like this:
+
+.. code-block:: terraform
+
+    provider "google" {
+        credentials = file(var.credentials_file)
+        project     = var.project
+        region      = var.region
+    }
+
+    module "bootstrap" {
+        source  = "stealthllama/panos-bootstrap/google"
+        version = "0.9.0"
+
+        bootstrap_project = var.project
+        bootstrap_region  = var.region
+
+        hostname        = "terraform-iac-fw"
+        panorama-server = var.panorama
+        tplname         = var.tplname
+        dgname          = var.dgname
+        vm-auth-key     = var.vm_auth_key
+    }
+
+    module "vpc" {
+        source = "./modules/vpc"
+
+        vpc_region = var.region
+
+        vpc_mgmt_network_name = "management-network"
+        vpc_mgmt_subnet_cidr  = "10.5.0.0/24"
+        vpc_mgmt_subnet_name  = "management-subnet"
+
+        vpc_untrust_network_name = "untrust-network"
+        vpc_untrust_subnet_cidr  = "10.5.1.0/24"
+        vpc_untrust_subnet_name  = "untrust-subnet"
+
+        vpc_web_network_name = "web-network"
+        vpc_web_subnet_cidr  = "10.5.2.0/24"
+        vpc_web_subnet_name  = "web-subnet"
+
+        vpc_db_network_name = "database-network"
+        vpc_db_subnet_cidr  = "10.5.3.0/24"
+        vpc_db_subnet_name  = "database-subnet"
+
+        allowed_mgmt_cidr = var.allowed_mgmt_cidr
+    }
+
+    module "web" {
+        source = "./modules/web"
+
+        web_name         = "web-vm"
+        web_zone         = var.zone
+        web_machine_type = "n1-standard-1"
+        web_ssh_key      = "admin:${file(var.public_key_file)}"
+        web_subnet_id    = module.vpc.web_subnet
+        web_ip           = "10.5.2.5"
+        web_image        = "debian-9"
+    }
+
+    module "db" {
+        source = "./modules/db"
+
+        db_name         = "db-vm"
+        db_zone         = var.zone
+        db_machine_type = "n1-standard-1"
+        db_ssh_key      = "admin:${file(var.public_key_file)}"
+        db_subnet_id    = module.vpc.db_subnet
+        db_ip           = "10.5.3.5"
+        db_image        = "debian-9"
+    }
+
+    module "firewall" {
+        source = "./modules/firewall"
+
+        fw_name             = "vm-series"
+        fw_zone             = var.zone
+        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
+        fw_machine_type     = "n1-standard-4"
+        fw_machine_cpu      = "Intel Skylake"
+        fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+
+        fw_ssh_key = "admin:${file(var.public_key_file)}"
+
+        fw_mgmt_subnet = module.vpc.mgmt_subnet
+        fw_mgmt_ip     = "10.5.0.4"
+        fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+
+        fw_untrust_subnet = module.vpc.untrust_subnet
+        fw_untrust_ip     = "10.5.1.4"
+        fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+
+        fw_web_subnet = module.vpc.web_subnet
+        fw_web_ip     = "10.5.2.4"
+        fw_web_rule   = module.vpc.web-allow-outbound-rule
+
+        fw_db_subnet = module.vpc.db_subnet
+        fw_db_ip     = "10.5.3.4"
+        fw_db_rule   = module.vpc.db-allow-outbound-rule
+    }
+
+    resource "google_compute_route" "web-route" {
+        name                   = "web-route"
+        dest_range             = "0.0.0.0/0"
+        network                = module.vpc.web_network
+        next_hop_instance      = module.firewall.firewall-instance
+        next_hop_instance_zone = var.zone
+        priority               = 100
+    }
+
+    resource "google_compute_route" "db-route" {
+        name                   = "db-route"
+        dest_range             = "0.0.0.0/0"
+        network                = module.vpc.db_network
+        next_hop_instance      = module.firewall.firewall-instance
+        next_hop_instance_zone = var.zone
+        priority               = 100
+    }
+
+
+Now, you're ready to deploy the infrastructure.  Run the following commands:
 
 .. code-block:: bash
 
     $ terraform init
-
-
-Deploy the lab infrastucture plan
----------------------------------
-We are now ready to deploy our lab infrastructure plan.  We should first
-perform a dry-run of the deployment process and validate the contents of the
-plan files and module dependencies.
-
-.. code-block:: bash
-
     $ terraform plan
+    $ terraform apply
 
-If there are no errors and the plan output looks good, let's go ahead and
-perform the deployment.
+As we saw before, ``terraform init`` will install all required providers and modules, ``terraform plan`` will show all
+the infrastructure that will be created, and ``terraform apply`` will create the infrastructure.
 
-.. code-block:: bash
-
-    $ terraform apply -auto-approve
-
-At a high level these are each of the steps this plan will perform:
+At a high level, the completed Terraform configuration will:
 
 #. Run the ``bootstrap`` module
     #. Create a GCP storage bucket for the firewall bootstrap package
@@ -160,51 +342,9 @@ At a high level these are each of the steps this plan will perform:
     #. Create the database server instance
     #. Create the database server interface
 
-The deployment process should finish in a few minutes and you will be presented
-with the public IP addresses of the VM-Series firewall management and untrust
-interfaces.  However, the VM-Series firewall can take up to *ten minutes* to
+The deployment process should finish in a few minutes and you will be presented with the public IP addresses of the
+VM-Series firewall management and untrust interfaces.  However, the VM-Series firewall can take up to *ten minutes* to
 complete the initial bootstrap process.
 
-It is recommended that you read the
-:doc:`../03-run/terraform/background-terraform` section ahead while you wait.
-
-
-Confirm firewall bootstrap completion
--------------------------------------
-SSH into the firewall with the following credentials.
-
-- **Username:** ``admin``
-- **Password:** ``Ignite2019!``
-
-
-.. code-block:: bash
-
-    $ ssh admin@<FIREWALL_MGMT_IP>
-
-Replace ``<FIREWALL_MGMT_IP>`` with the IP address of the firewall management
-interface that was provided in the Terraform plan results.  This information
-can be easily recalled using the ``terraform output`` command within the
-deployment directory.
-
-.. warning:: If you are unsuccessful the firewall instance is likely still
-   bootstrapping or performing an autocommit.  Hit ``Ctrl-C`` and try again
-   after waiting a few minutes.  The bootstrap process can take up to *ten
-   minutes* to complete before you are able to successfully log in.
-
-Once you have logged into the firewall you can check to ensure the management
-plane has completed its initialization.
-
-.. code-block:: bash
-
-    admin@lab-fw> show chassis-ready
-
-If the response is ``yes``, you are ready to proceed with the configuration
-activities.
-
-.. note:: While it is a security best practice to use SSH keys to authenticate
-          to VM instances in the cloud, we have defined a static password for
-          the firewall's admin account in this lab (specifically, in the
-          bootstrap package).  This is because the firewall API used by
-          Terraform and Ansible cannot utilize SSH keys and must have a
-          username/password or API key for authentication.
-
+Once the firewall has completed the bootstrap process, it should be listed in Panorama as a managed device in your
+device group under Panorama > Managed Devices > Summary.

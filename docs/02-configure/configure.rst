@@ -5,7 +5,7 @@ Panorama Configuration
 In this activity you will:
 
 - Initialize the Terraform provider
-- Customize configuration/variables.tf
+- Create the terraform.tfvars file
 - Learn about the provided modules
 - Assemble configuration/main.tf
 
@@ -57,32 +57,18 @@ With these values defined, we can now initialize the Terraform panos provider wi
 The provider is now ready to communicate with our Panorama instance.
 
 
-Customize configuration/variables.tf
-------------------------------------
+Create the terraform.tfvars file
+--------------------------------
 
 Our Terraform plan in this directory will create a device group, template, and template stack on our shared Panorama.
-So we don't overwrite the configuration of other students in the class, edit the ``configuration/variables.tf`` file,
-and adjust the default values of the variables:
+So we don't overwrite the configuration of other students in the class, create a file called ``terraform.tfvars`` and
+define values for the device group, template name, and template stack name:
 
 .. code-block:: terraform
 
-    variable "device_group" {
-        description = "The name of the Panorama device group"
-        type        = string
-        default     = "StudentXX-DG"
-    }
-
-    variable "template" {
-        description = "The name of the Panorama template"
-        type        = string
-        default     = "StudentXX-Template"
-    }
-
-    variable "stack" {
-        description = "The name of the Panorama template stack"
-        type        = string
-        default     = "StudentXX-Stack"
-    }
+    device_group    = "StudentXX-DG"
+    template        = "StudentXX-Template"
+    stack           = "StudentXX-Stack"
 
 Replace the strings ``StudentXX-DG``, ``StudentXX-Template``, and ``StudentXX-Stack`` with the values provided by the
 instructor.
@@ -186,9 +172,10 @@ Add the following to ``configuration/main.tf`` to build out the template and tem
         stack    = var.stack
     }
 
-Now run ``terraform plan``.  You will see the Terraform provider determine what changes need to be made, and output all
-the changes that will be made to the configuration.  If you run ``terraform apply``, those changes will be added to the
-candidate configuration, but not committed (:ref:`why? <terraform-commits>`).
+Now run ``terraform init`` (you need to run ``init`` each time you add a new module) and ``terraform plan``.  You will
+see the Terraform provider determine what changes need to be made, and output all the changes that will be made to the
+configuration.  If you run ``terraform apply``, those changes will be added to the candidate configuration, but not
+committed (:ref:`why? <terraform-commits>`).
 
 Add the next section to ``configuration/main.tf`` to build out the device group:
 
@@ -211,7 +198,7 @@ Add the next section to ``configuration/main.tf`` to build out the device group:
 This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
 outputs those names from what it creates, so we can chain these two modules together.
 
-You can run ``terraform plan`` and ``terraform apply`` to populate the device group on Panorama.
+You can run ``terraform init``, ``terraform plan``, and ``terraform apply`` to populate the device group on Panorama.
 
 Since Terraform is unable to commit configuration to PAN-OS on it's own, we have provided a Golang helper program to
 commit your user's changes to Panorama.  You can run it on the CLI using ``go run`` like this:
@@ -273,5 +260,5 @@ Your completed ``configuration/main.tf`` should look like this:
         ]
     }
 
-Log in to the Panorama web UI and verify that your changes have been committed.  You're now ready to deploy the
-environment and have your firewall bootstrap from this configuration.
+Run ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify that your changes have been
+committed.  You're now ready to deploy the environment and have your firewall bootstrap from this configuration.
