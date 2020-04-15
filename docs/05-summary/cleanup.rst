@@ -16,15 +16,7 @@ For GCP:
 
 .. code-block:: bash
 
-    $ cd ~/multicloud-automation-lab/deployment/gcp
-
-
-For AWS:
-
-.. code-block:: bash
-
-    $ cd ~/multicloud-automation-lab/deployment/aws
-
+    $ cd ~/terraform-iac-lab/deployment/gcp
 
 Tell Terraform to destroy the contents of its plan files.
 

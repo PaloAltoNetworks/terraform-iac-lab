@@ -26,16 +26,22 @@ wish.  Any Terraform file in the current working directory will be loaded and
 concatenated with the others when you tell Terraform to apply your desired
 configuration.
 
-Local State
------------
+State Management
+----------------
 
-Terraform saves the things it has done to a local file, referred to as a
-"state file".  Because state is saved locally, that means that sometimes the
-local state will differ from what's actually configured on the firewall.
+Terraform saves details about a deployment it has done to a file referred 
+to as a "state file".  While this state file can be stored locally from the 
+host on which a deployment has been executed, it is best practice to store 
+the state file remotely so that collaborators can manage infrastructure from
+a common state file.  Terraform Enterprise and Terraform Cloud both provide 
+centralized state management, but it can also be done using cloud storage 
+capabilities. 
 
-This is actually not a big deal, as many of Terraform's commands do a Read
-operation to check the actual state against what's saved locally.  Any
-changes that are found are then saved to the local state automatically.
+If changes are made to infrastructure that was deployed by Terraform, the 
+state file may differ from what's actually deployed.  This is actually not 
+a big deal, as many of Terraform's commands do a Read operation to check the 
+actual state against what's saved in the state file.  Any changes that are 
+found are then saved to the state file automatically.
 
 Example Terraform Configuration
 -------------------------------
@@ -155,7 +161,7 @@ User variables are variables that are defined in the Terraform plan file
 with the ``variable`` keyword.  These can be any of the types of values that
 attributes can be (default is string), and can also be configured to have
 default values.  When using a user variable in your plan files, they are
-referenced with ``var`` as a prefix: ``"${var.hostname}"``.  Terraform looks
+referenced with ``var`` as a prefix: ``var.hostname``.  Terraform looks
 for local variable values in the file ``terraform.tfvars``.
 
 Attribute variables are variables that reference other resources or data
