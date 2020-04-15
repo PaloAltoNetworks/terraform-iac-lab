@@ -5,7 +5,7 @@ Panorama Configuration
 In this activity you will:
 
 - Initialize the Terraform provider
-- Customize configuration/variables.tf
+- Create the terraform.tfvars file
 - Learn about the provided modules
 - Assemble configuration/main.tf
 
@@ -57,32 +57,18 @@ With these values defined, we can now initialize the Terraform panos provider wi
 The provider is now ready to communicate with our Panorama instance.
 
 
-Customize configuration/variables.tf
-------------------------------------
+Create the terraform.tfvars file
+--------------------------------
 
 Our Terraform plan in this directory will create a device group, template, and template stack on our shared Panorama.
-So we don't overwrite the configuration of other students in the class, edit the ``configuration/variables.tf`` file,
-and adjust the default values of the variables:
+So we don't overwrite the configuration of other students in the class, create a file called ``terraform.tfvars`` and
+define values for the device group, template name, and template stack name:
 
 .. code-block:: terraform
 
-    variable "device_group" {
-        description = "The name of the Panorama device group"
-        type        = string
-        default     = "StudentXX-DG"
-    }
-
-    variable "template" {
-        description = "The name of the Panorama template"
-        type        = string
-        default     = "StudentXX-Template"
-    }
-
-    variable "stack" {
-        description = "The name of the Panorama template stack"
-        type        = string
-        default     = "StudentXX-Stack"
-    }
+    device_group    = "StudentXX-DG"
+    template        = "StudentXX-Template"
+    stack           = "StudentXX-Stack"
 
 Replace the strings ``StudentXX-DG``, ``StudentXX-Template``, and ``StudentXX-Stack`` with the values provided by the
 instructor.
