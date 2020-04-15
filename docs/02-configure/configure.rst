@@ -186,9 +186,10 @@ Add the following to ``configuration/main.tf`` to build out the template and tem
         stack    = var.stack
     }
 
-Now run ``terraform plan``.  You will see the Terraform provider determine what changes need to be made, and output all
-the changes that will be made to the configuration.  If you run ``terraform apply``, those changes will be added to the
-candidate configuration, but not committed (:ref:`why? <terraform-commits>`).
+Now run ``terraform init`` (you need to run ``init`` each time you add a new module) and ``terraform plan``.  You will
+see the Terraform provider determine what changes need to be made, and output all the changes that will be made to the
+configuration.  If you run ``terraform apply``, those changes will be added to the candidate configuration, but not
+committed (:ref:`why? <terraform-commits>`).
 
 Add the next section to ``configuration/main.tf`` to build out the device group:
 
@@ -211,7 +212,7 @@ Add the next section to ``configuration/main.tf`` to build out the device group:
 This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
 outputs those names from what it creates, so we can chain these two modules together.
 
-You can run ``terraform plan`` and ``terraform apply`` to populate the device group on Panorama.
+You can run ``terraform init``, ``terraform plan``, and ``terraform apply`` to populate the device group on Panorama.
 
 Since Terraform is unable to commit configuration to PAN-OS on it's own, we have provided a Golang helper program to
 commit your user's changes to Panorama.  You can run it on the CLI using ``go run`` like this:
@@ -273,5 +274,5 @@ Your completed ``configuration/main.tf`` should look like this:
         ]
     }
 
-Log in to the Panorama web UI and verify that your changes have been committed.  You're now ready to deploy the
-environment and have your firewall bootstrap from this configuration.
+Run ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify that your changes have been
+committed.  You're now ready to deploy the environment and have your firewall bootstrap from this configuration.
