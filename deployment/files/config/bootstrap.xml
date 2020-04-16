@@ -3,7 +3,7 @@
   <mgt-config>
     <users>
       <entry name="admin">
-        <phash>$1$kaylxbdk$tP035CcZkqDNIk5sxYBaP/</phash>
+        <phash>$1$plfdoifc$bop1iBSRGrV2lhVU8iTBn/</phash>
         <permissions>
           <role-based>
             <superuser>yes</superuser>
@@ -268,7 +268,7 @@
             <disable-http>yes</disable-http>
           </service>
           <hostname>lab-fw</hostname>
-          <login-banner>Multi-Cloud Automation Lab</login-banner>
+          <login-banner>Terraform IAC Lab</login-banner>
         </system>
         <setting>
           <config>
