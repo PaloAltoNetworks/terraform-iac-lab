@@ -28,19 +28,7 @@ provider "google" {
 # PROCESS EACH MODULE IN ORDER
 ############################################################################################
 
-module "bootstrap" {
-  source  = "stealthllama/panos-bootstrap/google"
-  version = "0.9.0"
-
-  bootstrap_project = var.project
-  bootstrap_region  = var.region
-
-  hostname        = "terraform-iac-fw"
-  panorama-server = var.panorama
-  tplname         = var.tplname
-  dgname          = var.dgname
-  vm-auth-key     = var.vm_auth_key
-}
+## Add bootstrap module here.
 
 module "vpc" {
   source = "./modules/vpc"
@@ -90,45 +78,8 @@ module "db" {
   db_image        = "debian-9"
 }
 
-module "firewall" {
-  source = "./modules/firewall"
+## Add firewall module here.
 
-  fw_name             = "vm-series"
-  fw_zone             = var.zone
-  fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
-  fw_machine_type     = "n1-standard-4"
-  fw_machine_cpu      = "Intel Skylake"
-  fw_bootstrap_bucket = module.bootstrap.bootstrap_name
-
-  fw_ssh_key = "admin:${file(var.public_key_file)}"
-
-  fw_mgmt_subnet = module.vpc.mgmt_subnet
-  fw_mgmt_ip     = "10.5.0.4"
-  fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
-
-  fw_untrust_subnet = module.vpc.untrust_subnet
-  fw_untrust_ip     = "10.5.1.4"
-  fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
-
-  fw_web_subnet = module.vpc.web_subnet
-  fw_web_ip     = "10.5.2.4"
-  fw_web_rule   = module.vpc.web-allow-outbound-rule
-
-  fw_db_subnet = module.vpc.db_subnet
-  fw_db_ip     = "10.5.3.4"
-  fw_db_rule   = module.vpc.db-allow-outbound-rule
-}
-
-#module "scale" {
-#  source 					= "./modules/scale"
-
-#  db_name         			= "db-vm"
-#  db_zone					= "${var.zone}"
-#  db_machine_type			= "n1-standard-1"
-#  db_ssh_key 				= "admin:${file("${var.public_key_file}")}"
-#  db_subnet_id  			= "${module.vpc.db_subnet}"
-#  db_image					= "debian-9"
-#}
 
 ############################################################################################
 # CREATE ROUTES FOR WEB AND DB NETWORKS
