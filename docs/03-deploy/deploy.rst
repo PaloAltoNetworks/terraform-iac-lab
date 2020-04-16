@@ -92,10 +92,17 @@ Create a file called ``terraform.tfvars`` in the current directory that contains
 values.  You will need to add a number of things:
 
 - GCP configuration: The GCP project ID, region, and zone.
-- Authentication information: The paths to our JSON credentials and SSH public key files.
-- Panorama bootstrap information: The hostname/IP address of Panorama, the template stack and device group name, and
-  the VM auth key for our environment.
-- The hostname/IP address of Panorama we are bootstrapping from.
+    - **project**: The GCP project ID that Qwiklabs created for you.
+    - **region**: The GCP region we are using (supplied by instructor).
+    - **zone**: The GCP zone we are using (supplied by instructor).
+- Authentication information:
+    - **credentials_file**: The path to our JSON credentials file.
+    - **public_key_file**: The path to our SSH public key file.
+- Panorama bootstrap information:
+    - **panorama**: The hostname/IP address of Panorama (supplied by instructor).
+    - **tplname**: The template stack you created in the previous section (replace XX with your student number).
+    - **dgname**: The device group you created in the previous section (replace XX with your student number).
+    - **vm_auth_key**: The VM auth key for Panorama (supplied by instructor).
 
 Your file should look similar to the following, with the appropriate values replaced:
 
@@ -108,8 +115,8 @@ Your file should look similar to the following, with the appropriate values repl
     public_key_file     = "~/.ssh/lab_ssh_key.pub"
 
     panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
-    tplname     = "<FROM_PREVIOUS_STEP>"
-    dgname      = "<FROM_PREVIOUS_STEP>"
+    tplname     = "StudentXX-Stack"
+    dgname      = "StudentXX-DG"
     vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
 
 

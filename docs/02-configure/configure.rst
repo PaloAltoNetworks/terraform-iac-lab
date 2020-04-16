@@ -201,13 +201,8 @@ outputs those names from what it creates, so we can chain these two modules toge
 You can run ``terraform init``, ``terraform plan``, and ``terraform apply`` to populate the device group on Panorama.
 
 Since Terraform is unable to commit configuration to PAN-OS on it's own, we have provided a Golang helper program to
-commit your user's changes to Panorama.  You can run it on the CLI using ``go run`` like this:
-
-.. code-block:: shell
-
-    $ go run commit.go
-
-You can also use a null resource provisioner in your main.tf to have Terraform run the binary for you.
+commit your user's changes to Panorama.  You use a null resource provisioner in your main.tf to have Terraform run the
+program for you.
 
 Add the following section to ``configuration/main.tf`` to issue the commit:
 
@@ -260,5 +255,13 @@ Your completed ``configuration/main.tf`` should look like this:
         ]
     }
 
-Run ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify that your changes have been
-committed.  You're now ready to deploy the environment and have your firewall bootstrap from this configuration.
+Run the following command to pull the `pango <https://github.com/PaloAltoNetworks/pango>`_ library down for our
+helper program:
+
+.. code-block:: shell
+
+    $ go get github.com/PaloAltoNetworks/pango
+
+Now, run ``terraform init`` and ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify
+that your changes have been committed.  You're now ready to deploy the environment and have your firewall bootstrap
+from this configuration.

@@ -92,10 +92,12 @@ Verify firewall rule matches
 Now that we've confirmed the WordPress application is working properly, let's
 see what is happening with our firewall rules.
 
-Log into the firewall administrator web interface at ``https://<firewall-management-ip>``
-and navigate to **Policies > Security**.
+Log into the firewall administrator web interface at ``https://<firewall-management-ip>`` using these credentials:
 
-If you scroll to the right you will see details on the security rules that are
+- Username: ``admin``
+- Password: ``Ignite2020!``
+
+Navigate to **Policies > Security**, and scroll to the right.  Tou will see details on the security rules that are
 being hit.
 
 .. figure:: hit-count.png
