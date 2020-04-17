@@ -97,7 +97,7 @@ Log into the firewall administrator web interface at ``https://<firewall-managem
 - Username: ``admin``
 - Password: ``Ignite2020!``
 
-Navigate to **Policies > Security**, and scroll to the right.  Tou will see details on the security rules that are
+Navigate to **Policies > Security**, and scroll to the right.  You will see details on the security rules that are
 being hit.
 
 .. figure:: hit-count.png

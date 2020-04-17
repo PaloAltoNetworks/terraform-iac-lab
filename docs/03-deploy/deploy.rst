@@ -114,17 +114,10 @@ Your file should look similar to the following, with the appropriate values repl
     credentials_file    = "~/gcp_compute_key.json"
     public_key_file     = "~/.ssh/lab_ssh_key.pub"
 
-<<<<<<< HEAD
-    panorama            = "<SEE_INSTRUCTOR_PRESENTATION>"
-    tplname             = "<FROM_PREVIOUS_STEP>"
-    dgname              = "<FROM_PREVIOUS_STEP>"
-    vm_auth_key         = "<SEE_INSTRUCTOR_PRESENTATION>"
-=======
     panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
     tplname     = "StudentXX-Stack"
     dgname      = "StudentXX-DG"
     vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
->>>>>>> feaa726d7c018db59174eaf022440b494465137f
 
 
 Add the bootstrap module
