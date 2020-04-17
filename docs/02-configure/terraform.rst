@@ -183,8 +183,8 @@ Modules
 -------
 
 Terraform can group resources together in reusable pieces called *modules*.
-Modules can have their own variables to allow for customization, and outputs so
-that the resources they create can be accessed.  Both versions of this lab use
+Modules often have input variables to allow for customization, and output 
+variable so that the resources they create can be accessed.  This lab uses 
 modules to group together elements for the base networking components, the
 firewall, and the created instances.
 

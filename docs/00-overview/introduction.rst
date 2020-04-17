@@ -2,8 +2,8 @@
 Introduction
 ============
 
-Infrastructure as Code Overview
--------------------------------
+Infrastructure as Code 
+----------------------
 
 This training lab provides hands-on exposure to Infrastructure as Code (IaC) 
 concepts and practices.  IaC simply stated is the practice of defining, utilizing, 

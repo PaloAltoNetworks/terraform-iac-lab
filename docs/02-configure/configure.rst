@@ -20,6 +20,43 @@ First, change to the Terraform configuration directory.
     $ cd ~/terraform-iac-lab/configuration
 
 
+Why Panorama?
+-------------
+In this lab we will be leveraging a Panorama instance to configure the VM-Series firewall we'll be deploying.
+There are other options for configuring the VM-Series firewall such as using Terraform to configure the firewall 
+directly or, even simpler, bootstrapping the firewall with a full `bootstrap.xml` file.  However, we can make our 
+boostrap package simpler and reusable across multiple VM-Series instances by leveraging Panorama.  
+
+In this scenario we can provide VM-Series instance with the address of its Panorama console, the Device Group and 
+Template Stack it will be a member of, and an authorization key to register the instance securely with Panorama.  
+Once it registers with Panorama, the VM-Series instance will be mapped into the appropriate Device Group and Template 
+Stack and the configurations contained therein will be pushed to the firewall.
+
+The following is an example of an ``init-cfg.txt`` file used in the bootstrap process.
+
+.. code-block:: terraform
+
+    type=dhcp-client
+    ip-address=
+    default-gateway=
+    netmask=
+    ipv6-address=
+    ipv6-default-gateway=
+    hostname=Ca-FW-DC1
+    vm-auth-key=755036225328715
+    panorama-server=10.5.107.20
+    panorama-server-2=10.5.107.21
+    tplname=FINANCE_TG4
+    dgname=finance_dg
+    dns-primary=10.5.6.6
+    dns-secondary=10.5.6.7
+    op-command-modes=jumbo-frame, mgmt-interface-swap**
+    op-cmd-dpdk-pkt-io=***
+    dhcp-send-hostname=yes
+    dhcp-send-client-id=yes
+    dhcp-accept-server-hostname=yes
+    dhcp-accept-server-domain=yes
+
 Provider Initialization
 -----------------------
 Your first task is to set up the communications between the provider and the provided Panorama instance.  There's

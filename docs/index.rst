@@ -49,10 +49,10 @@ elements including the VM-series firewall using Terraform exclusively.
 
 Learning Outcomes
 ----------
-- Learn how to use Terraform to define and deploy cloud infrastructure and 
-  implement changes to PAN-OS devices
-- Learn best practices for managing infrastructure code environments
+- Learn best practices for managing infrastructure as code environments
+- Learn how to use Terraform to define and deploy cloud infrastructure 
 - Learn about bootstrapping best practices for VM-Series firewalls in the cloud
+- Learn about best practices for automating the management of VM-series firewalls 
 
 .. toctree::
    :maxdepth: 2
