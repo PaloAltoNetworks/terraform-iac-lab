@@ -25,9 +25,6 @@ jobs:
             terraform init
             terraform validate
           done
-          cd ${GITHUB_WORKSPACE}/deployment
-          terraform init
-          terraform validate
 
       - name: terraform fmt - deployment
         run: |
