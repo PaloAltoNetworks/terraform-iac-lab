@@ -48,6 +48,11 @@ variable "allowed_mgmt_cidr" {
   default     = "0.0.0.0/0"
 }
 
+variable "fw_name" {
+  description = "Name for the firewall"
+  type        = string
+}
+
 variable "panorama" {
   description = "Panorama hostname for bootstrap config"
   type        = string

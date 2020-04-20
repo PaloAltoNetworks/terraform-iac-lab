@@ -81,7 +81,7 @@ Now, you should see the variables exported in your shell, which you can verify u
 
 .. code-block:: bash
 
-    PANOS_HOSTNAME=panorama-tf-lab.panwlabs.net
+    PANOS_HOSTNAME=panorama.panlabs.org
     PANOS_USERNAME=studentXX
     PANOS_PASSWORD=Ignite2020!
 
@@ -103,11 +103,11 @@ define values for the device group, template name, and template stack name:
 
 .. code-block:: terraform
 
-    device_group    = "StudentXX-DG"
-    template        = "StudentXX-Template"
-    stack           = "StudentXX-Stack"
+    device_group    = "studentXX-dg"
+    template        = "studentXX-template"
+    stack           = "studentXX-stack"
 
-Replace the strings ``StudentXX-DG``, ``StudentXX-Template``, and ``StudentXX-Stack`` with the values provided by the
+Replace the strings ``studentXX-dg``, ``studentXX-template``, and ``studentXX-stack`` with the values provided by the
 instructor.
 
 

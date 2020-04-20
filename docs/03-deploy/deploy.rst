@@ -98,6 +98,8 @@ values.  You will need to add a number of things:
 - Authentication information:
     - **credentials_file**: The path to our JSON credentials file.
     - **public_key_file**: The path to our SSH public key file.
+- Firewall information:
+    - **fw_name**: The name for the firewall.
 - Panorama bootstrap information:
     - **panorama**: The hostname/IP address of Panorama (supplied by instructor).
     - **tplname**: The template stack you created in the previous section (replace XX with your student number).
@@ -114,9 +116,10 @@ Your file should look similar to the following, with the appropriate values repl
     credentials_file    = "~/gcp_compute_key.json"
     public_key_file     = "~/.ssh/lab_ssh_key.pub"
 
+    fw_name     = "studentXX-fw"
     panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
-    tplname     = "StudentXX-Stack"
-    dgname      = "StudentXX-DG"
+    tplname     = "studentXX-stack"
+    dgname      = "studentXX-dg"
     vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
 
 
@@ -134,7 +137,7 @@ Add the following module definition to ``deployment/main.tf``:
         bootstrap_project = var.project
         bootstrap_region  = var.region
 
-        hostname        = "terraform-iac-fw"
+        hostname        = var.fw_name
         panorama-server = var.panorama
         tplname         = var.tplname
         dgname          = var.dgname
@@ -158,7 +161,7 @@ Now we need to add another module definition to ``deployment/main.tf`` to specif
     module "firewall" {
         source = "./modules/firewall"
 
-        fw_name             = "vm-series"
+        fw_name             = var.fw_name
         fw_zone             = var.zone
         fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
         fw_machine_type     = "n1-standard-4"
