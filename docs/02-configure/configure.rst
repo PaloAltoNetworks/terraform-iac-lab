@@ -245,6 +245,16 @@ Add the following section to ``configuration/main.tf`` to issue the commit:
 
 .. code-block:: terraform
 
+    resource "null_resource" "get_pango" {
+        provisioner "local-exec" {
+            command = "go get -u github.com/PaloAltoNetworks/pango"
+        }
+        depends_on = [
+            module.policies.security_rule_group,
+            module.policies.nat_rule_group
+        ]
+    }
+    
     resource "null_resource" "commit_panorama" {
         provisioner "local-exec" {
             command = "go run commit.go"
@@ -282,6 +292,16 @@ Your completed ``configuration/main.tf`` should look like this:
         interface_db      = module.networking.interface_db
     }
 
+    resource "null_resource" "get_pango" {
+        provisioner "local-exec" {
+            command = "go get -u github.com/PaloAltoNetworks/pango"
+        }
+        depends_on = [
+            module.policies.security_rule_group,
+            module.policies.nat_rule_group
+        ]
+    }
+
     resource "null_resource" "commit_panorama" {
         provisioner "local-exec" {
             command = "go run commit.go"
@@ -292,12 +312,6 @@ Your completed ``configuration/main.tf`` should look like this:
         ]
     }
 
-Run the following command to pull the `pango <https://github.com/PaloAltoNetworks/pango>`_ library down for our
-helper program:
-
-.. code-block:: shell
-
-    $ go get github.com/PaloAltoNetworks/pango
 
 Now, run ``terraform init`` and ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify
 that your changes have been committed.  You're now ready to deploy the environment and have your firewall bootstrap

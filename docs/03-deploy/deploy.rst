@@ -270,7 +270,7 @@ Your completed ``deployment/main.tf`` file should look like this:
     module "firewall" {
         source = "./modules/firewall"
 
-        fw_name             = "vm-series"
+        fw_name             = var.fw_name
         fw_zone             = var.zone
         fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
         fw_machine_type     = "n1-standard-4"
