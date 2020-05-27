@@ -245,19 +245,9 @@ Add the following section to ``configuration/main.tf`` to issue the commit:
 
 .. code-block:: terraform
 
-    resource "null_resource" "get_pango" {
-        provisioner "local-exec" {
-            command = "go get -u github.com/PaloAltoNetworks/pango"
-        }
-        depends_on = [
-            module.policies.security_rule_group,
-            module.policies.nat_rule_group
-        ]
-    }
-    
     resource "null_resource" "commit_panorama" {
         provisioner "local-exec" {
-            command = "go run commit.go"
+            command = "./commit"
         }
         depends_on = [
             module.policies.security_rule_group,
@@ -292,19 +282,9 @@ Your completed ``configuration/main.tf`` should look like this:
         interface_db      = module.networking.interface_db
     }
 
-    resource "null_resource" "get_pango" {
-        provisioner "local-exec" {
-            command = "go get -u github.com/PaloAltoNetworks/pango"
-        }
-        depends_on = [
-            module.policies.security_rule_group,
-            module.policies.nat_rule_group
-        ]
-    }
-
     resource "null_resource" "commit_panorama" {
         provisioner "local-exec" {
-            command = "go run commit.go"
+            command = "./commit"
         }
         depends_on = [
             module.policies.security_rule_group,
