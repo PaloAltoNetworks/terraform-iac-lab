@@ -131,8 +131,8 @@ Add the following module definition to ``deployment/main.tf``:
 .. code-block:: terraform
 
     module "bootstrap" {
-        source  = "stealthllama/panos-bootstrap/google"
-        version = "0.9.0"
+        source  = "PaloAltoNetworks/panos-bootstrap/google"
+        version = "1.0.0"
 
         bootstrap_project = var.project
         bootstrap_region  = var.region
@@ -148,7 +148,7 @@ This uses a module that has been published to the Terraform module registry for 
 the code, it's on the
 `PaloAltoNetworks GitHub page <https://github.com/PaloAltoNetworks/terraform-google-panos-bootstrap>`_.) This will
 create the Google Storage bucket for holding a PAN-OS bootstrap configuration, as well as 
-`the required files <https://docs.paloaltonetworks.com/vm-series/9-0/vm-series-deployment/bootstrap-the-vm-series-firewall.html>`_.
+`the required files <https://docs.paloaltonetworks.com/vm-series/10-0/vm-series-deployment/bootstrap-the-vm-series-firewall.html>`_.
 
 
 Add the firewall module
@@ -163,7 +163,7 @@ Now we need to add another module definition to ``deployment/main.tf`` to specif
 
         fw_name             = var.fw_name
         fw_zone             = var.zone
-        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
+        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
         fw_machine_type     = "n1-standard-4"
         fw_machine_cpu      = "Intel Skylake"
         fw_bootstrap_bucket = module.bootstrap.bootstrap_name
@@ -206,8 +206,8 @@ Your completed ``deployment/main.tf`` file should look like this:
     }
 
     module "bootstrap" {
-        source  = "stealthllama/panos-bootstrap/google"
-        version = "0.9.0"
+        source  = "PaloAltoNetworks/panos-bootstrap/google"
+        version = "1.0.0"
 
         bootstrap_project = var.project
         bootstrap_region  = var.region
@@ -272,7 +272,7 @@ Your completed ``deployment/main.tf`` file should look like this:
 
         fw_name             = var.fw_name
         fw_zone             = var.zone
-        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901"
+        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
         fw_machine_type     = "n1-standard-4"
         fw_machine_cpu      = "Intel Skylake"
         fw_bootstrap_bucket = module.bootstrap.bootstrap_name
