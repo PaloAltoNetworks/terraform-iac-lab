@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Terraform Background" href="../02-configure/terraform.html" />
+    <link rel="prev" title="Requirements" href="requirements.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#log-into-the-qwiklabs-portal">Log into the Qwiklabs portal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-the-lab-environment">Launch the lab environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-into-google-cloud">Log into Google Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-the-cloud-shell">Launch the Cloud Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clone-the-lab-software-repository">Clone the lab software repository</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">configure</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/configure.html">Panorama Configuration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">deploy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/01-getting-started/setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>In this activity you will:</p>
+<ul class="simple">
+<li><p>Log into the Qwiklabs portal</p></li>
+<li><p>Launch the lab</p></li>
+<li><p>Log into the Google Cloud Platform console</p></li>
+<li><p>Launch a Cloud Shell instance</p></li>
+<li><p>Clone the lab software repository</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before you start it is recommended that you launch a private instance
+of your web browser.  This will prevent the use of cached Google credentials
+when logging into the GCP consoles.  This will help ensure you do not incur
+any personal charges.</p>
+</div>
+<div class="figure align-default" id="id1">
+<img alt="../_images/incognito.png" src="../_images/incognito.png" />
+<p class="caption"><span class="caption-text">Chrome Incognito mode</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="log-into-the-qwiklabs-portal">
+<h2>Log into the Qwiklabs portal<a class="headerlink" href="#log-into-the-qwiklabs-portal" title="Permalink to this headline">¶</a></h2>
+<p>Navigate to the <a class="reference external" href="https://paloaltonetworks.qwiklabs.com">Qwiklabs URL</a> in your
+web browser.</p>
+<p><code class="docutils literal notranslate"><span class="pre">https://paloaltonetworks.qwiklabs.com</span></code></p>
+<p>Log in with your Qwiklabs credentials (sign up if you are new to Qwiklabs). You
+must use your corporate email address for the username.</p>
+<div class="figure align-default">
+<img alt="../_images/qwiklabs-login.png" src="../_images/qwiklabs-login.png" />
+</div>
+</div>
+<div class="section" id="launch-the-lab-environment">
+<h2>Launch the lab environment<a class="headerlink" href="#launch-the-lab-environment" title="Permalink to this headline">¶</a></h2>
+<p>Confirm that the course containing the phrase <strong>Terraform Infrastructure as Code</strong> is
+listed under In Progress on the welcome screen.  Click on the this course in
+order to add it to your My Learning inventory.</p>
+<div class="figure align-default">
+<img alt="../_images/qwiklabs-main.png" src="../_images/qwiklabs-main.png" />
+</div>
+<p>You will will be directed to a screen containing the available labs.  Click on the
+<strong>Terraform Infrastructure as Code Lab</strong>.</p>
+<div class="figure align-default">
+<img alt="../_images/qwiklabs-lab.png" src="../_images/qwiklabs-lab.png" />
+</div>
+<p>You will be presented with a lab evironment screen, you will need to click the
+<strong>Start Lab</strong> button.  Qwiklabs will then provision a set of account
+credentials for GCP.</p>
+<div class="figure align-default">
+<img alt="../_images/qwiklabs-start.png" src="../_images/qwiklabs-start.png" />
+</div>
+<p>The lab environment will take a few minutes to provision.  Once it is completed, a set of GCP credentials will be added to
+the lefthand panel.</p>
+<div class="figure align-default">
+<img alt="../_images/qwiklabs-go.png" src="../_images/qwiklabs-go.png" />
+</div>
+</div>
+<div class="section" id="log-into-google-cloud">
+<h2>Log into Google Cloud<a class="headerlink" href="#log-into-google-cloud" title="Permalink to this headline">¶</a></h2>
+<p>Click on the <strong>Open Google Console</strong> to launch a new browser tab and log into GCP.
+Be sure to use the credentials provided by Qwiklabs rather than your personal Google
+account.  This will ensure that you are not charged for any infrastructure that you
+deploy.</p>
+<p>Once you’ve authenticated, accept the user agreements and account recovery defaults.
+You will then be presented with the Google Cloud dashboard.</p>
+<div class="figure align-default">
+<img alt="../_images/gcp-console.png" src="../_images/gcp-console.png" />
+</div>
+</div>
+<div class="section" id="launch-the-cloud-shell">
+<h2>Launch the Cloud Shell<a class="headerlink" href="#launch-the-cloud-shell" title="Permalink to this headline">¶</a></h2>
+<p>In the upper right corner of the dashboard, click on the shell prompt icon labeled
+<strong>Activate Cloud Shell</strong> to launch a Cloud Shell instance.  This is an on-demand Linux
+shell that contains many of the tools that will be used in this lab.  The Cloud Shell
+instance is where you will be working throughout the lab.</p>
+<div class="figure align-default">
+<img alt="../_images/gcp-cloudshell.png" src="../_images/gcp-cloudshell.png" />
+</div>
+</div>
+<div class="section" id="clone-the-lab-software-repository">
+<h2>Clone the lab software repository<a class="headerlink" href="#clone-the-lab-software-repository" title="Permalink to this headline">¶</a></h2>
+<p>Once you are presented with the Cloud Shell prompt you will need to clone
+the GitHub repository used in this lab.  This repository (or <em>repo</em>) contains
+the files needed to deploy the network and compute infrastructure we’ll be
+working with.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/PaloAltoNetworks/terraform-iac-lab.git
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../02-configure/terraform.html" class="btn btn-neutral float-right" title="Terraform Background" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="requirements.html" class="btn btn-neutral float-left" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

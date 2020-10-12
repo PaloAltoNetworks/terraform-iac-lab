@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lab Deployment &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Validation Testing" href="validation.html" />
+    <link rel="prev" title="Panorama Configuration" href="../02-configure/configure.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">configure</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/terraform.html">Terraform Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-configure/configure.html">Panorama Configuration</a></li>
+</ul>
+<p class="caption"><span class="caption-text">deploy</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lab Deployment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-service-account-credential-file">Create a service account credential file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-an-ssh-key-pair">Create an SSH key-pair</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-terraform-tfvars-file">Create the terraform.tfvars file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-the-bootstrap-module">Add the bootstrap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-the-firewall-module">Add the firewall module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy-the-infrastructure">Deploy the infrastructure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Lab Deployment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/03-deploy/deploy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lab-deployment">
+<h1>Lab Deployment<a class="headerlink" href="#lab-deployment" title="Permalink to this headline">¶</a></h1>
+<p>In this activity you will:</p>
+<ul class="simple">
+<li><p>Create a service account credential file</p></li>
+<li><p>Create an SSH key-pair</p></li>
+<li><p>Create the terraform.tfvars file</p></li>
+<li><p>Add the bootstrap module</p></li>
+<li><p>Add the firewall module</p></li>
+<li><p>Deploy the infrastructure</p></li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The lab infrastructure will also be deployed in GCP using Terraform.  A Terraform plan has been provided that will
+initialize the GCP provider, and call most of the modules responsible for creating the network, compute, and storage
+resources needed.  You will add the modules for creating the bootstrap configuration as well as the VM-Series firewall.</p>
+<p>First, change to the Terraform deployment directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/terraform-iac-lab/deployment
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-service-account-credential-file">
+<h2>Create a service account credential file<a class="headerlink" href="#create-a-service-account-credential-file" title="Permalink to this headline">¶</a></h2>
+<p>Terraform will need to authenticate to GCP to perform the deployment.  We <em>could</em> authenticate to GCP using the
+username presented in the Qwiklabs panel when the lab was started.  However, the Compute Engine default service
+account is typically used because it is certain to have all the neccesary permissions.</p>
+<p>List the email address of the Compute Engine default service account.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gcloud iam service-accounts list
+</pre></div>
+</div>
+<p>Use the following <code class="docutils literal notranslate"><span class="pre">gcloud</span></code> command to download the credentials for the <strong>Compute Engine default service account</strong>
+using its associated email address (displayed in the output of the previous command).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gcloud iam service-accounts keys create ~/gcp_compute_key.json --iam-account &lt;EMAIL_ADDRESS&gt;
+</pre></div>
+</div>
+<p>Verify the JSON credentials file was successfully created.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat ~/gcp_compute_key.json
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-an-ssh-key-pair">
+<h2>Create an SSH key-pair<a class="headerlink" href="#create-an-ssh-key-pair" title="Permalink to this headline">¶</a></h2>
+<p>All Compute Engine instances are required to have an SSH key-pair defined when the instance is created.  This is done
+to ensure secure access to the instance will be available once it is created.</p>
+<p>Create an SSH key-pair with an empty passphrase and save them in the <code class="docutils literal notranslate"><span class="pre">~/.ssh</span></code> directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ssh-keygen -t rsa -b <span class="m">1024</span> -N <span class="s1">&#39;&#39;</span> -f ~/.ssh/lab_ssh_key
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GCP has the ability to manage all of its own SSH keys and propagate
+them automatically to projects and instances. However, the VM-Series
+is only able to make use of a single SSH key. Rather than leverage
+GCP’s SSH key management process, we’ve created our own SSH key and
+configured Compute Engine to use our key exclusively.</p>
+</div>
+</div>
+<div class="section" id="create-the-terraform-tfvars-file">
+<h2>Create the terraform.tfvars file<a class="headerlink" href="#create-the-terraform-tfvars-file" title="Permalink to this headline">¶</a></h2>
+<p>In this directory you will find the three main files associated with a Terraform plan: <code class="docutils literal notranslate"><span class="pre">main.tf</span></code>, <code class="docutils literal notranslate"><span class="pre">variables.tf</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">outputs.tf</span></code>.  View the contents of these files to see what they contain and how they’re structured.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ more main.tf
+$ more variables.tf
+$ more outputs.tf
+</pre></div>
+</div>
+<p>The file <code class="docutils literal notranslate"><span class="pre">main.tf</span></code> defines the providers that will be used and the resources that will be created (more on that
+shortly).  Since it is poor practice to hard code values into the plan, the file <code class="docutils literal notranslate"><span class="pre">variables.tf</span></code> will be used to
+declare the variables that will be used in the plan (but not necessarily their values).  The <code class="docutils literal notranslate"><span class="pre">outputs.tf</span></code> file
+will define the values to display that result from applying the plan.</p>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">terraform.tfvars</span></code> in the current directory that contains the following variables and their
+values.  You will need to add a number of things:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>GCP configuration: The GCP project ID, region, and zone.</dt><dd><ul>
+<li><p><strong>project</strong>: The GCP project ID that Qwiklabs created for you.</p></li>
+<li><p><strong>region</strong>: The GCP region we are using (supplied by instructor).</p></li>
+<li><p><strong>zone</strong>: The GCP zone we are using (supplied by instructor).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Authentication information:</dt><dd><ul>
+<li><p><strong>credentials_file</strong>: The path to our JSON credentials file.</p></li>
+<li><p><strong>public_key_file</strong>: The path to our SSH public key file.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Firewall information:</dt><dd><ul>
+<li><p><strong>fw_name</strong>: The name for the firewall.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Panorama bootstrap information:</dt><dd><ul>
+<li><p><strong>panorama</strong>: The hostname/IP address of Panorama (supplied by instructor).</p></li>
+<li><p><strong>tplname</strong>: The template stack you created in the previous section (replace XX with your student number).</p></li>
+<li><p><strong>dgname</strong>: The device group you created in the previous section (replace XX with your student number).</p></li>
+<li><p><strong>vm_auth_key</strong>: The VM auth key for Panorama (supplied by instructor).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Your file should look similar to the following, with the appropriate values replaced:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="na">project</span>             <span class="o">=</span> <span class="s2">&quot;&lt;YOUR_GCP_PROJECT_ID&gt;&quot;</span>
+<span class="na">region</span>              <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">zone</span>                <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">credentials_file</span>    <span class="o">=</span> <span class="s2">&quot;~/gcp_compute_key.json&quot;</span>
+<span class="na">public_key_file</span>     <span class="o">=</span> <span class="s2">&quot;~/.ssh/lab_ssh_key.pub&quot;</span>
+
+<span class="na">fw_name</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-fw&quot;</span>
+<span class="na">panorama</span>    <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">tplname</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-stack&quot;</span>
+<span class="na">dgname</span>      <span class="o">=</span> <span class="s2">&quot;studentXX-dg&quot;</span>
+<span class="na">vm_auth_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-the-bootstrap-module">
+<h2>Add the bootstrap module<a class="headerlink" href="#add-the-bootstrap-module" title="Permalink to this headline">¶</a></h2>
+<p>Add the following module definition to <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code>:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;bootstrap&quot; {
+    source  = &quot;PaloAltoNetworks/panos-bootstrap/google&quot;
+    version = &quot;1.0.0&quot;
+
+    bootstrap_project = var.project
+    bootstrap_region  = var.region
+
+    hostname        = var.fw_name
+    panorama-server = var.panorama
+    tplname         = var.tplname
+    dgname          = var.dgname
+    vm-auth-key     = var.vm_auth_key
+}
+</pre></div>
+</div>
+<p>This uses a module that has been published to the Terraform module registry for public use.  (If you’d like to review
+the code, it’s on the
+<a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-google-panos-bootstrap">PaloAltoNetworks GitHub page</a>.) This will
+create the Google Storage bucket for holding a PAN-OS bootstrap configuration, as well as
+<a class="reference external" href="https://docs.paloaltonetworks.com/vm-series/10-0/vm-series-deployment/bootstrap-the-vm-series-firewall.html">the required files</a>.</p>
+</div>
+<div class="section" id="add-the-firewall-module">
+<h2>Add the firewall module<a class="headerlink" href="#add-the-firewall-module" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to add another module definition to <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code> to specify the firewall configuration:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;firewall&quot; {
+    source = &quot;./modules/firewall&quot;
+
+    fw_name             = var.fw_name
+    fw_zone             = var.zone
+    fw_image            = &quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;
+    fw_machine_type     = &quot;n1-standard-4&quot;
+    fw_machine_cpu      = &quot;Intel Skylake&quot;
+    fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+
+    fw_ssh_key = &quot;admin:${file(var.public_key_file)}&quot;
+
+    fw_mgmt_subnet = module.vpc.mgmt_subnet
+    fw_mgmt_ip     = &quot;10.5.0.4&quot;
+    fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+
+    fw_untrust_subnet = module.vpc.untrust_subnet
+    fw_untrust_ip     = &quot;10.5.1.4&quot;
+    fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+
+    fw_web_subnet = module.vpc.web_subnet
+    fw_web_ip     = &quot;10.5.2.4&quot;
+    fw_web_rule   = module.vpc.web-allow-outbound-rule
+
+    fw_db_subnet = module.vpc.db_subnet
+    fw_db_ip     = &quot;10.5.3.4&quot;
+    fw_db_rule   = module.vpc.db-allow-outbound-rule
+}
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/deployment/modules/firewall/main.tf">This module</a>
+creates the VM-Series instance.  Notice how the outputs from the <em>bootstrap</em> and <em>vpc</em> modules are used as inputs to
+this one.</p>
+</div>
+<div class="section" id="deploy-the-infrastructure">
+<h2>Deploy the infrastructure<a class="headerlink" href="#deploy-the-infrastructure" title="Permalink to this headline">¶</a></h2>
+<p>Your completed <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code> file should look like this:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>provider &quot;google&quot; {
+    credentials = file(var.credentials_file)
+    project     = var.project
+    region      = var.region
+}
+
+module &quot;bootstrap&quot; {
+    source  = &quot;PaloAltoNetworks/panos-bootstrap/google&quot;
+    version = &quot;1.0.0&quot;
+
+    bootstrap_project = var.project
+    bootstrap_region  = var.region
+
+    hostname        = &quot;terraform-iac-fw&quot;
+    panorama-server = var.panorama
+    tplname         = var.tplname
+    dgname          = var.dgname
+    vm-auth-key     = var.vm_auth_key
+}
+
+module &quot;vpc&quot; {
+    source = &quot;./modules/vpc&quot;
+
+    vpc_region = var.region
+
+    vpc_mgmt_network_name = &quot;management-network&quot;
+    vpc_mgmt_subnet_cidr  = &quot;10.5.0.0/24&quot;
+    vpc_mgmt_subnet_name  = &quot;management-subnet&quot;
+
+    vpc_untrust_network_name = &quot;untrust-network&quot;
+    vpc_untrust_subnet_cidr  = &quot;10.5.1.0/24&quot;
+    vpc_untrust_subnet_name  = &quot;untrust-subnet&quot;
+
+    vpc_web_network_name = &quot;web-network&quot;
+    vpc_web_subnet_cidr  = &quot;10.5.2.0/24&quot;
+    vpc_web_subnet_name  = &quot;web-subnet&quot;
+
+    vpc_db_network_name = &quot;database-network&quot;
+    vpc_db_subnet_cidr  = &quot;10.5.3.0/24&quot;
+    vpc_db_subnet_name  = &quot;database-subnet&quot;
+
+    allowed_mgmt_cidr = var.allowed_mgmt_cidr
+}
+
+module &quot;web&quot; {
+    source = &quot;./modules/web&quot;
+
+    web_name         = &quot;web-vm&quot;
+    web_zone         = var.zone
+    web_machine_type = &quot;n1-standard-1&quot;
+    web_ssh_key      = &quot;admin:${file(var.public_key_file)}&quot;
+    web_subnet_id    = module.vpc.web_subnet
+    web_ip           = &quot;10.5.2.5&quot;
+    web_image        = &quot;debian-9&quot;
+}
+
+module &quot;db&quot; {
+    source = &quot;./modules/db&quot;
+
+    db_name         = &quot;db-vm&quot;
+    db_zone         = var.zone
+    db_machine_type = &quot;n1-standard-1&quot;
+    db_ssh_key      = &quot;admin:${file(var.public_key_file)}&quot;
+    db_subnet_id    = module.vpc.db_subnet
+    db_ip           = &quot;10.5.3.5&quot;
+    db_image        = &quot;debian-9&quot;
+}
+
+module &quot;firewall&quot; {
+    source = &quot;./modules/firewall&quot;
+
+    fw_name             = var.fw_name
+    fw_zone             = var.zone
+    fw_image            = &quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;
+    fw_machine_type     = &quot;n1-standard-4&quot;
+    fw_machine_cpu      = &quot;Intel Skylake&quot;
+    fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+
+    fw_ssh_key = &quot;admin:${file(var.public_key_file)}&quot;
+
+    fw_mgmt_subnet = module.vpc.mgmt_subnet
+    fw_mgmt_ip     = &quot;10.5.0.4&quot;
+    fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+
+    fw_untrust_subnet = module.vpc.untrust_subnet
+    fw_untrust_ip     = &quot;10.5.1.4&quot;
+    fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+
+    fw_web_subnet = module.vpc.web_subnet
+    fw_web_ip     = &quot;10.5.2.4&quot;
+    fw_web_rule   = module.vpc.web-allow-outbound-rule
+
+    fw_db_subnet = module.vpc.db_subnet
+    fw_db_ip     = &quot;10.5.3.4&quot;
+    fw_db_rule   = module.vpc.db-allow-outbound-rule
+}
+
+resource &quot;google_compute_route&quot; &quot;web-route&quot; {
+    name                   = &quot;web-route&quot;
+    dest_range             = &quot;0.0.0.0/0&quot;
+    network                = module.vpc.web_network
+    next_hop_instance      = module.firewall.firewall-instance
+    next_hop_instance_zone = var.zone
+    priority               = 100
+}
+
+resource &quot;google_compute_route&quot; &quot;db-route&quot; {
+    name                   = &quot;db-route&quot;
+    dest_range             = &quot;0.0.0.0/0&quot;
+    network                = module.vpc.db_network
+    next_hop_instance      = module.firewall.firewall-instance
+    next_hop_instance_zone = var.zone
+    priority               = 100
+}
+</pre></div>
+</div>
+<p>Now, you’re ready to deploy the infrastructure.  Run the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ terraform init
+$ terraform plan
+$ terraform apply
+</pre></div>
+</div>
+<p>As we saw before, <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> will install all required providers and modules, <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code> will show all
+the infrastructure that will be created, and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> will create the infrastructure.</p>
+<p>At a high level, the completed Terraform configuration will:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Run the <code class="docutils literal notranslate"><span class="pre">bootstrap</span></code> module</dt><dd><ol class="arabic simple">
+<li><p>Create a GCP storage bucket for the firewall bootstrap package</p></li>
+<li><p>Apply a policy to the bucket allowing read access to <code class="docutils literal notranslate"><span class="pre">allUsers</span></code></p></li>
+<li><p>Create the <code class="docutils literal notranslate"><span class="pre">/config/init-cfg.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">/config/bootstrap.xml</span></code>,
+<code class="docutils literal notranslate"><span class="pre">/software</span></code>, <code class="docutils literal notranslate"><span class="pre">/content</span></code>, and <code class="docutils literal notranslate"><span class="pre">/license</span></code> objects in the bootstrap
+bucket</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Run the <code class="docutils literal notranslate"><span class="pre">vpc</span></code> module</dt><dd><ol class="arabic simple">
+<li><p>Create the VPC</p></li>
+<li><p>Create the Internet gateway</p></li>
+<li><p>Create the <code class="docutils literal notranslate"><span class="pre">management</span></code>, <code class="docutils literal notranslate"><span class="pre">untrust</span></code>, <code class="docutils literal notranslate"><span class="pre">web</span></code>, and <code class="docutils literal notranslate"><span class="pre">database</span></code>
+subnets</p></li>
+<li><p>Create the security groups for each subnet</p></li>
+<li><p>Create the default route for the <code class="docutils literal notranslate"><span class="pre">web</span></code> and <code class="docutils literal notranslate"><span class="pre">database</span></code> subnets</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Run the <code class="docutils literal notranslate"><span class="pre">firewall</span></code> module</dt><dd><ol class="arabic simple">
+<li><p>Create the VM-Series firewall instance</p></li>
+<li><p>Create the VM-Series firewall interfaces</p></li>
+<li><p>Create the public IPs for the <code class="docutils literal notranslate"><span class="pre">management</span></code> and <code class="docutils literal notranslate"><span class="pre">untrust</span></code> interfaces</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Run the <code class="docutils literal notranslate"><span class="pre">web</span></code> module</dt><dd><ol class="arabic simple">
+<li><p>Create the web server instance</p></li>
+<li><p>Create the web server interface</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Run the <code class="docutils literal notranslate"><span class="pre">database</span></code> module</dt><dd><ol class="arabic simple">
+<li><p>Create the database server instance</p></li>
+<li><p>Create the database server interface</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<p>The deployment process should finish in a few minutes and you will be presented with the public IP addresses of the
+VM-Series firewall management and untrust interfaces.  However, the VM-Series firewall can take up to <em>ten minutes</em> to
+complete the initial bootstrap process.</p>
+<p>Once the firewall has completed the bootstrap process, it should be listed in Panorama as a managed device in your
+device group under Panorama &gt; Managed Devices &gt; Summary.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="validation.html" class="btn btn-neutral float-right" title="Validation Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../02-configure/configure.html" class="btn btn-neutral float-left" title="Panorama Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

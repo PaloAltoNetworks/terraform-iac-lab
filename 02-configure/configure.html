@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Panorama Configuration &mdash; terraform-iac-lab  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab Deployment" href="../03-deploy/deploy.html" />
+    <link rel="prev" title="Terraform Background" href="terraform.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> terraform-iac-lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
+</ul>
+<p class="caption"><span class="caption-text">configure</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform Background</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Panorama Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-panorama">Why Panorama?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#provider-initialization">Provider Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-terraform-tfvars-file">Create the terraform.tfvars file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#learn-about-the-provided-modules">Learn about the provided modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assemble-configuration-main-tf">Assemble configuration/main.tf</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">deploy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">summary</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
+</ul>
+<p class="caption"><span class="caption-text">appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">terraform-iac-lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Panorama Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/02-configure/configure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="panorama-configuration">
+<h1>Panorama Configuration<a class="headerlink" href="#panorama-configuration" title="Permalink to this headline">¶</a></h1>
+<p>In this activity you will:</p>
+<ul class="simple">
+<li><p>Initialize the Terraform provider</p></li>
+<li><p>Create the terraform.tfvars file</p></li>
+<li><p>Learn about the provided modules</p></li>
+<li><p>Assemble configuration/main.tf</p></li>
+</ul>
+<p>For this portion of the lab, you will be using the Palo Alto Networks
+<a class="reference external" href="https://www.terraform.io/docs/providers/panos/index.html">PAN-OS Terraform provider</a>.</p>
+<p>First, change to the Terraform configuration directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/terraform-iac-lab/configuration
+</pre></div>
+</div>
+<div class="section" id="why-panorama">
+<h2>Why Panorama?<a class="headerlink" href="#why-panorama" title="Permalink to this headline">¶</a></h2>
+<p>In this lab we will be leveraging a Panorama instance to configure the VM-Series firewall we’ll be deploying.
+There are other options for configuring the VM-Series firewall such as using Terraform to configure the firewall
+directly or, even simpler, bootstrapping the firewall with a full <cite>bootstrap.xml</cite> file.  However, we can make our
+boostrap package simpler and reusable across multiple VM-Series instances by leveraging Panorama.</p>
+<p>In this scenario we can provide VM-Series instance with the address of its Panorama console, the Device Group and
+Template Stack it will be a member of, and an authorization key to register the instance securely with Panorama.
+Once it registers with Panorama, the VM-Series instance will be mapped into the appropriate Device Group and Template
+Stack and the configurations contained therein will be pushed to the firewall.</p>
+<p>The following is an example of an <code class="docutils literal notranslate"><span class="pre">init-cfg.txt</span></code> file used in the bootstrap process.</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>type=dhcp-client
+ip-address=
+default-gateway=
+netmask=
+ipv6-address=
+ipv6-default-gateway=
+hostname=Ca-FW-DC1
+vm-auth-key=755036225328715
+panorama-server=10.5.107.20
+panorama-server-2=10.5.107.21
+tplname=FINANCE_TG4
+dgname=finance_dg
+dns-primary=10.5.6.6
+dns-secondary=10.5.6.7
+op-command-modes=jumbo-frame, mgmt-interface-swap**
+op-cmd-dpdk-pkt-io=***
+dhcp-send-hostname=yes
+dhcp-send-client-id=yes
+dhcp-accept-server-hostname=yes
+dhcp-accept-server-domain=yes
+</pre></div>
+</div>
+</div>
+<div class="section" id="provider-initialization">
+<h2>Provider Initialization<a class="headerlink" href="#provider-initialization" title="Permalink to this headline">¶</a></h2>
+<p>Your first task is to set up the communications between the provider and the provided Panorama instance.  There’s
+several ways this can be done.  The IP address, username, and password (or API key) can be set as variables in
+Terraform, and can be typed in manually each time the Terraform plan is run, or specified on the command line using
+the <code class="docutils literal notranslate"><span class="pre">-var</span></code> command line option to <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code> and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>.  You can also reference a JSON file in
+the provider configuration which can contain the configuration.</p>
+<p>Another way you can accomplish this is by using environment variables.  Use the following commands to add the
+appropriate environment variables, substituting in the values provided by the instructor:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">PANOS_HOSTNAME</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR PANORAMA MGMT IP GOES HERE&gt;&quot;</span>
+$ <span class="nb">export</span> <span class="nv">PANOS_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;YOUR STUDENT NAME&gt;&quot;</span>
+$ <span class="nb">export</span> <span class="nv">PANOS_PASSWORD</span><span class="o">=</span><span class="s2">&quot;Ignite2020!&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace the text <code class="docutils literal notranslate"><span class="pre">&lt;YOUR</span> <span class="pre">PANORAMA</span> <span class="pre">MGMT</span> <span class="pre">IP</span> <span class="pre">GOES</span> <span class="pre">HERE&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;YOUR</span> <span class="pre">STUDENT</span> <span class="pre">NAME&gt;</span></code> with the values provided
+to you by the instructor.</p>
+</div>
+<p>Now, you should see the variables exported in your shell, which you can verify using the <code class="docutils literal notranslate"><span class="pre">env</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">PANOS</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PANOS_HOSTNAME</span><span class="o">=</span>panorama.panlabs.org
+<span class="nv">PANOS_USERNAME</span><span class="o">=</span>studentXX
+<span class="nv">PANOS_PASSWORD</span><span class="o">=</span>Ignite2020!
+</pre></div>
+</div>
+<p>With these values defined, we can now initialize the Terraform panos provider with the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ terraform init
+</pre></div>
+</div>
+<p>The provider is now ready to communicate with our Panorama instance.</p>
+</div>
+<div class="section" id="create-the-terraform-tfvars-file">
+<h2>Create the terraform.tfvars file<a class="headerlink" href="#create-the-terraform-tfvars-file" title="Permalink to this headline">¶</a></h2>
+<p>Our Terraform plan in this directory will create a device group, template, and template stack on our shared Panorama.
+So we don’t overwrite the configuration of other students in the class, create a file called <code class="docutils literal notranslate"><span class="pre">terraform.tfvars</span></code> and
+define values for the device group, template name, and template stack name:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="na">device_group</span>    <span class="o">=</span> <span class="s2">&quot;studentXX-dg&quot;</span>
+<span class="na">template</span>        <span class="o">=</span> <span class="s2">&quot;studentXX-template&quot;</span>
+<span class="na">stack</span>           <span class="o">=</span> <span class="s2">&quot;studentXX-stack&quot;</span>
+</pre></div>
+</div>
+<p>Replace the strings <code class="docutils literal notranslate"><span class="pre">studentXX-dg</span></code>, <code class="docutils literal notranslate"><span class="pre">studentXX-template</span></code>, and <code class="docutils literal notranslate"><span class="pre">studentXX-stack</span></code> with the values provided by the
+instructor.</p>
+</div>
+<div class="section" id="learn-about-the-provided-modules">
+<h2>Learn about the provided modules<a class="headerlink" href="#learn-about-the-provided-modules" title="Permalink to this headline">¶</a></h2>
+<p>You have been provided with two Terraform modules in the <code class="docutils literal notranslate"><span class="pre">configuration/modules</span></code> directory that will build out our
+Panorama configuration.  Here’s a snippet of the contents of
+<a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/main.tf">main.tf</a>
+in the <code class="docutils literal notranslate"><span class="pre">configuration/modules/network</span></code> directory:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>resource &quot;panos_panorama_template&quot; &quot;demo_template&quot; {
+    name = var.template
+}
+
+resource &quot;panos_panorama_template_stack&quot; &quot;demo_stack&quot; {
+    name      = var.stack
+    templates = [panos_panorama_template.demo_template.name]
+}
+
+resource &quot;panos_panorama_ethernet_interface&quot; &quot;untrust&quot; {
+    name                      = &quot;ethernet1/1&quot;
+    comment                   = &quot;untrust interface&quot;
+    vsys                      = &quot;vsys1&quot;
+    mode                      = &quot;layer3&quot;
+    enable_dhcp               = true
+    create_dhcp_default_route = true
+    template                  = panos_panorama_template.demo_template.name
+}
+
+resource &quot;panos_panorama_ethernet_interface&quot; &quot;web&quot; {
+    name        = &quot;ethernet1/2&quot;
+    comment     = &quot;web interface&quot;
+    vsys        = &quot;vsys1&quot;
+    mode        = &quot;layer3&quot;
+    enable_dhcp = true
+    template    = panos_panorama_template.demo_template.name
+}
+
+resource &quot;panos_panorama_ethernet_interface&quot; &quot;db&quot; {
+    name        = &quot;ethernet1/3&quot;
+    comment     = &quot;database interface&quot;
+    vsys        = &quot;vsys1&quot;
+    mode        = &quot;layer3&quot;
+    enable_dhcp = true
+    template    = panos_panorama_template.demo_template.name
+}
+</pre></div>
+</div>
+<p>Terraform will use this configuration to build out the contents of the template and template stack specified by the
+<code class="docutils literal notranslate"><span class="pre">template</span></code> and <code class="docutils literal notranslate"><span class="pre">stack</span></code> variables.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module also specifies some
+<a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/outputs.tf">outputs</a>
+that can be fed to other modules in the configuration:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>output &quot;zone_untrust&quot; {
+    value = panos_panorama_zone.untrust.name
+}
+
+output &quot;zone_web&quot; {
+    value = panos_panorama_zone.web.name
+}
+
+output &quot;zone_db&quot; {
+    value = panos_panorama_zone.db.name
+}
+
+output &quot;interface_untrust&quot; {
+    value = panos_panorama_ethernet_interface.untrust.name
+}
+
+output &quot;interface_web&quot; {
+    value = panos_panorama_ethernet_interface.web.name
+}
+
+output &quot;interface_db&quot; {
+    value = panos_panorama_ethernet_interface.db.name
+}
+</pre></div>
+</div>
+<p>The module to populate the
+<a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/policies/main.tf">device group</a>
+works in a similar fashion.</p>
+</div>
+<div class="section" id="assemble-configuration-main-tf">
+<h2>Assemble configuration/main.tf<a class="headerlink" href="#assemble-configuration-main-tf" title="Permalink to this headline">¶</a></h2>
+<p>Add the following to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the template and template stack on our Panorama instance:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;networking&quot; {
+    source = &quot;./modules/networking&quot;
+
+    template = var.template
+    stack    = var.stack
+}
+</pre></div>
+</div>
+<p>Now run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> (you need to run <code class="docutils literal notranslate"><span class="pre">init</span></code> each time you add a new module) and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code>.  You will
+see the Terraform provider determine what changes need to be made, and output all the changes that will be made to the
+configuration.  If you run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>, those changes will be added to the candidate configuration, but not
+committed (<a class="reference internal" href="../06-appendix/terraform-commit.html#terraform-commits"><span class="std std-ref">why?</span></a>).</p>
+<p>Add the next section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the device group:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;policies&quot; {
+    source = &quot;./modules/policies&quot;
+
+    device_group = var.device_group
+
+    zone_untrust = module.networking.zone_untrust
+    zone_web     = module.networking.zone_web
+    zone_db      = module.networking.zone_db
+
+    interface_untrust = module.networking.interface_untrust
+    interface_web     = module.networking.interface_web
+    interface_db      = module.networking.interface_db
+}
+</pre></div>
+</div>
+<p>This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
+outputs those names from what it creates, so we can chain these two modules together.</p>
+<p>You can run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code>, and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to populate the device group on Panorama.</p>
+<p>Since Terraform is unable to commit configuration to PAN-OS on it’s own, we have provided a Golang helper program to
+commit your user’s changes to Panorama.  You use a null resource provisioner in your main.tf to have Terraform run the
+program for you.</p>
+<p>Add the following section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to issue the commit:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>resource &quot;null_resource&quot; &quot;commit_panorama&quot; {
+    provisioner &quot;local-exec&quot; {
+        command = &quot;./commit&quot;
+    }
+    depends_on = [
+        module.policies.security_rule_group,
+        module.policies.nat_rule_group
+    ]
+}
+</pre></div>
+</div>
+<p>Your completed <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> should look like this:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>provider &quot;panos&quot; {}
+
+module &quot;networking&quot; {
+    source = &quot;./modules/networking&quot;
+
+    template = var.template
+    stack    = var.stack
+}
+
+module &quot;policies&quot; {
+    source = &quot;./modules/policies&quot;
+
+    device_group = var.device_group
+
+    zone_untrust = module.networking.zone_untrust
+    zone_web     = module.networking.zone_web
+    zone_db      = module.networking.zone_db
+
+    interface_untrust = module.networking.interface_untrust
+    interface_web     = module.networking.interface_web
+    interface_db      = module.networking.interface_db
+}
+
+resource &quot;null_resource&quot; &quot;commit_panorama&quot; {
+    provisioner &quot;local-exec&quot; {
+        command = &quot;./commit&quot;
+    }
+    depends_on = [
+        module.policies.security_rule_group,
+        module.policies.nat_rule_group
+    ]
+}
+</pre></div>
+</div>
+<p>Now, run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to finalize the changes.  Log in to the Panorama web UI and verify
+that your changes have been committed.  You’re now ready to deploy the environment and have your firewall bootstrap
+from this configuration.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../03-deploy/deploy.html" class="btn btn-neutral float-right" title="Lab Deployment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="terraform.html" class="btn btn-neutral float-left" title="Terraform Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Palo Alto Networks
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
