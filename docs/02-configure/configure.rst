@@ -94,8 +94,8 @@ With these values defined, we can now initialize the Terraform panos provider wi
 The provider is now ready to communicate with our Panorama instance.
 
 
-Create the terraform.tfvars file
---------------------------------
+Create configuration/terraform.tfvars
+-------------------------------------
 
 Our Terraform plan in this directory will create a device group, template, and template stack on our shared Panorama.
 So we don't overwrite the configuration of other students in the class, create a file called ``terraform.tfvars`` and

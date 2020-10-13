@@ -71,8 +71,8 @@ Create an SSH key-pair with an empty passphrase and save them in the ``~/.ssh`` 
           configured Compute Engine to use our key exclusively.
 
 
-Create the terraform.tfvars file
---------------------------------
+Create deployment/terraform.tfvars
+----------------------------------
 
 In this directory you will find the three main files associated with a Terraform plan: ``main.tf``, ``variables.tf``,
 and ``outputs.tf``.  View the contents of these files to see what they contain and how they're structured.
