@@ -1,6 +1,6 @@
-============
-Introduction
-============
+================
+Lab Introduction
+================
 
 Infrastructure as Code 
 ----------------------

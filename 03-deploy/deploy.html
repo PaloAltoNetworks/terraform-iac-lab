@@ -88,7 +88,7 @@
             
               <p class="caption"><span class="caption-text">overview</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Lab Introduction</a></li>
 </ul>
 <p class="caption"><span class="caption-text">getting started</span></p>
 <ul>
@@ -106,7 +106,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-a-service-account-credential-file">Create a service account credential file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-an-ssh-key-pair">Create an SSH key-pair</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#create-the-terraform-tfvars-file">Create the terraform.tfvars file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-deployment-terraform-tfvars">Create deployment/terraform.tfvars</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-the-bootstrap-module">Add the bootstrap module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add-the-firewall-module">Add the firewall module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploy-the-infrastructure">Deploy the infrastructure</a></li>
@@ -245,8 +245,8 @@ GCP’s SSH key management process, we’ve created our own SSH key and
 configured Compute Engine to use our key exclusively.</p>
 </div>
 </div>
-<div class="section" id="create-the-terraform-tfvars-file">
-<h2>Create the terraform.tfvars file<a class="headerlink" href="#create-the-terraform-tfvars-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-deployment-terraform-tfvars">
+<h2>Create deployment/terraform.tfvars<a class="headerlink" href="#create-deployment-terraform-tfvars" title="Permalink to this headline">¶</a></h2>
 <p>In this directory you will find the three main files associated with a Terraform plan: <code class="docutils literal notranslate"><span class="pre">main.tf</span></code>, <code class="docutils literal notranslate"><span class="pre">variables.tf</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">outputs.tf</span></code>.  View the contents of these files to see what they contain and how they’re structured.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ more main.tf
@@ -260,73 +260,76 @@ declare the variables that will be used in the plan (but not necessarily their v
 will define the values to display that result from applying the plan.</p>
 <p>Create a file called <code class="docutils literal notranslate"><span class="pre">terraform.tfvars</span></code> in the current directory that contains the following variables and their
 values.  You will need to add a number of things:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>GCP configuration: The GCP project ID, region, and zone.</dt><dd><ul>
-<li><p><strong>project</strong>: The GCP project ID that Qwiklabs created for you.</p></li>
-<li><p><strong>region</strong>: The GCP region we are using (supplied by instructor).</p></li>
-<li><p><strong>zone</strong>: The GCP zone we are using (supplied by instructor).</p></li>
-</ul>
+<p><strong>GCP configuration:</strong></p>
+<dl class="simple">
+<dt>project:</dt><dd><p>The GCP project ID to use.</p>
+</dd>
+<dt>region:</dt><dd><p>The GCP region we are using.</p>
+</dd>
+<dt>zone:</dt><dd><p>The GCP zone we are using.</p>
 </dd>
 </dl>
-</li>
-<li><dl class="simple">
-<dt>Authentication information:</dt><dd><ul>
-<li><p><strong>credentials_file</strong>: The path to our JSON credentials file.</p></li>
-<li><p><strong>public_key_file</strong>: The path to our SSH public key file.</p></li>
-</ul>
+<p><strong>Authentication information</strong></p>
+<dl class="simple">
+<dt>credentials_file:</dt><dd><p>Path to the JSON credentials file.</p>
+</dd>
+<dt>public_key_file:</dt><dd><p>Path to the SSH public key file.</p>
 </dd>
 </dl>
-</li>
-<li><dl class="simple">
-<dt>Firewall information:</dt><dd><ul>
-<li><p><strong>fw_name</strong>: The name for the firewall.</p></li>
-</ul>
+<p><strong>Firewall information:</strong></p>
+<dl class="simple">
+<dt>fw_name:</dt><dd><p>The name for the firewall.</p>
 </dd>
 </dl>
-</li>
-<li><dl class="simple">
-<dt>Panorama bootstrap information:</dt><dd><ul>
-<li><p><strong>panorama</strong>: The hostname/IP address of Panorama (supplied by instructor).</p></li>
-<li><p><strong>tplname</strong>: The template stack you created in the previous section (replace XX with your student number).</p></li>
-<li><p><strong>dgname</strong>: The device group you created in the previous section (replace XX with your student number).</p></li>
-<li><p><strong>vm_auth_key</strong>: The VM auth key for Panorama (supplied by instructor).</p></li>
-</ul>
+<p><strong>Panorama bootstrap information:</strong></p>
+<dl class="simple">
+<dt>panorama:</dt><dd><p>The hostname/IP address of Panorama.</p>
+</dd>
+<dt>tplname:</dt><dd><p>The template stack created in the previous section (replace XX with your
+student number).</p>
+</dd>
+<dt>dgname:</dt><dd><p>The device group created in the previous section (replace XX with your
+student number).</p>
+</dd>
+<dt>vm_auth_key:</dt><dd><p>The VM auth key for Panorama.</p>
 </dd>
 </dl>
-</li>
-</ul>
 <p>Your file should look similar to the following, with the appropriate values replaced:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="na"> project</span>             <span class="o">=</span> <span class="s2">&quot;&lt;YOUR_GCP_PROJECT_ID&gt;&quot;</span>
-<span class="na"> region</span>              <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
-<span class="na"> zone</span>                <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
-<span class="na"> credentials_file</span>    <span class="o">=</span> <span class="s2">&quot;~/gcp_compute_key.json&quot;</span>
-<span class="na"> public_key_file</span>     <span class="o">=</span> <span class="s2">&quot;~/.ssh/lab_ssh_key.pub&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="na">project</span>             <span class="o">=</span> <span class="s2">&quot;&lt;YOUR_GCP_PROJECT_ID&gt;&quot;</span>
+<span class="na">region</span>              <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">zone</span>                <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">credentials_file</span>    <span class="o">=</span> <span class="s2">&quot;~/gcp_compute_key.json&quot;</span>
+<span class="na">public_key_file</span>     <span class="o">=</span> <span class="s2">&quot;~/.ssh/lab_ssh_key.pub&quot;</span>
 
-<span class="na"> fw_name</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-fw&quot;</span>
-<span class="na"> panorama</span>    <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
-<span class="na"> tplname</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-stack&quot;</span>
-<span class="na"> dgname</span>      <span class="o">=</span> <span class="s2">&quot;studentXX-dg&quot;</span>
-<span class="na"> vm_auth_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">fw_name</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-fw&quot;</span>
+<span class="na">panorama</span>    <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
+<span class="na">tplname</span>     <span class="o">=</span> <span class="s2">&quot;studentXX-stack&quot;</span>
+<span class="na">dgname</span>      <span class="o">=</span> <span class="s2">&quot;studentXX-dg&quot;</span>
+<span class="na">vm_auth_key</span> <span class="o">=</span> <span class="s2">&quot;&lt;SEE_INSTRUCTOR_PRESENTATION&gt;&quot;</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re running this lab on your own, replace these values appropriately.
+See the Panorama documentation for generating the VM auth key.</p>
 </div>
 </div>
 <div class="section" id="add-the-bootstrap-module">
 <h2>Add the bootstrap module<a class="headerlink" href="#add-the-bootstrap-module" title="Permalink to this headline">¶</a></h2>
 <p>Add the following module definition to <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code>:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;bootstrap&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span>  <span class="o">=</span> <span class="s2">&quot;PaloAltoNetworks/panos-bootstrap/google&quot;</span>
-<span class="na">     version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="s">&quot;bootstrap&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span>  <span class="o">=</span> <span class="s2">&quot;PaloAltoNetworks/panos-bootstrap/google&quot;</span>
+<span class="na">    version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
 
-<span class="na">     bootstrap_project</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
-<span class="na">     bootstrap_region</span>  <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
+<span class="na">    bootstrap_project</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
+<span class="na">    bootstrap_region</span>  <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
 
-<span class="na">     hostname</span>        <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
-<span class="na">     panorama-server</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">panorama</span>
-<span class="na">     tplname</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">tplname</span>
-<span class="na">     dgname</span>          <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">dgname</span>
-<span class="na">     vm-auth-key</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">vm_auth_key</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    hostname</span>        <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
+<span class="na">    panorama-server</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">panorama</span>
+<span class="na">    tplname</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">tplname</span>
+<span class="na">    dgname</span>          <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">dgname</span>
+<span class="na">    vm-auth-key</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">vm_auth_key</span>
+<span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>This uses a module that has been published to the Terraform module registry for public use.  (If you’d like to review
@@ -338,34 +341,34 @@ create the Google Storage bucket for holding a PAN-OS bootstrap configuration, a
 <div class="section" id="add-the-firewall-module">
 <h2>Add the firewall module<a class="headerlink" href="#add-the-firewall-module" title="Permalink to this headline">¶</a></h2>
 <p>Now we need to add another module definition to <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code> to specify the firewall configuration:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
 
-<span class="na">     fw_name</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
-<span class="na">     fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;</span>
-<span class="na">     fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
-<span class="na">     fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
-<span class="na">     fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
+<span class="na">    fw_name</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
+<span class="na">    fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;</span>
+<span class="na">    fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
+<span class="na">    fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
+<span class="na">    fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
 
-<span class="na">     fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
+<span class="na">    fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
 
-<span class="na">     fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
-<span class="na">     fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
-<span class="na">     fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
+<span class="na">    fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
+<span class="na">    fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
+<span class="na">    fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
 
-<span class="na">     fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
-<span class="na">     fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
-<span class="na">     fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
+<span class="na">    fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
+<span class="na">    fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
+<span class="na">    fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
 
-<span class="na">     fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
-<span class="na">     fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
-<span class="na">     fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
+<span class="na">    fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
+<span class="na">    fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
+<span class="na">    fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
 
-<span class="na">     fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
-<span class="na">     fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
-<span class="na">     fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
+<span class="na">    fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
+<span class="na">    fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
+<span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/deployment/modules/firewall/main.tf">This module</a>
@@ -375,120 +378,120 @@ this one.</p>
 <div class="section" id="deploy-the-infrastructure">
 <h2>Deploy the infrastructure<a class="headerlink" href="#deploy-the-infrastructure" title="Permalink to this headline">¶</a></h2>
 <p>Your completed <code class="docutils literal notranslate"><span class="pre">deployment/main.tf</span></code> file should look like this:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">provider</span> <span class="s">&quot;google&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     credentials</span> <span class="o">=</span> <span class="err">file</span><span class="p">(</span><span class="err">var</span><span class="p">.</span><span class="err">credentials_file</span><span class="p">)</span>
-<span class="na">     project</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
-<span class="na">     region</span>      <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
- <span class=" -Punctuation">}</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">provider</span> <span class="s">&quot;google&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    credentials</span> <span class="o">=</span> <span class="err">file</span><span class="p">(</span><span class="err">var</span><span class="p">.</span><span class="err">credentials_file</span><span class="p">)</span>
+<span class="na">    project</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
+<span class="na">    region</span>      <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">module</span> <span class="s">&quot;bootstrap&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span>  <span class="o">=</span> <span class="s2">&quot;PaloAltoNetworks/panos-bootstrap/google&quot;</span>
-<span class="na">     version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+<span class="kr">module</span> <span class="s">&quot;bootstrap&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span>  <span class="o">=</span> <span class="s2">&quot;PaloAltoNetworks/panos-bootstrap/google&quot;</span>
+<span class="na">    version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
 
-<span class="na">     bootstrap_project</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
-<span class="na">     bootstrap_region</span>  <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
+<span class="na">    bootstrap_project</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">project</span>
+<span class="na">    bootstrap_region</span>  <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
 
-<span class="na">     hostname</span>        <span class="o">=</span> <span class="s2">&quot;terraform-iac-fw&quot;</span>
-<span class="na">     panorama-server</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">panorama</span>
-<span class="na">     tplname</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">tplname</span>
-<span class="na">     dgname</span>          <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">dgname</span>
-<span class="na">     vm-auth-key</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">vm_auth_key</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    hostname</span>        <span class="o">=</span> <span class="s2">&quot;terraform-iac-fw&quot;</span>
+<span class="na">    panorama-server</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">panorama</span>
+<span class="na">    tplname</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">tplname</span>
+<span class="na">    dgname</span>          <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">dgname</span>
+<span class="na">    vm-auth-key</span>     <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">vm_auth_key</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">module</span> <span class="s">&quot;vpc&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/vpc&quot;</span>
+<span class="kr">module</span> <span class="s">&quot;vpc&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/vpc&quot;</span>
 
-<span class="na">     vpc_region</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
+<span class="na">    vpc_region</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">region</span>
 
-<span class="na">     vpc_mgmt_network_name</span> <span class="o">=</span> <span class="s2">&quot;management-network&quot;</span>
-<span class="na">     vpc_mgmt_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.0.0/24&quot;</span>
-<span class="na">     vpc_mgmt_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;management-subnet&quot;</span>
+<span class="na">    vpc_mgmt_network_name</span> <span class="o">=</span> <span class="s2">&quot;management-network&quot;</span>
+<span class="na">    vpc_mgmt_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.0.0/24&quot;</span>
+<span class="na">    vpc_mgmt_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;management-subnet&quot;</span>
 
-<span class="na">     vpc_untrust_network_name</span> <span class="o">=</span> <span class="s2">&quot;untrust-network&quot;</span>
-<span class="na">     vpc_untrust_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.1.0/24&quot;</span>
-<span class="na">     vpc_untrust_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;untrust-subnet&quot;</span>
+<span class="na">    vpc_untrust_network_name</span> <span class="o">=</span> <span class="s2">&quot;untrust-network&quot;</span>
+<span class="na">    vpc_untrust_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.1.0/24&quot;</span>
+<span class="na">    vpc_untrust_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;untrust-subnet&quot;</span>
 
-<span class="na">     vpc_web_network_name</span> <span class="o">=</span> <span class="s2">&quot;web-network&quot;</span>
-<span class="na">     vpc_web_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.2.0/24&quot;</span>
-<span class="na">     vpc_web_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;web-subnet&quot;</span>
+<span class="na">    vpc_web_network_name</span> <span class="o">=</span> <span class="s2">&quot;web-network&quot;</span>
+<span class="na">    vpc_web_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.2.0/24&quot;</span>
+<span class="na">    vpc_web_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;web-subnet&quot;</span>
 
-<span class="na">     vpc_db_network_name</span> <span class="o">=</span> <span class="s2">&quot;database-network&quot;</span>
-<span class="na">     vpc_db_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.3.0/24&quot;</span>
-<span class="na">     vpc_db_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;database-subnet&quot;</span>
+<span class="na">    vpc_db_network_name</span> <span class="o">=</span> <span class="s2">&quot;database-network&quot;</span>
+<span class="na">    vpc_db_subnet_cidr</span>  <span class="o">=</span> <span class="s2">&quot;10.5.3.0/24&quot;</span>
+<span class="na">    vpc_db_subnet_name</span>  <span class="o">=</span> <span class="s2">&quot;database-subnet&quot;</span>
 
-<span class="na">     allowed_mgmt_cidr</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">allowed_mgmt_cidr</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    allowed_mgmt_cidr</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">allowed_mgmt_cidr</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">module</span> <span class="s">&quot;web&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/web&quot;</span>
+<span class="kr">module</span> <span class="s">&quot;web&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/web&quot;</span>
 
-<span class="na">     web_name</span>         <span class="o">=</span> <span class="s2">&quot;web-vm&quot;</span>
-<span class="na">     web_zone</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     web_machine_type</span> <span class="o">=</span> <span class="s2">&quot;n1-standard-1&quot;</span>
-<span class="na">     web_ssh_key</span>      <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
-<span class="na">     web_subnet_id</span>    <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
-<span class="na">     web_ip</span>           <span class="o">=</span> <span class="s2">&quot;10.5.2.5&quot;</span>
-<span class="na">     web_image</span>        <span class="o">=</span> <span class="s2">&quot;debian-9&quot;</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    web_name</span>         <span class="o">=</span> <span class="s2">&quot;web-vm&quot;</span>
+<span class="na">    web_zone</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    web_machine_type</span> <span class="o">=</span> <span class="s2">&quot;n1-standard-1&quot;</span>
+<span class="na">    web_ssh_key</span>      <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
+<span class="na">    web_subnet_id</span>    <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
+<span class="na">    web_ip</span>           <span class="o">=</span> <span class="s2">&quot;10.5.2.5&quot;</span>
+<span class="na">    web_image</span>        <span class="o">=</span> <span class="s2">&quot;debian-9&quot;</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">module</span> <span class="s">&quot;db&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/db&quot;</span>
+<span class="kr">module</span> <span class="s">&quot;db&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/db&quot;</span>
 
-<span class="na">     db_name</span>         <span class="o">=</span> <span class="s2">&quot;db-vm&quot;</span>
-<span class="na">     db_zone</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     db_machine_type</span> <span class="o">=</span> <span class="s2">&quot;n1-standard-1&quot;</span>
-<span class="na">     db_ssh_key</span>      <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
-<span class="na">     db_subnet_id</span>    <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
-<span class="na">     db_ip</span>           <span class="o">=</span> <span class="s2">&quot;10.5.3.5&quot;</span>
-<span class="na">     db_image</span>        <span class="o">=</span> <span class="s2">&quot;debian-9&quot;</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    db_name</span>         <span class="o">=</span> <span class="s2">&quot;db-vm&quot;</span>
+<span class="na">    db_zone</span>         <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    db_machine_type</span> <span class="o">=</span> <span class="s2">&quot;n1-standard-1&quot;</span>
+<span class="na">    db_ssh_key</span>      <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
+<span class="na">    db_subnet_id</span>    <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
+<span class="na">    db_ip</span>           <span class="o">=</span> <span class="s2">&quot;10.5.3.5&quot;</span>
+<span class="na">    db_image</span>        <span class="o">=</span> <span class="s2">&quot;debian-9&quot;</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
+<span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
 
-<span class="na">     fw_name</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
-<span class="na">     fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;</span>
-<span class="na">     fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
-<span class="na">     fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
-<span class="na">     fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
+<span class="na">    fw_name</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">fw_name</span>
+<span class="na">    fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000&quot;</span>
+<span class="na">    fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
+<span class="na">    fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
+<span class="na">    fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
 
-<span class="na">     fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
+<span class="na">    fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
 
-<span class="na">     fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
-<span class="na">     fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
-<span class="na">     fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
+<span class="na">    fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
+<span class="na">    fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
+<span class="na">    fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
 
-<span class="na">     fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
-<span class="na">     fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
-<span class="na">     fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
+<span class="na">    fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
+<span class="na">    fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
+<span class="na">    fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
 
-<span class="na">     fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
-<span class="na">     fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
-<span class="na">     fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
+<span class="na">    fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
+<span class="na">    fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
+<span class="na">    fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
 
-<span class="na">     fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
-<span class="na">     fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
-<span class="na">     fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
- <span class=" -Punctuation">}</span>
+<span class="na">    fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
+<span class="na">    fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
+<span class="na">    fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">resource</span> <span class="s">&quot;google_compute_route&quot; &quot;web-route&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     name</span>                   <span class="o">=</span> <span class="s2">&quot;web-route&quot;</span>
-<span class="na">     dest_range</span>             <span class="o">=</span> <span class="s2">&quot;0.0.0.0/0&quot;</span>
-<span class="na">     network</span>                <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_network</span>
-<span class="na">     next_hop_instance</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">firewall</span><span class="p">.</span><span class="err">firewall-instance</span>
-<span class="na">     next_hop_instance_zone</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     priority</span>               <span class="o">=</span> <span class="m">100</span>
- <span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="s">&quot;google_compute_route&quot; &quot;web-route&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>                   <span class="o">=</span> <span class="s2">&quot;web-route&quot;</span>
+<span class="na">    dest_range</span>             <span class="o">=</span> <span class="s2">&quot;0.0.0.0/0&quot;</span>
+<span class="na">    network</span>                <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_network</span>
+<span class="na">    next_hop_instance</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">firewall</span><span class="p">.</span><span class="err">firewall-instance</span>
+<span class="na">    next_hop_instance_zone</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    priority</span>               <span class="o">=</span> <span class="m">100</span>
+<span class=" -Punctuation">}</span>
 
- <span class="kr">resource</span> <span class="s">&quot;google_compute_route&quot; &quot;db-route&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     name</span>                   <span class="o">=</span> <span class="s2">&quot;db-route&quot;</span>
-<span class="na">     dest_range</span>             <span class="o">=</span> <span class="s2">&quot;0.0.0.0/0&quot;</span>
-<span class="na">     network</span>                <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_network</span>
-<span class="na">     next_hop_instance</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">firewall</span><span class="p">.</span><span class="err">firewall-instance</span>
-<span class="na">     next_hop_instance_zone</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     priority</span>               <span class="o">=</span> <span class="m">100</span>
- <span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="s">&quot;google_compute_route&quot; &quot;db-route&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>                   <span class="o">=</span> <span class="s2">&quot;db-route&quot;</span>
+<span class="na">    dest_range</span>             <span class="o">=</span> <span class="s2">&quot;0.0.0.0/0&quot;</span>
+<span class="na">    network</span>                <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_network</span>
+<span class="na">    next_hop_instance</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">firewall</span><span class="p">.</span><span class="err">firewall-instance</span>
+<span class="na">    next_hop_instance_zone</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">    priority</span>               <span class="o">=</span> <span class="m">100</span>
+<span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>Now, you’re ready to deploy the infrastructure.  Run the following commands:</p>

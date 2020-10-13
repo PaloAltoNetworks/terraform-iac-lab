@@ -88,15 +88,23 @@
             
               <p class="caption"><span class="caption-text">overview</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Lab Introduction</a></li>
 </ul>
 <p class="caption"><span class="caption-text">getting started</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#log-into-the-qwiklabs-portal">Log into the Qwiklabs portal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#launch-the-lab-environment">Launch the lab environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#log-into-google-cloud">Log into Google Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-qwiklabs-class">Setup - Qwiklabs Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#log-into-the-qwiklabs-portal">Log into the Qwiklabs portal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launch-the-lab-environment">Launch the lab environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-into-google-cloud">Log into Google Cloud</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-personal-account">Setup - Personal Account</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-gcp-project">Create a GCP project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enable-compute-engine-api">Enable Compute Engine API</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#launch-the-cloud-shell">Launch the Cloud Shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#clone-the-lab-software-repository">Clone the lab software repository</a></li>
 </ul>
@@ -190,25 +198,41 @@
 <h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
 <p>In this activity you will:</p>
 <ul class="simple">
-<li><p>Log into the Qwiklabs portal</p></li>
 <li><p>Launch the lab</p></li>
 <li><p>Log into the Google Cloud Platform console</p></li>
 <li><p>Launch a Cloud Shell instance</p></li>
 <li><p>Clone the lab software repository</p></li>
 </ul>
+<p>This lab can be used in two different ways, through an organized class using
+Qwiklabs, or at your own pace using your personal GCP account.  The two ways
+differ only in the setup method - every thing after logging into the GCP
+console is the same.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Before you start it is recommended that you launch a private instance
-of your web browser.  This will prevent the use of cached Google credentials
-when logging into the GCP consoles.  This will help ensure you do not incur
-any personal charges.</p>
+<p>If you use your own personal GCP account, you are responsible for
+all incurred charges and deleting the created resources after
+completing the lab.</p>
+</div>
+<p>Follow the instructions for the method you are using for this lab:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#setup-qwiklabs-class"><span class="std std-ref">Setup - Qwiklabs Class</span></a></p></li>
+<li><p><a class="reference internal" href="#setup-personal-account"><span class="std std-ref">Setup - Personal Account</span></a></p></li>
+</ul>
+<div class="section" id="setup-qwiklabs-class">
+<h2>Setup - Qwiklabs Class<a class="headerlink" href="#setup-qwiklabs-class" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before you start it is recommended that you launch a private
+instance of your web browser.  This will prevent the use of cached
+Google credentials when logging into the GCP console. This will
+help ensure you do not incur any personal charges.</p>
 </div>
 <div class="figure align-default" id="id1">
 <img alt="../_images/incognito.png" src="../_images/incognito.png" />
 <p class="caption"><span class="caption-text">Chrome Incognito mode</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="section" id="log-into-the-qwiklabs-portal">
-<h2>Log into the Qwiklabs portal<a class="headerlink" href="#log-into-the-qwiklabs-portal" title="Permalink to this headline">¶</a></h2>
+<h3>Log into the Qwiklabs portal<a class="headerlink" href="#log-into-the-qwiklabs-portal" title="Permalink to this headline">¶</a></h3>
 <p>Navigate to the <a class="reference external" href="https://paloaltonetworks.qwiklabs.com">Qwiklabs URL</a> in your
 web browser.</p>
 <p><code class="docutils literal notranslate"><span class="pre">https://paloaltonetworks.qwiklabs.com</span></code></p>
@@ -219,7 +243,7 @@ must use your corporate email address for the username.</p>
 </div>
 </div>
 <div class="section" id="launch-the-lab-environment">
-<h2>Launch the lab environment<a class="headerlink" href="#launch-the-lab-environment" title="Permalink to this headline">¶</a></h2>
+<h3>Launch the lab environment<a class="headerlink" href="#launch-the-lab-environment" title="Permalink to this headline">¶</a></h3>
 <p>Confirm that the course containing the phrase <strong>Terraform Infrastructure as Code</strong> is
 listed under In Progress on the welcome screen.  Click on the this course in
 order to add it to your My Learning inventory.</p>
@@ -244,7 +268,7 @@ the lefthand panel.</p>
 </div>
 </div>
 <div class="section" id="log-into-google-cloud">
-<h2>Log into Google Cloud<a class="headerlink" href="#log-into-google-cloud" title="Permalink to this headline">¶</a></h2>
+<h3>Log into Google Cloud<a class="headerlink" href="#log-into-google-cloud" title="Permalink to this headline">¶</a></h3>
 <p>Click on the <strong>Open Google Console</strong> to launch a new browser tab and log into GCP.
 Be sure to use the credentials provided by Qwiklabs rather than your personal Google
 account.  This will ensure that you are not charged for any infrastructure that you
@@ -253,6 +277,49 @@ deploy.</p>
 You will then be presented with the Google Cloud dashboard.</p>
 <div class="figure align-default">
 <img alt="../_images/gcp-console.png" src="../_images/gcp-console.png" />
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Continue on with the lab in the <a class="reference internal" href="#launch-the-cloud-shell"><span class="std std-ref">Launch the Cloud Shell</span></a>
+section.</p>
+</div>
+</div>
+</div>
+<div class="section" id="setup-personal-account">
+<h2>Setup - Personal Account<a class="headerlink" href="#setup-personal-account" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-a-gcp-project">
+<h3>Create a GCP project<a class="headerlink" href="#create-a-gcp-project" title="Permalink to this headline">¶</a></h3>
+<p>Log into the GCP console, and click <strong>Create Project</strong> to create a new project.</p>
+<div class="figure align-default">
+<img alt="../_images/personal-create.png" src="../_images/personal-create.png" />
+</div>
+<p>Give your project a unique name, and click <strong>Create</strong>.</p>
+<div class="figure align-default">
+<img alt="../_images/personal-project-name.png" src="../_images/personal-project-name.png" />
+</div>
+<p>Make sure your project is selected at the top of the console.</p>
+<div class="figure align-default">
+<img alt="../_images/personal-project-select.png" src="../_images/personal-project-select.png" />
+</div>
+</div>
+<div class="section" id="enable-compute-engine-api">
+<h3>Enable Compute Engine API<a class="headerlink" href="#enable-compute-engine-api" title="Permalink to this headline">¶</a></h3>
+<p>Now, enable the Compute Engine API for this project.  From the menu, select
+<strong>APIs &amp; Services &gt; Library</strong>.</p>
+<div class="figure align-default">
+<img alt="../_images/personal-api-library.png" src="../_images/personal-api-library.png" />
+</div>
+<p>Search for <em>Compute Engine API</em>, then click on it.</p>
+<div class="figure align-default">
+<img alt="../_images/personal-api-compute-enable.png" src="../_images/personal-api-compute-enable.png" />
+</div>
+<p>Finally, click <strong>Enable</strong> to enable the API.  It will take a few minutes to
+fully activate.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Continue on with the lab in the <a class="reference internal" href="#launch-the-cloud-shell"><span class="std std-ref">Launch the Cloud Shell</span></a>
+section.</p>
+</div>
 </div>
 </div>
 <div class="section" id="launch-the-cloud-shell">
