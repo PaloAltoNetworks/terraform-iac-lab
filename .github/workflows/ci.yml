@@ -84,7 +84,7 @@ jobs:
       - name: Generate documentation
         run: |
           cd docs
-          sphinx-build source html
+          make html
           touch html/.nojekyll
 
       - name: Deploy to GitHub Pages
