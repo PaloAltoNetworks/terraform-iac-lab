@@ -23,7 +23,7 @@ First, change to the Terraform deployment directory:
 
 .. code-block:: bash
 
-    $ cd ~/terraform-iac-lab/deployment
+   $ cd ~/terraform-iac-lab/deployment
 
 
 Create a service account credential file
@@ -37,20 +37,20 @@ List the email address of the Compute Engine default service account.
 
 .. code-block:: bash
 
-    $ gcloud iam service-accounts list
+   $ gcloud iam service-accounts list
 
 Use the following ``gcloud`` command to download the credentials for the **Compute Engine default service account**
 using its associated email address (displayed in the output of the previous command).
 
 .. code-block:: bash
 
-    $ gcloud iam service-accounts keys create ~/gcp_compute_key.json --iam-account <EMAIL_ADDRESS>
+   $ gcloud iam service-accounts keys create ~/gcp_compute_key.json --iam-account <EMAIL_ADDRESS>
 
 Verify the JSON credentials file was successfully created.
 
 .. code-block:: bash
 
-    $ cat ~/gcp_compute_key.json
+   $ cat ~/gcp_compute_key.json
 
 
 Create an SSH key-pair
@@ -62,13 +62,15 @@ Create an SSH key-pair with an empty passphrase and save them in the ``~/.ssh`` 
 
 .. code-block:: bash
 
-    $ ssh-keygen -t rsa -b 1024 -N '' -f ~/.ssh/lab_ssh_key
+   $ ssh-keygen -t rsa -b 1024 -N '' -f ~/.ssh/lab_ssh_key
 
-.. note:: GCP has the ability to manage all of its own SSH keys and propagate
-          them automatically to projects and instances. However, the VM-Series
-          is only able to make use of a single SSH key. Rather than leverage
-          GCP's SSH key management process, we've created our own SSH key and
-          configured Compute Engine to use our key exclusively.
+.. note::
+
+   GCP has the ability to manage all of its own SSH keys and propagate
+   them automatically to projects and instances. However, the VM-Series
+   is only able to make use of a single SSH key. Rather than leverage
+   GCP's SSH key management process, we've created our own SSH key and
+   configured Compute Engine to use our key exclusively.
 
 
 Create deployment/terraform.tfvars
@@ -111,17 +113,17 @@ Your file should look similar to the following, with the appropriate values repl
 .. code-block:: terraform
    :force:
 
-    project             = "<YOUR_GCP_PROJECT_ID>"
-    region              = "<SEE_INSTRUCTOR_PRESENTATION>"
-    zone                = "<SEE_INSTRUCTOR_PRESENTATION>"
-    credentials_file    = "~/gcp_compute_key.json"
-    public_key_file     = "~/.ssh/lab_ssh_key.pub"
+   project             = "<YOUR_GCP_PROJECT_ID>"
+   region              = "<SEE_INSTRUCTOR_PRESENTATION>"
+   zone                = "<SEE_INSTRUCTOR_PRESENTATION>"
+   credentials_file    = "~/gcp_compute_key.json"
+   public_key_file     = "~/.ssh/lab_ssh_key.pub"
 
-    fw_name     = "studentXX-fw"
-    panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
-    tplname     = "studentXX-stack"
-    dgname      = "studentXX-dg"
-    vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
+   fw_name     = "studentXX-fw"
+   panorama    = "<SEE_INSTRUCTOR_PRESENTATION>"
+   tplname     = "studentXX-stack"
+   dgname      = "studentXX-dg"
+   vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
 
 
 Add the bootstrap module
@@ -132,19 +134,19 @@ Add the following module definition to ``deployment/main.tf``:
 .. code-block:: terraform
    :force:
 
-    module "bootstrap" {
-        source  = "PaloAltoNetworks/panos-bootstrap/google"
-        version = "1.0.0"
+   module "bootstrap" {
+       source  = "PaloAltoNetworks/panos-bootstrap/google"
+       version = "1.0.0"
 
-        bootstrap_project = var.project
-        bootstrap_region  = var.region
+       bootstrap_project = var.project
+       bootstrap_region  = var.region
 
-        hostname        = var.fw_name
-        panorama-server = var.panorama
-        tplname         = var.tplname
-        dgname          = var.dgname
-        vm-auth-key     = var.vm_auth_key
-    }
+       hostname        = var.fw_name
+       panorama-server = var.panorama
+       tplname         = var.tplname
+       dgname          = var.dgname
+       vm-auth-key     = var.vm_auth_key
+   }
 
 This uses a module that has been published to the Terraform module registry for public use.  (If you'd like to review
 the code, it's on the
@@ -161,34 +163,34 @@ Now we need to add another module definition to ``deployment/main.tf`` to specif
 .. code-block:: terraform
    :force:
 
-    module "firewall" {
-        source = "./modules/firewall"
+   module "firewall" {
+       source = "./modules/firewall"
 
-        fw_name             = var.fw_name
-        fw_zone             = var.zone
-        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
-        fw_machine_type     = "n1-standard-4"
-        fw_machine_cpu      = "Intel Skylake"
-        fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+       fw_name             = var.fw_name
+       fw_zone             = var.zone
+       fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
+       fw_machine_type     = "n1-standard-4"
+       fw_machine_cpu      = "Intel Skylake"
+       fw_bootstrap_bucket = module.bootstrap.bootstrap_name
 
-        fw_ssh_key = "admin:${file(var.public_key_file)}"
+       fw_ssh_key = "admin:${file(var.public_key_file)}"
 
-        fw_mgmt_subnet = module.vpc.mgmt_subnet
-        fw_mgmt_ip     = "10.5.0.4"
-        fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+       fw_mgmt_subnet = module.vpc.mgmt_subnet
+       fw_mgmt_ip     = "10.5.0.4"
+       fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
 
-        fw_untrust_subnet = module.vpc.untrust_subnet
-        fw_untrust_ip     = "10.5.1.4"
-        fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+       fw_untrust_subnet = module.vpc.untrust_subnet
+       fw_untrust_ip     = "10.5.1.4"
+       fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
 
-        fw_web_subnet = module.vpc.web_subnet
-        fw_web_ip     = "10.5.2.4"
-        fw_web_rule   = module.vpc.web-allow-outbound-rule
+       fw_web_subnet = module.vpc.web_subnet
+       fw_web_ip     = "10.5.2.4"
+       fw_web_rule   = module.vpc.web-allow-outbound-rule
 
-        fw_db_subnet = module.vpc.db_subnet
-        fw_db_ip     = "10.5.3.4"
-        fw_db_rule   = module.vpc.db-allow-outbound-rule
-    }
+       fw_db_subnet = module.vpc.db_subnet
+       fw_db_ip     = "10.5.3.4"
+       fw_db_rule   = module.vpc.db-allow-outbound-rule
+   }
 
 `This module <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/deployment/modules/firewall/main.tf>`_
 creates the VM-Series instance.  Notice how the outputs from the *bootstrap* and *vpc* modules are used as inputs to
@@ -203,120 +205,120 @@ Your completed ``deployment/main.tf`` file should look like this:
 .. code-block:: terraform
    :force:
 
-    provider "google" {
-        credentials = file(var.credentials_file)
-        project     = var.project
-        region      = var.region
-    }
+   provider "google" {
+       credentials = file(var.credentials_file)
+       project     = var.project
+       region      = var.region
+   }
 
-    module "bootstrap" {
-        source  = "PaloAltoNetworks/panos-bootstrap/google"
-        version = "1.0.0"
+   module "bootstrap" {
+       source  = "PaloAltoNetworks/panos-bootstrap/google"
+       version = "1.0.0"
 
-        bootstrap_project = var.project
-        bootstrap_region  = var.region
+       bootstrap_project = var.project
+       bootstrap_region  = var.region
 
-        hostname        = "terraform-iac-fw"
-        panorama-server = var.panorama
-        tplname         = var.tplname
-        dgname          = var.dgname
-        vm-auth-key     = var.vm_auth_key
-    }
+       hostname        = "terraform-iac-fw"
+       panorama-server = var.panorama
+       tplname         = var.tplname
+       dgname          = var.dgname
+       vm-auth-key     = var.vm_auth_key
+   }
 
-    module "vpc" {
-        source = "./modules/vpc"
+   module "vpc" {
+       source = "./modules/vpc"
 
-        vpc_region = var.region
+       vpc_region = var.region
 
-        vpc_mgmt_network_name = "management-network"
-        vpc_mgmt_subnet_cidr  = "10.5.0.0/24"
-        vpc_mgmt_subnet_name  = "management-subnet"
+       vpc_mgmt_network_name = "management-network"
+       vpc_mgmt_subnet_cidr  = "10.5.0.0/24"
+       vpc_mgmt_subnet_name  = "management-subnet"
 
-        vpc_untrust_network_name = "untrust-network"
-        vpc_untrust_subnet_cidr  = "10.5.1.0/24"
-        vpc_untrust_subnet_name  = "untrust-subnet"
+       vpc_untrust_network_name = "untrust-network"
+       vpc_untrust_subnet_cidr  = "10.5.1.0/24"
+       vpc_untrust_subnet_name  = "untrust-subnet"
 
-        vpc_web_network_name = "web-network"
-        vpc_web_subnet_cidr  = "10.5.2.0/24"
-        vpc_web_subnet_name  = "web-subnet"
+       vpc_web_network_name = "web-network"
+       vpc_web_subnet_cidr  = "10.5.2.0/24"
+       vpc_web_subnet_name  = "web-subnet"
 
-        vpc_db_network_name = "database-network"
-        vpc_db_subnet_cidr  = "10.5.3.0/24"
-        vpc_db_subnet_name  = "database-subnet"
+       vpc_db_network_name = "database-network"
+       vpc_db_subnet_cidr  = "10.5.3.0/24"
+       vpc_db_subnet_name  = "database-subnet"
 
-        allowed_mgmt_cidr = var.allowed_mgmt_cidr
-    }
+       allowed_mgmt_cidr = var.allowed_mgmt_cidr
+   }
 
-    module "web" {
-        source = "./modules/web"
+   module "web" {
+       source = "./modules/web"
 
-        web_name         = "web-vm"
-        web_zone         = var.zone
-        web_machine_type = "n1-standard-1"
-        web_ssh_key      = "admin:${file(var.public_key_file)}"
-        web_subnet_id    = module.vpc.web_subnet
-        web_ip           = "10.5.2.5"
-        web_image        = "debian-9"
-    }
+       web_name         = "web-vm"
+       web_zone         = var.zone
+       web_machine_type = "n1-standard-1"
+       web_ssh_key      = "admin:${file(var.public_key_file)}"
+       web_subnet_id    = module.vpc.web_subnet
+       web_ip           = "10.5.2.5"
+       web_image        = "debian-9"
+   }
 
-    module "db" {
-        source = "./modules/db"
+   module "db" {
+       source = "./modules/db"
 
-        db_name         = "db-vm"
-        db_zone         = var.zone
-        db_machine_type = "n1-standard-1"
-        db_ssh_key      = "admin:${file(var.public_key_file)}"
-        db_subnet_id    = module.vpc.db_subnet
-        db_ip           = "10.5.3.5"
-        db_image        = "debian-9"
-    }
+       db_name         = "db-vm"
+       db_zone         = var.zone
+       db_machine_type = "n1-standard-1"
+       db_ssh_key      = "admin:${file(var.public_key_file)}"
+       db_subnet_id    = module.vpc.db_subnet
+       db_ip           = "10.5.3.5"
+       db_image        = "debian-9"
+   }
 
-    module "firewall" {
-        source = "./modules/firewall"
+   module "firewall" {
+       source = "./modules/firewall"
 
-        fw_name             = var.fw_name
-        fw_zone             = var.zone
-        fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
-        fw_machine_type     = "n1-standard-4"
-        fw_machine_cpu      = "Intel Skylake"
-        fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+       fw_name             = var.fw_name
+       fw_zone             = var.zone
+       fw_image            = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-bundle2-1000"
+       fw_machine_type     = "n1-standard-4"
+       fw_machine_cpu      = "Intel Skylake"
+       fw_bootstrap_bucket = module.bootstrap.bootstrap_name
 
-        fw_ssh_key = "admin:${file(var.public_key_file)}"
+       fw_ssh_key = "admin:${file(var.public_key_file)}"
 
-        fw_mgmt_subnet = module.vpc.mgmt_subnet
-        fw_mgmt_ip     = "10.5.0.4"
-        fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+       fw_mgmt_subnet = module.vpc.mgmt_subnet
+       fw_mgmt_ip     = "10.5.0.4"
+       fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
 
-        fw_untrust_subnet = module.vpc.untrust_subnet
-        fw_untrust_ip     = "10.5.1.4"
-        fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+       fw_untrust_subnet = module.vpc.untrust_subnet
+       fw_untrust_ip     = "10.5.1.4"
+       fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
 
-        fw_web_subnet = module.vpc.web_subnet
-        fw_web_ip     = "10.5.2.4"
-        fw_web_rule   = module.vpc.web-allow-outbound-rule
+       fw_web_subnet = module.vpc.web_subnet
+       fw_web_ip     = "10.5.2.4"
+       fw_web_rule   = module.vpc.web-allow-outbound-rule
 
-        fw_db_subnet = module.vpc.db_subnet
-        fw_db_ip     = "10.5.3.4"
-        fw_db_rule   = module.vpc.db-allow-outbound-rule
-    }
+       fw_db_subnet = module.vpc.db_subnet
+       fw_db_ip     = "10.5.3.4"
+       fw_db_rule   = module.vpc.db-allow-outbound-rule
+   }
 
-    resource "google_compute_route" "web-route" {
-        name                   = "web-route"
-        dest_range             = "0.0.0.0/0"
-        network                = module.vpc.web_network
-        next_hop_instance      = module.firewall.firewall-instance
-        next_hop_instance_zone = var.zone
-        priority               = 100
-    }
+   resource "google_compute_route" "web-route" {
+       name                   = "web-route"
+       dest_range             = "0.0.0.0/0"
+       network                = module.vpc.web_network
+       next_hop_instance      = module.firewall.firewall-instance
+       next_hop_instance_zone = var.zone
+       priority               = 100
+   }
 
-    resource "google_compute_route" "db-route" {
-        name                   = "db-route"
-        dest_range             = "0.0.0.0/0"
-        network                = module.vpc.db_network
-        next_hop_instance      = module.firewall.firewall-instance
-        next_hop_instance_zone = var.zone
-        priority               = 100
-    }
+   resource "google_compute_route" "db-route" {
+       name                   = "db-route"
+       dest_range             = "0.0.0.0/0"
+       network                = module.vpc.db_network
+       next_hop_instance      = module.firewall.firewall-instance
+       next_hop_instance_zone = var.zone
+       priority               = 100
+   }
 
 
 Now, you're ready to deploy the infrastructure.  Run the following commands:

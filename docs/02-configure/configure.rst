@@ -70,9 +70,9 @@ appropriate environment variables, substituting in the values provided by the in
 
 .. code-block:: bash
 
-    $ export PANOS_HOSTNAME="<YOUR PANORAMA MGMT IP GOES HERE>"
-    $ export PANOS_USERNAME="<YOUR STUDENT NAME>"
-    $ export PANOS_PASSWORD="Ignite2020!"
+   $ export PANOS_HOSTNAME="<YOUR PANORAMA MGMT IP GOES HERE>"
+   $ export PANOS_USERNAME="<YOUR STUDENT NAME>"
+   $ export PANOS_PASSWORD="Ignite2020!"
 
 .. note:: Replace the text ``<YOUR PANORAMA MGMT IP GOES HERE>`` and ``<YOUR STUDENT NAME>`` with the values provided
           to you by the instructor.
@@ -169,29 +169,29 @@ that can be fed to other modules in the configuration:
 .. code-block:: terraform
    :force:
 
-    output "zone_untrust" {
-        value = panos_panorama_zone.untrust.name
-    }
+   output "zone_untrust" {
+       value = panos_panorama_zone.untrust.name
+   }
 
-    output "zone_web" {
-        value = panos_panorama_zone.web.name
-    }
+   output "zone_web" {
+       value = panos_panorama_zone.web.name
+   }
 
-    output "zone_db" {
-        value = panos_panorama_zone.db.name
-    }
+   output "zone_db" {
+       value = panos_panorama_zone.db.name
+   }
 
-    output "interface_untrust" {
-        value = panos_panorama_ethernet_interface.untrust.name
-    }
+   output "interface_untrust" {
+       value = panos_panorama_ethernet_interface.untrust.name
+   }
 
-    output "interface_web" {
-        value = panos_panorama_ethernet_interface.web.name
-    }
+   output "interface_web" {
+       value = panos_panorama_ethernet_interface.web.name
+   }
 
-    output "interface_db" {
-        value = panos_panorama_ethernet_interface.db.name
-    }
+   output "interface_db" {
+       value = panos_panorama_ethernet_interface.db.name
+   }
 
 The module to populate the 
 `device group <https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/policies/main.tf>`_
@@ -205,12 +205,12 @@ Add the following to ``configuration/main.tf`` to build out the template and tem
 .. code-block:: terraform
    :force:
 
-    module "networking" {
-        source = "./modules/networking"
+   module "networking" {
+       source = "./modules/networking"
 
-        template = var.template
-        stack    = var.stack
-    }
+       template = var.template
+       stack    = var.stack
+   }
 
 Now run ``terraform init`` (you need to run ``init`` each time you add a new module) and ``terraform plan``.  You will
 see the Terraform provider determine what changes need to be made, and output all the changes that will be made to the
@@ -222,19 +222,19 @@ Add the next section to ``configuration/main.tf`` to build out the device group:
 .. code-block:: terraform
    :force:
 
-    module "policies" {
-        source = "./modules/policies"
+   module "policies" {
+       source = "./modules/policies"
 
-        device_group = var.device_group
+       device_group = var.device_group
 
-        zone_untrust = module.networking.zone_untrust
-        zone_web     = module.networking.zone_web
-        zone_db      = module.networking.zone_db
+       zone_untrust = module.networking.zone_untrust
+       zone_web     = module.networking.zone_web
+       zone_db      = module.networking.zone_db
 
-        interface_untrust = module.networking.interface_untrust
-        interface_web     = module.networking.interface_web
-        interface_db      = module.networking.interface_db
-    }
+       interface_untrust = module.networking.interface_untrust
+       interface_web     = module.networking.interface_web
+       interface_db      = module.networking.interface_db
+   }
 
 This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
 outputs those names from what it creates, so we can chain these two modules together.
@@ -250,53 +250,53 @@ Add the following section to ``configuration/main.tf`` to issue the commit:
 .. code-block:: terraform
    :force:
 
-    resource "null_resource" "commit_panorama" {
-        provisioner "local-exec" {
-            command = "./commit"
-        }
-        depends_on = [
-            module.policies.security_rule_group,
-            module.policies.nat_rule_group
-        ]
-    }
+   resource "null_resource" "commit_panorama" {
+       provisioner "local-exec" {
+           command = "./commit"
+       }
+       depends_on = [
+           module.policies.security_rule_group,
+           module.policies.nat_rule_group
+       ]
+   }
 
 Your completed ``configuration/main.tf`` should look like this:
 
 .. code-block:: terraform
    :force:
 
-    provider "panos" {}
+   provider "panos" {}
 
-    module "networking" {
-        source = "./modules/networking"
+   module "networking" {
+       source = "./modules/networking"
 
-        template = var.template
-        stack    = var.stack
-    }
+       template = var.template
+       stack    = var.stack
+   }
 
-    module "policies" {
-        source = "./modules/policies"
+   module "policies" {
+       source = "./modules/policies"
 
-        device_group = var.device_group
+       device_group = var.device_group
 
-        zone_untrust = module.networking.zone_untrust
-        zone_web     = module.networking.zone_web
-        zone_db      = module.networking.zone_db
+       zone_untrust = module.networking.zone_untrust
+       zone_web     = module.networking.zone_web
+       zone_db      = module.networking.zone_db
 
-        interface_untrust = module.networking.interface_untrust
-        interface_web     = module.networking.interface_web
-        interface_db      = module.networking.interface_db
-    }
+       interface_untrust = module.networking.interface_untrust
+       interface_web     = module.networking.interface_web
+       interface_db      = module.networking.interface_db
+   }
 
-    resource "null_resource" "commit_panorama" {
-        provisioner "local-exec" {
-            command = "./commit"
-        }
-        depends_on = [
-            module.policies.security_rule_group,
-            module.policies.nat_rule_group
-        ]
-    }
+   resource "null_resource" "commit_panorama" {
+       provisioner "local-exec" {
+           command = "./commit"
+       }
+       depends_on = [
+           module.policies.security_rule_group,
+           module.policies.nat_rule_group
+       ]
+   }
 
 
 Now, run ``terraform init`` and ``terraform apply`` to finalize the changes.  Log in to the Panorama web UI and verify
