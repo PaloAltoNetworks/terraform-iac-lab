@@ -2,6 +2,9 @@
 name: CI/CD
 on:
   push:
+    branches:
+      - master
+      - develop
   pull_request:
   schedule:
     - cron: "0 0 1 * *"
@@ -72,13 +75,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build documentation with Sphinx
-        uses: ammaraskar/sphinx-action@v0.4
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2.1.3
         with:
-          docs-folder: "docs/"
+          python-version: 3.8
 
-      - name: Turn off Jekyll
-        run: touch docs/html/.nojekyll
+      - name: Install documentation requirements
+        run: |
+          pip install -r docs/requirements.txt
+
+      - name: Generate documentation
+        run: |
+          cd docs
+          make html
+          touch html/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.6.2
