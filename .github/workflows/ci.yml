@@ -2,6 +2,9 @@
 name: CI/CD
 on:
   push:
+    branches:
+      - master
+      - develop
   pull_request:
   schedule:
     - cron: "0 0 1 * *"
@@ -64,8 +67,8 @@ jobs:
 
   docs:
     name: docs
-    # if: github.event_name == 'push' && github.ref != 'refs/heads/develop'
-    # needs: [release]
+    if: github.event_name == 'push' && github.ref != 'refs/heads/develop'
+    needs: [release]
     runs-on: ubuntu-latest
 
     steps:
@@ -77,14 +80,14 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install documentation utils
+      - name: Install documentation requirements
         run: |
-          pip install Sphinx sphinx-rtd-theme
+          pip install -r docs/requirements.txt
 
       - name: Generate documentation
         run: |
           cd docs
-          sphinx-build source html
+          make html
           touch html/.nojekyll
 
       - name: Deploy to GitHub Pages

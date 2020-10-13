@@ -34,8 +34,6 @@ override.tf.json
 # Ignore VS Code configs.
 .vscode/*
 
-# Ignore VS Code reStructuredText plugin previews.
-docs/source/_build/*
-
-# Ignore built documentation.
+# Ignore RST preview and built docs.
+docs/_build/*
 docs/html/*

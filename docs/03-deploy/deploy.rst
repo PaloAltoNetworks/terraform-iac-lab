@@ -109,6 +109,7 @@ values.  You will need to add a number of things:
 Your file should look similar to the following, with the appropriate values replaced:
 
 .. code-block:: terraform
+   :force:
 
     project             = "<YOUR_GCP_PROJECT_ID>"
     region              = "<SEE_INSTRUCTOR_PRESENTATION>"
@@ -129,6 +130,7 @@ Add the bootstrap module
 Add the following module definition to ``deployment/main.tf``:
 
 .. code-block:: terraform
+   :force:
 
     module "bootstrap" {
         source  = "PaloAltoNetworks/panos-bootstrap/google"
@@ -157,6 +159,7 @@ Add the firewall module
 Now we need to add another module definition to ``deployment/main.tf`` to specify the firewall configuration:
 
 .. code-block:: terraform
+   :force:
 
     module "firewall" {
         source = "./modules/firewall"
@@ -198,6 +201,7 @@ Deploy the infrastructure
 Your completed ``deployment/main.tf`` file should look like this:
 
 .. code-block:: terraform
+   :force:
 
     provider "google" {
         credentials = file(var.credentials_file)

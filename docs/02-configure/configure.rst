@@ -34,7 +34,7 @@ Stack and the configurations contained therein will be pushed to the firewall.
 
 The following is an example of an ``init-cfg.txt`` file used in the bootstrap process.
 
-.. code-block:: terraform
+.. code-block:: none
 
     type=dhcp-client
     ip-address=
@@ -81,15 +81,15 @@ Now, you should see the variables exported in your shell, which you can verify u
 
 .. code-block:: bash
 
-    PANOS_HOSTNAME=panorama.panlabs.org
-    PANOS_USERNAME=studentXX
-    PANOS_PASSWORD=Ignite2020!
+   PANOS_HOSTNAME=panorama.panlabs.org
+   PANOS_USERNAME=studentXX
+   PANOS_PASSWORD=Ignite2020!
 
 With these values defined, we can now initialize the Terraform panos provider with the following command.
 
 .. code-block:: bash
 
-    $ terraform init
+   $ terraform init
 
 The provider is now ready to communicate with our Panorama instance.
 
@@ -103,9 +103,9 @@ define values for the device group, template name, and template stack name:
 
 .. code-block:: terraform
 
-    device_group    = "studentXX-dg"
-    template        = "studentXX-template"
-    stack           = "studentXX-stack"
+   device_group    = "studentXX-dg"
+   template        = "studentXX-template"
+   stack           = "studentXX-stack"
 
 Replace the strings ``studentXX-dg``, ``studentXX-template``, and ``studentXX-stack`` with the values provided by the
 instructor.
@@ -120,43 +120,44 @@ Panorama configuration.  Here's a snippet of the contents of
 in the ``configuration/modules/network`` directory:
 
 .. code-block:: terraform
+   :force:
 
-    resource "panos_panorama_template" "demo_template" {
-        name = var.template
-    }
+   resource "panos_panorama_template" "demo_template" {
+       name = var.template
+   }
 
-    resource "panos_panorama_template_stack" "demo_stack" {
-        name      = var.stack
-        templates = [panos_panorama_template.demo_template.name]
-    }
+   resource "panos_panorama_template_stack" "demo_stack" {
+       name      = var.stack
+       templates = [panos_panorama_template.demo_template.name]
+   }
 
-    resource "panos_panorama_ethernet_interface" "untrust" {
-        name                      = "ethernet1/1"
-        comment                   = "untrust interface"
-        vsys                      = "vsys1"
-        mode                      = "layer3"
-        enable_dhcp               = true
-        create_dhcp_default_route = true
-        template                  = panos_panorama_template.demo_template.name
-    }
+   resource "panos_panorama_ethernet_interface" "untrust" {
+       name                      = "ethernet1/1"
+       comment                   = "untrust interface"
+       vsys                      = "vsys1"
+       mode                      = "layer3"
+       enable_dhcp               = true
+       create_dhcp_default_route = true
+       template                  = panos_panorama_template.demo_template.name
+   }
 
-    resource "panos_panorama_ethernet_interface" "web" {
-        name        = "ethernet1/2"
-        comment     = "web interface"
-        vsys        = "vsys1"
-        mode        = "layer3"
-        enable_dhcp = true
-        template    = panos_panorama_template.demo_template.name
-    }
+   resource "panos_panorama_ethernet_interface" "web" {
+       name        = "ethernet1/2"
+       comment     = "web interface"
+       vsys        = "vsys1"
+       mode        = "layer3"
+       enable_dhcp = true
+       template    = panos_panorama_template.demo_template.name
+   }
 
-    resource "panos_panorama_ethernet_interface" "db" {
-        name        = "ethernet1/3"
-        comment     = "database interface"
-        vsys        = "vsys1"
-        mode        = "layer3"
-        enable_dhcp = true
-        template    = panos_panorama_template.demo_template.name
-    }
+   resource "panos_panorama_ethernet_interface" "db" {
+       name        = "ethernet1/3"
+       comment     = "database interface"
+       vsys        = "vsys1"
+       mode        = "layer3"
+       enable_dhcp = true
+       template    = panos_panorama_template.demo_template.name
+   }
 
 Terraform will use this configuration to build out the contents of the template and template stack specified by the
 ``template`` and ``stack`` variables.
@@ -166,6 +167,7 @@ The ``network`` module also specifies some
 that can be fed to other modules in the configuration:
 
 .. code-block:: terraform
+   :force:
 
     output "zone_untrust" {
         value = panos_panorama_zone.untrust.name
@@ -201,6 +203,7 @@ Assemble configuration/main.tf
 Add the following to ``configuration/main.tf`` to build out the template and template stack on our Panorama instance:
 
 .. code-block:: terraform
+   :force:
 
     module "networking" {
         source = "./modules/networking"
@@ -217,6 +220,7 @@ committed (:ref:`why? <terraform-commits>`).
 Add the next section to ``configuration/main.tf`` to build out the device group:
 
 .. code-block:: terraform
+   :force:
 
     module "policies" {
         source = "./modules/policies"
@@ -244,6 +248,7 @@ program for you.
 Add the following section to ``configuration/main.tf`` to issue the commit:
 
 .. code-block:: terraform
+   :force:
 
     resource "null_resource" "commit_panorama" {
         provisioner "local-exec" {
@@ -258,6 +263,7 @@ Add the following section to ``configuration/main.tf`` to issue the commit:
 Your completed ``configuration/main.tf`` should look like this:
 
 .. code-block:: terraform
+   :force:
 
     provider "panos" {}
 
