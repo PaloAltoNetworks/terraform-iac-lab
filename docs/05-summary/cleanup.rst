@@ -20,8 +20,11 @@ Change into the ``deployment`` directory, and tell Terraform to destroy all of t
     $ cd ~/terraform-iac-lab/deployment
     $ terraform destroy
 
-.. note:: The Qwiklabs training environment will actually take care of destroying everything that we've created at the
-          end of this lab, but it is a good habit to be aware of the cloud resources you've deployed and to destroy
-          them when no longer needed.
+.. warning::
 
+   If you are doing the lab on your own, this is a critical step to stop being
+   charged by GCP.
 
+   Qwiklabs will take care of destroying everything when the lab expires, but
+   destroying cloud resources when they are no longer needed is a good habit to
+   get in to.

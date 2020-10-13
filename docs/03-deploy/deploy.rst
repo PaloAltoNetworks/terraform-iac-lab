@@ -93,20 +93,45 @@ will define the values to display that result from applying the plan.
 Create a file called ``terraform.tfvars`` in the current directory that contains the following variables and their
 values.  You will need to add a number of things:
 
-- GCP configuration: The GCP project ID, region, and zone.
-    - **project**: The GCP project ID that Qwiklabs created for you.
-    - **region**: The GCP region we are using (supplied by instructor).
-    - **zone**: The GCP zone we are using (supplied by instructor).
-- Authentication information:
-    - **credentials_file**: The path to our JSON credentials file.
-    - **public_key_file**: The path to our SSH public key file.
-- Firewall information:
-    - **fw_name**: The name for the firewall.
-- Panorama bootstrap information:
-    - **panorama**: The hostname/IP address of Panorama (supplied by instructor).
-    - **tplname**: The template stack you created in the previous section (replace XX with your student number).
-    - **dgname**: The device group you created in the previous section (replace XX with your student number).
-    - **vm_auth_key**: The VM auth key for Panorama (supplied by instructor).
+**GCP configuration:**
+
+project:
+  The GCP project ID to use.
+
+region:
+  The GCP region we are using.
+
+zone:
+  The GCP zone we are using.
+
+**Authentication information**
+
+credentials_file:
+  Path to the JSON credentials file.
+
+public_key_file:
+  Path to the SSH public key file.
+
+**Firewall information:**
+
+fw_name:
+  The name for the firewall.
+
+**Panorama bootstrap information:**
+
+panorama:
+  The hostname/IP address of Panorama.
+
+tplname:
+  The template stack created in the previous section (replace XX with your
+  student number).
+
+dgname:
+  The device group created in the previous section (replace XX with your
+  student number).
+
+vm_auth_key:
+  The VM auth key for Panorama.
 
 Your file should look similar to the following, with the appropriate values replaced:
 
@@ -125,6 +150,10 @@ Your file should look similar to the following, with the appropriate values repl
    dgname      = "studentXX-dg"
    vm_auth_key = "<SEE_INSTRUCTOR_PRESENTATION>"
 
+.. note::
+
+   If you're running this lab on your own, replace these values appropriately.
+   See the Panorama documentation for generating the VM auth key.
 
 Add the bootstrap module
 ------------------------

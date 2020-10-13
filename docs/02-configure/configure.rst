@@ -74,8 +74,11 @@ appropriate environment variables, substituting in the values provided by the in
    $ export PANOS_USERNAME="<YOUR STUDENT NAME>"
    $ export PANOS_PASSWORD="Ignite2020!"
 
-.. note:: Replace the text ``<YOUR PANORAMA MGMT IP GOES HERE>`` and ``<YOUR STUDENT NAME>`` with the values provided
-          to you by the instructor.
+.. note::
+
+   Replace the text ``<YOUR PANORAMA MGMT IP GOES HERE>`` and 
+   ``<YOUR STUDENT NAME>`` with the values provided to you by the instructor.
+   If you're doing this lab on your own, you'll need your own Panorama instance.
 
 Now, you should see the variables exported in your shell, which you can verify using the ``env | grep PANOS`` command:
 
