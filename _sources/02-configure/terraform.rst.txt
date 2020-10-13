@@ -50,6 +50,7 @@ Here's an example of a Terraform configuration file.  We will discuss the
 parts of this config below.
 
 .. code-block:: terraform
+   :force:
 
     variable "hostname" {
         default = "127.0.0.1"
@@ -195,6 +196,7 @@ instance, the network interfaces, and various other resources.
 It can be used in another Terraform plan like this:
 
 .. code-block:: terraform
+   :force:
 
     module "firewall" {
         source = "./modules/firewall"

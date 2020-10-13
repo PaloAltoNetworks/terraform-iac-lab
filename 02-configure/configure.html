@@ -60,6 +60,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -208,7 +212,7 @@ Template Stack it will be a member of, and an authorization key to register the 
 Once it registers with Panorama, the VM-Series instance will be mapped into the appropriate Device Group and Template
 Stack and the configurations contained therein will be pushed to the firewall.</p>
 <p>The following is an example of an <code class="docutils literal notranslate"><span class="pre">init-cfg.txt</span></code> file used in the bootstrap process.</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>type=dhcp-client
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>type=dhcp-client
 ip-address=
 default-gateway=
 netmask=
@@ -281,42 +285,42 @@ instructor.</p>
 Panorama configuration.  Here’s a snippet of the contents of
 <a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/main.tf">main.tf</a>
 in the <code class="docutils literal notranslate"><span class="pre">configuration/modules/network</span></code> directory:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>resource &quot;panos_panorama_template&quot; &quot;demo_template&quot; {
-    name = var.template
-}
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span> <span class="s">&quot;panos_panorama_template&quot; &quot;demo_template&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
+<span class=" -Punctuation">}</span>
 
-resource &quot;panos_panorama_template_stack&quot; &quot;demo_stack&quot; {
-    name      = var.stack
-    templates = [panos_panorama_template.demo_template.name]
-}
+<span class="kr">resource</span> <span class="s">&quot;panos_panorama_template_stack&quot; &quot;demo_stack&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>      <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
+<span class="na">    templates</span> <span class="o">=</span> <span class="p">[</span><span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span><span class="p">]</span>
+<span class=" -Punctuation">}</span>
 
-resource &quot;panos_panorama_ethernet_interface&quot; &quot;untrust&quot; {
-    name                      = &quot;ethernet1/1&quot;
-    comment                   = &quot;untrust interface&quot;
-    vsys                      = &quot;vsys1&quot;
-    mode                      = &quot;layer3&quot;
-    enable_dhcp               = true
-    create_dhcp_default_route = true
-    template                  = panos_panorama_template.demo_template.name
-}
+<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;untrust&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>                      <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
+<span class="na">    comment</span>                   <span class="o">=</span> <span class="s2">&quot;untrust interface&quot;</span>
+<span class="na">    vsys</span>                      <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+<span class="na">    mode</span>                      <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+<span class="na">    enable_dhcp</span>               <span class="o">=</span> <span class="kt">true</span>
+<span class="na">    create_dhcp_default_route</span> <span class="o">=</span> <span class="kt">true</span>
+<span class="na">    template</span>                  <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
+<span class=" -Punctuation">}</span>
 
-resource &quot;panos_panorama_ethernet_interface&quot; &quot;web&quot; {
-    name        = &quot;ethernet1/2&quot;
-    comment     = &quot;web interface&quot;
-    vsys        = &quot;vsys1&quot;
-    mode        = &quot;layer3&quot;
-    enable_dhcp = true
-    template    = panos_panorama_template.demo_template.name
-}
+<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;web&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/2&quot;</span>
+<span class="na">    comment</span>     <span class="o">=</span> <span class="s2">&quot;web interface&quot;</span>
+<span class="na">    vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+<span class="na">    mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+<span class="na">    enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
+<span class="na">    template</span>    <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
+<span class=" -Punctuation">}</span>
 
-resource &quot;panos_panorama_ethernet_interface&quot; &quot;db&quot; {
-    name        = &quot;ethernet1/3&quot;
-    comment     = &quot;database interface&quot;
-    vsys        = &quot;vsys1&quot;
-    mode        = &quot;layer3&quot;
-    enable_dhcp = true
-    template    = panos_panorama_template.demo_template.name
-}
+<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;db&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">    name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/3&quot;</span>
+<span class="na">    comment</span>     <span class="o">=</span> <span class="s2">&quot;database interface&quot;</span>
+<span class="na">    vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+<span class="na">    mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+<span class="na">    enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
+<span class="na">    template</span>    <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
+<span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>Terraform will use this configuration to build out the contents of the template and template stack specified by the
@@ -324,29 +328,29 @@ resource &quot;panos_panorama_ethernet_interface&quot; &quot;db&quot; {
 <p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module also specifies some
 <a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/outputs.tf">outputs</a>
 that can be fed to other modules in the configuration:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>output &quot;zone_untrust&quot; {
-    value = panos_panorama_zone.untrust.name
-}
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">output</span> <span class="s">&quot;zone_untrust&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">untrust</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-output &quot;zone_web&quot; {
-    value = panos_panorama_zone.web.name
-}
+ <span class="kr">output</span> <span class="s">&quot;zone_web&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">web</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-output &quot;zone_db&quot; {
-    value = panos_panorama_zone.db.name
-}
+ <span class="kr">output</span> <span class="s">&quot;zone_db&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">db</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-output &quot;interface_untrust&quot; {
-    value = panos_panorama_ethernet_interface.untrust.name
-}
+ <span class="kr">output</span> <span class="s">&quot;interface_untrust&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">untrust</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-output &quot;interface_web&quot; {
-    value = panos_panorama_ethernet_interface.web.name
-}
+ <span class="kr">output</span> <span class="s">&quot;interface_web&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">web</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-output &quot;interface_db&quot; {
-    value = panos_panorama_ethernet_interface.db.name
-}
+ <span class="kr">output</span> <span class="s">&quot;interface_db&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">db</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>The module to populate the
@@ -356,12 +360,12 @@ works in a similar fashion.</p>
 <div class="section" id="assemble-configuration-main-tf">
 <h2>Assemble configuration/main.tf<a class="headerlink" href="#assemble-configuration-main-tf" title="Permalink to this headline">¶</a></h2>
 <p>Add the following to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the template and template stack on our Panorama instance:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;networking&quot; {
-    source = &quot;./modules/networking&quot;
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;networking&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
 
-    template = var.template
-    stack    = var.stack
-}
+<span class="na">     template</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
+<span class="na">     stack</span>    <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>Now run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> (you need to run <code class="docutils literal notranslate"><span class="pre">init</span></code> each time you add a new module) and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code>.  You will
@@ -369,19 +373,19 @@ see the Terraform provider determine what changes need to be made, and output al
 configuration.  If you run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>, those changes will be added to the candidate configuration, but not
 committed (<a class="reference internal" href="../06-appendix/terraform-commit.html#terraform-commits"><span class="std std-ref">why?</span></a>).</p>
 <p>Add the next section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the device group:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;policies&quot; {
-    source = &quot;./modules/policies&quot;
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;policies&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
 
-    device_group = var.device_group
+<span class="na">     device_group</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">device_group</span>
 
-    zone_untrust = module.networking.zone_untrust
-    zone_web     = module.networking.zone_web
-    zone_db      = module.networking.zone_db
+<span class="na">     zone_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_untrust</span>
+<span class="na">     zone_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_web</span>
+<span class="na">     zone_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_db</span>
 
-    interface_untrust = module.networking.interface_untrust
-    interface_web     = module.networking.interface_web
-    interface_db      = module.networking.interface_db
-}
+<span class="na">     interface_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_untrust</span>
+<span class="na">     interface_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_web</span>
+<span class="na">     interface_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_db</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
@@ -391,50 +395,50 @@ outputs those names from what it creates, so we can chain these two modules toge
 commit your user’s changes to Panorama.  You use a null resource provisioner in your main.tf to have Terraform run the
 program for you.</p>
 <p>Add the following section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to issue the commit:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>resource &quot;null_resource&quot; &quot;commit_panorama&quot; {
-    provisioner &quot;local-exec&quot; {
-        command = &quot;./commit&quot;
-    }
-    depends_on = [
-        module.policies.security_rule_group,
-        module.policies.nat_rule_group
-    ]
-}
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">resource</span> <span class="s">&quot;null_resource&quot; &quot;commit_panorama&quot;</span> <span class=" -Punctuation">{</span>
+     <span class="kr">provisioner</span> <span class="s">&quot;local-exec&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">         command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
+     <span class=" -Punctuation">}</span>
+<span class="na">     depends_on</span> <span class="o">=</span> <span class="p">[</span>
+         <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">security_rule_group</span><span class="p">,</span>
+         <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">nat_rule_group</span>
+     <span class="p">]</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>Your completed <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> should look like this:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>provider &quot;panos&quot; {}
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">provider</span> <span class="s">&quot;panos&quot;</span> <span class=" -Punctuation">{}</span>
 
-module &quot;networking&quot; {
-    source = &quot;./modules/networking&quot;
+ <span class="kr">module</span> <span class="s">&quot;networking&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
 
-    template = var.template
-    stack    = var.stack
-}
+<span class="na">     template</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
+<span class="na">     stack</span>    <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
+ <span class=" -Punctuation">}</span>
 
-module &quot;policies&quot; {
-    source = &quot;./modules/policies&quot;
+ <span class="kr">module</span> <span class="s">&quot;policies&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
 
-    device_group = var.device_group
+<span class="na">     device_group</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">device_group</span>
 
-    zone_untrust = module.networking.zone_untrust
-    zone_web     = module.networking.zone_web
-    zone_db      = module.networking.zone_db
+<span class="na">     zone_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_untrust</span>
+<span class="na">     zone_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_web</span>
+<span class="na">     zone_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_db</span>
 
-    interface_untrust = module.networking.interface_untrust
-    interface_web     = module.networking.interface_web
-    interface_db      = module.networking.interface_db
-}
+<span class="na">     interface_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_untrust</span>
+<span class="na">     interface_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_web</span>
+<span class="na">     interface_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_db</span>
+ <span class=" -Punctuation">}</span>
 
-resource &quot;null_resource&quot; &quot;commit_panorama&quot; {
-    provisioner &quot;local-exec&quot; {
-        command = &quot;./commit&quot;
-    }
-    depends_on = [
-        module.policies.security_rule_group,
-        module.policies.nat_rule_group
-    ]
-}
+ <span class="kr">resource</span> <span class="s">&quot;null_resource&quot; &quot;commit_panorama&quot;</span> <span class=" -Punctuation">{</span>
+     <span class="kr">provisioner</span> <span class="s">&quot;local-exec&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">         command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
+     <span class=" -Punctuation">}</span>
+<span class="na">     depends_on</span> <span class="o">=</span> <span class="p">[</span>
+         <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">security_rule_group</span><span class="p">,</span>
+         <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">nat_rule_group</span>
+     <span class="p">]</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>Now, run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to finalize the changes.  Log in to the Panorama web UI and verify

@@ -60,6 +60,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -237,43 +241,43 @@ found are then saved to the state file automatically.</p>
 <h3>Example Terraform Configuration<a class="headerlink" href="#example-terraform-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Here’s an example of a Terraform configuration file.  We will discuss the
 parts of this config below.</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>variable &quot;hostname&quot; {
-    default = &quot;127.0.0.1&quot;
-}
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">variable</span> <span class="s">&quot;hostname&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+ <span class=" -Punctuation">}</span>
 
-variable &quot;username&quot; {
-    default = &quot;admin&quot;
-}
+ <span class="kr">variable</span> <span class="s">&quot;username&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+ <span class=" -Punctuation">}</span>
 
-variable &quot;password&quot; {
-    default = &quot;admin&quot;
-}
+ <span class="kr">variable</span> <span class="s">&quot;password&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+ <span class=" -Punctuation">}</span>
 
-provider &quot;panos&quot; {
-    hostname = var.hostname
-    username = var.username
-    password = var.password
-}
+ <span class="kr">provider</span> <span class="s">&quot;panos&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     hostname</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">hostname</span>
+<span class="na">     username</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">username</span>
+<span class="na">     password</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">password</span>
+ <span class=" -Punctuation">}</span>
 
-resource &quot;panos_management_profile&quot; &quot;ssh&quot; {
-    name = &quot;allow ssh&quot;
-    ssh = true
-}
+ <span class="kr">resource</span> <span class="s">&quot;panos_management_profile&quot; &quot;ssh&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;allow ssh&quot;</span>
+<span class="na">     ssh</span> <span class="o">=</span> <span class="kt">true</span>
+ <span class=" -Punctuation">}</span>
 
-resource &quot;panos_ethernet_interface&quot; &quot;eth1&quot; {
-    name = &quot;ethernet1/1&quot;
-    vsys = &quot;vsys1&quot;
-    mode = &quot;layer3&quot;
-    enable_dhcp = true
-    management_profile = panos_management_profile.ssh.name
-}
+ <span class="kr">resource</span> <span class="s">&quot;panos_ethernet_interface&quot; &quot;eth1&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
+<span class="na">     vsys</span> <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+<span class="na">     mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+<span class="na">     enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
+<span class="na">     management_profile</span> <span class="o">=</span> <span class="err">panos_management_profile</span><span class="p">.</span><span class="err">ssh</span><span class="p">.</span><span class="err">name</span>
+ <span class=" -Punctuation">}</span>
 
-resource &quot;panos_zone&quot; &quot;zone1&quot; {
-    name = &quot;L3-in&quot;
-    mode = &quot;layer3&quot;
-    interfaces = [&quot;ethernet1/1&quot;]
-    depends_on = [&quot;panos_ethernet_interface.eth1&quot;]
-}
+ <span class="kr">resource</span> <span class="s">&quot;panos_zone&quot; &quot;zone1&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;L3-in&quot;</span>
+<span class="na">     mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+<span class="na">     interfaces</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ethernet1/1&quot;</span><span class="p">]</span>
+<span class="na">     depends_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;panos_ethernet_interface.eth1&quot;</span><span class="p">]</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 </div>
@@ -364,34 +368,34 @@ firewall, and the created instances.</p>
 <code class="docutils literal notranslate"><span class="pre">deployment/modules/firewall</span></code>.  Calling this module creates the firewall
 instance, the network interfaces, and various other resources.</p>
 <p>It can be used in another Terraform plan like this:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span>module &quot;firewall&quot; {
-    source = &quot;./modules/firewall&quot;
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
+<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
 
-    fw_name             = &quot;vm-series&quot;
-    fw_zone             = var.zone
-    fw_image            = &quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901&quot;
-    fw_machine_type     = &quot;n1-standard-4&quot;
-    fw_machine_cpu      = &quot;Intel Skylake&quot;
-    fw_bootstrap_bucket = module.bootstrap.bootstrap_name
+<span class="na">     fw_name</span>             <span class="o">=</span> <span class="s2">&quot;vm-series&quot;</span>
+<span class="na">     fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
+<span class="na">     fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901&quot;</span>
+<span class="na">     fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
+<span class="na">     fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
+<span class="na">     fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
 
-    fw_ssh_key = &quot;admin:${file(var.public_key_file)}&quot;
+<span class="na">     fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
 
-    fw_mgmt_subnet = module.vpc.mgmt_subnet
-    fw_mgmt_ip     = &quot;10.5.0.4&quot;
-    fw_mgmt_rule   = module.vpc.mgmt-allow-inbound-rule
+<span class="na">     fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
+<span class="na">     fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
+<span class="na">     fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
 
-    fw_untrust_subnet = module.vpc.untrust_subnet
-    fw_untrust_ip     = &quot;10.5.1.4&quot;
-    fw_untrust_rule   = module.vpc.untrust-allow-inbound-rule
+<span class="na">     fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
+<span class="na">     fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
+<span class="na">     fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
 
-    fw_web_subnet = module.vpc.web_subnet
-    fw_web_ip     = &quot;10.5.2.4&quot;
-    fw_web_rule   = module.vpc.web-allow-outbound-rule
+<span class="na">     fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
+<span class="na">     fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
+<span class="na">     fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
 
-    fw_db_subnet = module.vpc.db_subnet
-    fw_db_ip     = &quot;10.5.3.4&quot;
-    fw_db_rule   = module.vpc.db-allow-outbound-rule
-}
+<span class="na">     fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
+<span class="na">     fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
+<span class="na">     fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
+ <span class=" -Punctuation">}</span>
 </pre></div>
 </div>
 <p>This calls the firewall module, and passes in values for the variables it

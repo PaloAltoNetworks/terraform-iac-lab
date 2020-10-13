@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Terraform Infrastructure as Code Lab Guide
-=========================================
+==========================================
 
 .. image:: panw-logo-bw.png
    :align: center
@@ -50,7 +50,8 @@ elements including the VM-series firewall using Terraform exclusively.
 
 
 Learning Outcomes
-----------
+-----------------
+
 - Learn best practices for managing infrastructure as code environments
 - Learn how to use Terraform to define and deploy cloud infrastructure 
 - Learn about bootstrapping best practices for VM-Series firewalls in the cloud
