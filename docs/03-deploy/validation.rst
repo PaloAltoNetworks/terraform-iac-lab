@@ -105,7 +105,7 @@ being hit.
 
 Scroll back to the left, find the security rule entitled *Allow web inbound*.
 Then click on the drop-down menu icon to the right of the rule name and
-select **Log Viewer*.
+select *Log Viewer*.
 
 .. figure:: web-hits.png
    :align: center
