@@ -16,8 +16,8 @@ Welcome
 
 Welcome to the Terraform Infrastructure as Code Lab!
 
-In this lab we will be deploying a multi-tiered web application to the cloud.  
-To accomplish this we'll first need need to define the infrastructure supporting 
+In this lab we will be deploying a multi-tiered web application to the cloud.
+To accomplish this we'll first need to define the infrastructure supporting
 our application as well as how we're going to secure the application.  Rather than 
 manually defining the infrastructure elements within the cloud provider portal, 
 we're going to define our infrastructure in code using Terraform's declarative 
