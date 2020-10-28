@@ -32,5 +32,5 @@ fi
 # NEW_VERSION=$(echo "$1" | sed -e 's/-beta\./.b/' | sed -e 's/-alpha\./.a/')
 
 # Set version in docs/source/index.rst
-grep -E '^Version: (.+)$' "$ROOT/docs/source/index.rst" > /dev/null
-sed -i.bak -E "s/^Version: (.+)$/Version: $1/" "$ROOT/docs/source/index.rst" && rm "$ROOT/docs/source/index.rst.bak"
+grep -E '^Version: (.+)$' "$ROOT/docs/index.rst" > /dev/null
+sed -i.bak -E "s/^Version: (.+)$/Version: $1/" "$ROOT/docs/index.rst" && rm "$ROOT/docs/index.rst.bak"
