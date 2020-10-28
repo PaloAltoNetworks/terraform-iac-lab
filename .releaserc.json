@@ -1,32 +1,32 @@
 {
   "branches": [
-      "master"
+    "master"
   ],
   "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/exec",
-        {
-            "prepareCmd": ".github/set-version.sh ${nextRelease.version}"
-        }
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": ".github/set-version.sh ${nextRelease.version}"
+      }
     ],
-      [
-          "@semantic-release/git",
-          {
-              "assets": [
-                  "README.md",
-                  "docs/source/index.rst"
-              ],
-              "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
-          }
-      ],
-      [
-          "@semantic-release/github",
-          {
-              "successComment": ":tada: This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:\n\nThe release is available on [GitHub release](<github_release_url>)\n\n> Posted by [semantic-release](https://github.com/semantic-release/semantic-release) bot"
-          }
-      ]
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "README.md",
+          "docs/source/index.rst"
+        ],
+        "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "successComment": ":tada: This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:\n\nThe release is available on [GitHub release](<github_release_url>)\n\n> Posted by [semantic-release](https://github.com/semantic-release/semantic-release) bot"
+      }
+    ]
   ],
   "preset": "conventionalcommits"
 }
