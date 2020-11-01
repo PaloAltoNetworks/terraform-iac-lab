@@ -45,7 +45,7 @@ jobs:
 
   automerge:
     name: Auto-merge
-    needs: [test, format]
+    needs: [validate]
     runs-on: ubuntu-latest
     steps:
       - name: Auto-merge pull requests from dependabot (patches only)
