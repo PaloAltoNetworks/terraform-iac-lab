@@ -37,3 +37,5 @@ override.tf.json
 # Ignore RST preview and built docs.
 docs/_build/*
 docs/html/*
+
+.DS_Store
