@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Panorama Configuration &mdash; terraform-iac-lab  documentation</title>
   
@@ -13,10 +13,15 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
+
   
+  
+
   
 
   
@@ -26,10 +31,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -51,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> terraform-iac-lab
+            <a href="../index.html" class="icon icon-home"> terraform-iac-lab
           
 
           
@@ -86,16 +91,16 @@
               
             
             
-              <p class="caption"><span class="caption-text">overview</span></p>
+              <p class="caption" role="heading"><span class="caption-text">overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Lab Introduction</a></li>
 </ul>
-<p class="caption"><span class="caption-text">getting started</span></p>
+<p class="caption" role="heading"><span class="caption-text">getting started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
 </ul>
-<p class="caption"><span class="caption-text">configure</span></p>
+<p class="caption" role="heading"><span class="caption-text">configure</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="terraform.html">Terraform Background</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Panorama Configuration</a><ul>
@@ -107,18 +112,18 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">deploy</span></p>
+<p class="caption" role="heading"><span class="caption-text">deploy</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
 </ul>
-<p class="caption"><span class="caption-text">summary</span></p>
+<p class="caption" role="heading"><span class="caption-text">summary</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
 </ul>
-<p class="caption"><span class="caption-text">appendix</span></p>
+<p class="caption" role="heading"><span class="caption-text">appendix</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
 </ul>
@@ -161,6 +166,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -172,7 +179,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/02-configure/configure.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -286,42 +293,42 @@ instructor.</p>
 Panorama configuration.  Here’s a snippet of the contents of
 <a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/main.tf">main.tf</a>
 in the <code class="docutils literal notranslate"><span class="pre">configuration/modules/network</span></code> directory:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span> <span class="s">&quot;panos_panorama_template&quot; &quot;demo_template&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    name</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
-<span class=" -Punctuation">}</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span> <span class="nc">&quot;panos_panorama_template&quot;</span> <span class="nv">&quot;demo_template&quot;</span> <span class="p">{</span>
+    <span class="na">name</span> <span class="o">=</span> <span class="nv">var.template</span>
+<span class="p">}</span>
 
-<span class="kr">resource</span> <span class="s">&quot;panos_panorama_template_stack&quot; &quot;demo_stack&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    name</span>      <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
-<span class="na">    templates</span> <span class="o">=</span> <span class="p">[</span><span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span><span class="p">]</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="nc">&quot;panos_panorama_template_stack&quot;</span> <span class="nv">&quot;demo_stack&quot;</span> <span class="p">{</span>
+    <span class="na">name</span>      <span class="o">=</span> <span class="nv">var.stack</span>
+    <span class="na">templates</span> <span class="o">=</span> <span class="p">[</span><span class="nv">panos_panorama_template.demo_template.name</span><span class="p">]</span>
+<span class="p">}</span>
 
-<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;untrust&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    name</span>                      <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
-<span class="na">    comment</span>                   <span class="o">=</span> <span class="s2">&quot;untrust interface&quot;</span>
-<span class="na">    vsys</span>                      <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
-<span class="na">    mode</span>                      <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
-<span class="na">    enable_dhcp</span>               <span class="o">=</span> <span class="kt">true</span>
-<span class="na">    create_dhcp_default_route</span> <span class="o">=</span> <span class="kt">true</span>
-<span class="na">    template</span>                  <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="nc">&quot;panos_panorama_ethernet_interface&quot;</span> <span class="nv">&quot;untrust&quot;</span> <span class="p">{</span>
+    <span class="na">name</span>                      <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
+    <span class="na">comment</span>                   <span class="o">=</span> <span class="s2">&quot;untrust interface&quot;</span>
+    <span class="na">vsys</span>                      <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+    <span class="na">mode</span>                      <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+    <span class="na">enable_dhcp</span>               <span class="o">=</span> <span class="no">true</span>
+    <span class="na">create_dhcp_default_route</span> <span class="o">=</span> <span class="no">true</span>
+    <span class="na">template</span>                  <span class="o">=</span> <span class="nv">panos_panorama_template.demo_template.name</span>
+<span class="p">}</span>
 
-<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;web&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/2&quot;</span>
-<span class="na">    comment</span>     <span class="o">=</span> <span class="s2">&quot;web interface&quot;</span>
-<span class="na">    vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
-<span class="na">    mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
-<span class="na">    enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
-<span class="na">    template</span>    <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="nc">&quot;panos_panorama_ethernet_interface&quot;</span> <span class="nv">&quot;web&quot;</span> <span class="p">{</span>
+    <span class="na">name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/2&quot;</span>
+    <span class="na">comment</span>     <span class="o">=</span> <span class="s2">&quot;web interface&quot;</span>
+    <span class="na">vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+    <span class="na">mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+    <span class="na">enable_dhcp</span> <span class="o">=</span> <span class="no">true</span>
+    <span class="na">template</span>    <span class="o">=</span> <span class="nv">panos_panorama_template.demo_template.name</span>
+<span class="p">}</span>
 
-<span class="kr">resource</span> <span class="s">&quot;panos_panorama_ethernet_interface&quot; &quot;db&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/3&quot;</span>
-<span class="na">    comment</span>     <span class="o">=</span> <span class="s2">&quot;database interface&quot;</span>
-<span class="na">    vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
-<span class="na">    mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
-<span class="na">    enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
-<span class="na">    template</span>    <span class="o">=</span> <span class="err">panos_panorama_template</span><span class="p">.</span><span class="err">demo_template</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">resource</span> <span class="nc">&quot;panos_panorama_ethernet_interface&quot;</span> <span class="nv">&quot;db&quot;</span> <span class="p">{</span>
+    <span class="na">name</span>        <span class="o">=</span> <span class="s2">&quot;ethernet1/3&quot;</span>
+    <span class="na">comment</span>     <span class="o">=</span> <span class="s2">&quot;database interface&quot;</span>
+    <span class="na">vsys</span>        <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+    <span class="na">mode</span>        <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+    <span class="na">enable_dhcp</span> <span class="o">=</span> <span class="no">true</span>
+    <span class="na">template</span>    <span class="o">=</span> <span class="nv">panos_panorama_template.demo_template.name</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Terraform will use this configuration to build out the contents of the template and template stack specified by the
@@ -329,29 +336,29 @@ in the <code class="docutils literal notranslate"><span class="pre">configuratio
 <p>The <code class="docutils literal notranslate"><span class="pre">network</span></code> module also specifies some
 <a class="reference external" href="https://github.com/PaloAltoNetworks/terraform-iac-lab/blob/master/configuration/modules/networking/outputs.tf">outputs</a>
 that can be fed to other modules in the configuration:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">output</span> <span class="s">&quot;zone_untrust&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">untrust</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">output</span> <span class="nv">&quot;zone_untrust&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_zone.untrust.name</span>
+<span class="p">}</span>
 
-<span class="kr">output</span> <span class="s">&quot;zone_web&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">web</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">output</span> <span class="nv">&quot;zone_web&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_zone.web.name</span>
+<span class="p">}</span>
 
-<span class="kr">output</span> <span class="s">&quot;zone_db&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_zone</span><span class="p">.</span><span class="err">db</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">output</span> <span class="nv">&quot;zone_db&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_zone.db.name</span>
+<span class="p">}</span>
 
-<span class="kr">output</span> <span class="s">&quot;interface_untrust&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">untrust</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">output</span> <span class="nv">&quot;interface_untrust&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_ethernet_interface.untrust.name</span>
+<span class="p">}</span>
 
-<span class="kr">output</span> <span class="s">&quot;interface_web&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">web</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">output</span> <span class="nv">&quot;interface_web&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_ethernet_interface.web.name</span>
+<span class="p">}</span>
 
-<span class="kr">output</span> <span class="s">&quot;interface_db&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    value</span> <span class="o">=</span> <span class="err">panos_panorama_ethernet_interface</span><span class="p">.</span><span class="err">db</span><span class="p">.</span><span class="err">name</span>
-<span class=" -Punctuation">}</span>
+<span class="kr">output</span> <span class="nv">&quot;interface_db&quot;</span> <span class="p">{</span>
+    <span class="na">value</span> <span class="o">=</span> <span class="nv">panos_panorama_ethernet_interface.db.name</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>The module to populate the
@@ -361,12 +368,12 @@ works in a similar fashion.</p>
 <div class="section" id="assemble-configuration-main-tf">
 <h2>Assemble configuration/main.tf<a class="headerlink" href="#assemble-configuration-main-tf" title="Permalink to this headline">¶</a></h2>
 <p>Add the following to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the template and template stack on our Panorama instance:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="s">&quot;networking&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="nv">&quot;networking&quot;</span> <span class="p">{</span>
+    <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
 
-<span class="na">    template</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
-<span class="na">    stack</span>    <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
-<span class=" -Punctuation">}</span>
+    <span class="na">template</span> <span class="o">=</span> <span class="nv">var.template</span>
+    <span class="na">stack</span>    <span class="o">=</span> <span class="nv">var.stack</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Now run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> (you need to run <code class="docutils literal notranslate"><span class="pre">init</span></code> each time you add a new module) and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code>.  You will
@@ -374,19 +381,19 @@ see the Terraform provider determine what changes need to be made, and output al
 configuration.  If you run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code>, those changes will be added to the candidate configuration, but not
 committed (<a class="reference internal" href="../06-appendix/terraform-commit.html#terraform-commits"><span class="std std-ref">why?</span></a>).</p>
 <p>Add the next section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to build out the device group:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="s">&quot;policies&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span> <span class="nv">&quot;policies&quot;</span> <span class="p">{</span>
+    <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
 
-<span class="na">    device_group</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">device_group</span>
+    <span class="na">device_group</span> <span class="o">=</span> <span class="nv">var.device_group</span>
 
-<span class="na">    zone_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_untrust</span>
-<span class="na">    zone_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_web</span>
-<span class="na">    zone_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_db</span>
+    <span class="na">zone_untrust</span> <span class="o">=</span> <span class="nv">module.networking.zone_untrust</span>
+    <span class="na">zone_web</span>     <span class="o">=</span> <span class="nv">module.networking.zone_web</span>
+    <span class="na">zone_db</span>      <span class="o">=</span> <span class="nv">module.networking.zone_db</span>
 
-<span class="na">    interface_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_untrust</span>
-<span class="na">    interface_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_web</span>
-<span class="na">    interface_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_db</span>
-<span class=" -Punctuation">}</span>
+    <span class="na">interface_untrust</span> <span class="o">=</span> <span class="nv">module.networking.interface_untrust</span>
+    <span class="na">interface_web</span>     <span class="o">=</span> <span class="nv">module.networking.interface_web</span>
+    <span class="na">interface_db</span>      <span class="o">=</span> <span class="nv">module.networking.interface_db</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>This module has variables for the names of zones and interfaces to avoid hard coding values.  Our networking module
@@ -396,50 +403,50 @@ outputs those names from what it creates, so we can chain these two modules toge
 commit your user’s changes to Panorama.  You use a null resource provisioner in your main.tf to have Terraform run the
 program for you.</p>
 <p>Add the following section to <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> to issue the commit:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span> <span class="s">&quot;null_resource&quot; &quot;commit_panorama&quot;</span> <span class=" -Punctuation">{</span>
-    <span class="kr">provisioner</span> <span class="s">&quot;local-exec&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">        command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
-    <span class=" -Punctuation">}</span>
-<span class="na">    depends_on</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">security_rule_group</span><span class="p">,</span>
-        <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">nat_rule_group</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span> <span class="nc">&quot;null_resource&quot;</span> <span class="nv">&quot;commit_panorama&quot;</span> <span class="p">{</span>
+    <span class="kr">provisioner</span> <span class="nv">&quot;local-exec&quot;</span> <span class="p">{</span>
+        <span class="na">command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
+    <span class="p">}</span>
+    <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nv">module.policies.security_rule_group</span><span class="p">,</span>
+        <span class="nv">module.policies.nat_rule_group</span>
     <span class="p">]</span>
-<span class=" -Punctuation">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Your completed <code class="docutils literal notranslate"><span class="pre">configuration/main.tf</span></code> should look like this:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">provider</span> <span class="s">&quot;panos&quot;</span> <span class=" -Punctuation">{}</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">provider</span> <span class="nv">&quot;panos&quot;</span> <span class="p">{</span><span class="err">}</span>
 
-<span class="kr">module</span> <span class="s">&quot;networking&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
+<span class="kr">module</span> <span class="nv">&quot;networking&quot;</span> <span class="p">{</span>
+    <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;./modules/networking&quot;</span>
 
-<span class="na">    template</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">template</span>
-<span class="na">    stack</span>    <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">stack</span>
-<span class=" -Punctuation">}</span>
+    <span class="na">template</span> <span class="o">=</span> <span class="nv">var.template</span>
+    <span class="na">stack</span>    <span class="o">=</span> <span class="nv">var.stack</span>
+<span class="p">}</span>
 
-<span class="kr">module</span> <span class="s">&quot;policies&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">    source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
+<span class="kr">module</span> <span class="nv">&quot;policies&quot;</span> <span class="p">{</span>
+    <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;./modules/policies&quot;</span>
 
-<span class="na">    device_group</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">device_group</span>
+    <span class="na">device_group</span> <span class="o">=</span> <span class="nv">var.device_group</span>
 
-<span class="na">    zone_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_untrust</span>
-<span class="na">    zone_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_web</span>
-<span class="na">    zone_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">zone_db</span>
+    <span class="na">zone_untrust</span> <span class="o">=</span> <span class="nv">module.networking.zone_untrust</span>
+    <span class="na">zone_web</span>     <span class="o">=</span> <span class="nv">module.networking.zone_web</span>
+    <span class="na">zone_db</span>      <span class="o">=</span> <span class="nv">module.networking.zone_db</span>
 
-<span class="na">    interface_untrust</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_untrust</span>
-<span class="na">    interface_web</span>     <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_web</span>
-<span class="na">    interface_db</span>      <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">networking</span><span class="p">.</span><span class="err">interface_db</span>
-<span class=" -Punctuation">}</span>
+    <span class="na">interface_untrust</span> <span class="o">=</span> <span class="nv">module.networking.interface_untrust</span>
+    <span class="na">interface_web</span>     <span class="o">=</span> <span class="nv">module.networking.interface_web</span>
+    <span class="na">interface_db</span>      <span class="o">=</span> <span class="nv">module.networking.interface_db</span>
+<span class="p">}</span>
 
-<span class="kr">resource</span> <span class="s">&quot;null_resource&quot; &quot;commit_panorama&quot;</span> <span class=" -Punctuation">{</span>
-    <span class="kr">provisioner</span> <span class="s">&quot;local-exec&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">        command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
-    <span class=" -Punctuation">}</span>
-<span class="na">    depends_on</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">security_rule_group</span><span class="p">,</span>
-        <span class="kr">module</span><span class="p">.</span><span class="err">policies</span><span class="p">.</span><span class="err">nat_rule_group</span>
+<span class="kr">resource</span> <span class="nc">&quot;null_resource&quot;</span> <span class="nv">&quot;commit_panorama&quot;</span> <span class="p">{</span>
+    <span class="kr">provisioner</span> <span class="nv">&quot;local-exec&quot;</span> <span class="p">{</span>
+        <span class="na">command</span> <span class="o">=</span> <span class="s2">&quot;./commit&quot;</span>
+    <span class="p">}</span>
+    <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nv">module.policies.security_rule_group</span><span class="p">,</span>
+        <span class="nv">module.policies.nat_rule_group</span>
     <span class="p">]</span>
-<span class=" -Punctuation">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Now, run <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> to finalize the changes.  Log in to the Panorama web UI and verify
@@ -453,37 +460,29 @@ from this configuration.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../03-deploy/deploy.html" class="btn btn-neutral float-right" title="Lab Deployment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="terraform.html" class="btn btn-neutral float-left" title="Terraform Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../03-deploy/deploy.html" class="btn btn-neutral float-right" title="Lab Deployment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="terraform.html" class="btn btn-neutral float-left" title="Terraform Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Palo Alto Networks
+        &#169; Copyright 2020, Palo Alto Networks.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

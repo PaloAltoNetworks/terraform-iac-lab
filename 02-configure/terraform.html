@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Terraform Background &mdash; terraform-iac-lab  documentation</title>
   
@@ -13,10 +13,15 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
+
   
+  
+
   
 
   
@@ -26,10 +31,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -51,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> terraform-iac-lab
+            <a href="../index.html" class="icon icon-home"> terraform-iac-lab
           
 
           
@@ -86,16 +91,16 @@
               
             
             
-              <p class="caption"><span class="caption-text">overview</span></p>
+              <p class="caption" role="heading"><span class="caption-text">overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../00-overview/introduction.html">Lab Introduction</a></li>
 </ul>
-<p class="caption"><span class="caption-text">getting started</span></p>
+<p class="caption" role="heading"><span class="caption-text">getting started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/requirements.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01-getting-started/setup.html">Setup</a></li>
 </ul>
-<p class="caption"><span class="caption-text">configure</span></p>
+<p class="caption" role="heading"><span class="caption-text">configure</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Terraform Background</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#terraform-at-a-glance">Terraform At a Glance</a></li>
@@ -121,18 +126,18 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="configure.html">Panorama Configuration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">deploy</span></p>
+<p class="caption" role="heading"><span class="caption-text">deploy</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/deploy.html">Lab Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../03-deploy/validation.html">Validation Testing</a></li>
 </ul>
-<p class="caption"><span class="caption-text">summary</span></p>
+<p class="caption" role="heading"><span class="caption-text">summary</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/summary.html">Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/cleanup.html">Cleaning Up</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05-summary/moreinfo.html">Further Reading</a></li>
 </ul>
-<p class="caption"><span class="caption-text">appendix</span></p>
+<p class="caption" role="heading"><span class="caption-text">appendix</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../06-appendix/terraform-commit.html">Terraform and Commits</a></li>
 </ul>
@@ -175,6 +180,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -186,7 +193,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/02-configure/terraform.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -241,43 +248,43 @@ found are then saved to the state file automatically.</p>
 <h3>Example Terraform Configuration<a class="headerlink" href="#example-terraform-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Here’s an example of a Terraform configuration file.  We will discuss the
 parts of this config below.</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">variable</span> <span class="s">&quot;hostname&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
- <span class=" -Punctuation">}</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">variable</span> <span class="nv">&quot;hostname&quot;</span> <span class="p">{</span>
+     <span class="na">default</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+ <span class="p">}</span>
 
- <span class="kr">variable</span> <span class="s">&quot;username&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">variable</span> <span class="nv">&quot;username&quot;</span> <span class="p">{</span>
+     <span class="na">default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+ <span class="p">}</span>
 
- <span class="kr">variable</span> <span class="s">&quot;password&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">variable</span> <span class="nv">&quot;password&quot;</span> <span class="p">{</span>
+     <span class="na">default</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+ <span class="p">}</span>
 
- <span class="kr">provider</span> <span class="s">&quot;panos&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     hostname</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">hostname</span>
-<span class="na">     username</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">username</span>
-<span class="na">     password</span> <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">password</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">provider</span> <span class="nv">&quot;panos&quot;</span> <span class="p">{</span>
+     <span class="na">hostname</span> <span class="o">=</span> <span class="nv">var.hostname</span>
+     <span class="na">username</span> <span class="o">=</span> <span class="nv">var.username</span>
+     <span class="na">password</span> <span class="o">=</span> <span class="nv">var.password</span>
+ <span class="p">}</span>
 
- <span class="kr">resource</span> <span class="s">&quot;panos_management_profile&quot; &quot;ssh&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;allow ssh&quot;</span>
-<span class="na">     ssh</span> <span class="o">=</span> <span class="kt">true</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">resource</span> <span class="nc">&quot;panos_management_profile&quot;</span> <span class="nv">&quot;ssh&quot;</span> <span class="p">{</span>
+     <span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;allow ssh&quot;</span>
+     <span class="na">ssh</span> <span class="o">=</span> <span class="no">true</span>
+ <span class="p">}</span>
 
- <span class="kr">resource</span> <span class="s">&quot;panos_ethernet_interface&quot; &quot;eth1&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
-<span class="na">     vsys</span> <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
-<span class="na">     mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
-<span class="na">     enable_dhcp</span> <span class="o">=</span> <span class="kt">true</span>
-<span class="na">     management_profile</span> <span class="o">=</span> <span class="err">panos_management_profile</span><span class="p">.</span><span class="err">ssh</span><span class="p">.</span><span class="err">name</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">resource</span> <span class="nc">&quot;panos_ethernet_interface&quot;</span> <span class="nv">&quot;eth1&quot;</span> <span class="p">{</span>
+     <span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;ethernet1/1&quot;</span>
+     <span class="na">vsys</span> <span class="o">=</span> <span class="s2">&quot;vsys1&quot;</span>
+     <span class="na">mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+     <span class="na">enable_dhcp</span> <span class="o">=</span> <span class="no">true</span>
+     <span class="na">management_profile</span> <span class="o">=</span> <span class="nv">panos_management_profile.ssh.name</span>
+ <span class="p">}</span>
 
- <span class="kr">resource</span> <span class="s">&quot;panos_zone&quot; &quot;zone1&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     name</span> <span class="o">=</span> <span class="s2">&quot;L3-in&quot;</span>
-<span class="na">     mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
-<span class="na">     interfaces</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ethernet1/1&quot;</span><span class="p">]</span>
-<span class="na">     depends_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;panos_ethernet_interface.eth1&quot;</span><span class="p">]</span>
- <span class=" -Punctuation">}</span>
+ <span class="kr">resource</span> <span class="nc">&quot;panos_zone&quot;</span> <span class="nv">&quot;zone1&quot;</span> <span class="p">{</span>
+     <span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;L3-in&quot;</span>
+     <span class="na">mode</span> <span class="o">=</span> <span class="s2">&quot;layer3&quot;</span>
+     <span class="na">interfaces</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ethernet1/1&quot;</span><span class="p">]</span>
+     <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;panos_ethernet_interface.eth1&quot;</span><span class="p">]</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -368,34 +375,34 @@ firewall, and the created instances.</p>
 <code class="docutils literal notranslate"><span class="pre">deployment/modules/firewall</span></code>.  Calling this module creates the firewall
 instance, the network interfaces, and various other resources.</p>
 <p>It can be used in another Terraform plan like this:</p>
-<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="s">&quot;firewall&quot;</span> <span class=" -Punctuation">{</span>
-<span class="na">     source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span> <span class="kr">module</span> <span class="nv">&quot;firewall&quot;</span> <span class="p">{</span>
+     <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;./modules/firewall&quot;</span>
 
-<span class="na">     fw_name</span>             <span class="o">=</span> <span class="s2">&quot;vm-series&quot;</span>
-<span class="na">     fw_zone</span>             <span class="o">=</span> <span class="err">var</span><span class="p">.</span><span class="err">zone</span>
-<span class="na">     fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901&quot;</span>
-<span class="na">     fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
-<span class="na">     fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
-<span class="na">     fw_bootstrap_bucket</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">bootstrap</span><span class="p">.</span><span class="err">bootstrap_name</span>
+     <span class="na">fw_name</span>             <span class="o">=</span> <span class="s2">&quot;vm-series&quot;</span>
+     <span class="na">fw_zone</span>             <span class="o">=</span> <span class="nv">var.zone</span>
+     <span class="na">fw_image</span>            <span class="o">=</span> <span class="s2">&quot;https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-901&quot;</span>
+     <span class="na">fw_machine_type</span>     <span class="o">=</span> <span class="s2">&quot;n1-standard-4&quot;</span>
+     <span class="na">fw_machine_cpu</span>      <span class="o">=</span> <span class="s2">&quot;Intel Skylake&quot;</span>
+     <span class="na">fw_bootstrap_bucket</span> <span class="o">=</span> <span class="nv">module.bootstrap.bootstrap_name</span>
 
-<span class="na">     fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
+     <span class="na">fw_ssh_key</span> <span class="o">=</span> <span class="s2">&quot;admin:${file(var.public_key_file)}&quot;</span>
 
-<span class="na">     fw_mgmt_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt_subnet</span>
-<span class="na">     fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
-<span class="na">     fw_mgmt_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">mgmt-allow-inbound-rule</span>
+     <span class="na">fw_mgmt_subnet</span> <span class="o">=</span> <span class="nv">module.vpc.mgmt_subnet</span>
+     <span class="na">fw_mgmt_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.0.4&quot;</span>
+     <span class="na">fw_mgmt_rule</span>   <span class="o">=</span> <span class="nv">module.vpc.mgmt-allow-inbound-rule</span>
 
-<span class="na">     fw_untrust_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust_subnet</span>
-<span class="na">     fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
-<span class="na">     fw_untrust_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">untrust-allow-inbound-rule</span>
+     <span class="na">fw_untrust_subnet</span> <span class="o">=</span> <span class="nv">module.vpc.untrust_subnet</span>
+     <span class="na">fw_untrust_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.1.4&quot;</span>
+     <span class="na">fw_untrust_rule</span>   <span class="o">=</span> <span class="nv">module.vpc.untrust-allow-inbound-rule</span>
 
-<span class="na">     fw_web_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web_subnet</span>
-<span class="na">     fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
-<span class="na">     fw_web_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">web-allow-outbound-rule</span>
+     <span class="na">fw_web_subnet</span> <span class="o">=</span> <span class="nv">module.vpc.web_subnet</span>
+     <span class="na">fw_web_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.2.4&quot;</span>
+     <span class="na">fw_web_rule</span>   <span class="o">=</span> <span class="nv">module.vpc.web-allow-outbound-rule</span>
 
-<span class="na">     fw_db_subnet</span> <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db_subnet</span>
-<span class="na">     fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
-<span class="na">     fw_db_rule</span>   <span class="o">=</span> <span class="kr">module</span><span class="p">.</span><span class="err">vpc</span><span class="p">.</span><span class="err">db-allow-outbound-rule</span>
- <span class=" -Punctuation">}</span>
+     <span class="na">fw_db_subnet</span> <span class="o">=</span> <span class="nv">module.vpc.db_subnet</span>
+     <span class="na">fw_db_ip</span>     <span class="o">=</span> <span class="s2">&quot;10.5.3.4&quot;</span>
+     <span class="na">fw_db_rule</span>   <span class="o">=</span> <span class="nv">module.vpc.db-allow-outbound-rule</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 <p>This calls the firewall module, and passes in values for the variables it
@@ -434,37 +441,29 @@ resources that Terraform created.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="configure.html" class="btn btn-neutral float-right" title="Panorama Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../01-getting-started/setup.html" class="btn btn-neutral float-left" title="Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="configure.html" class="btn btn-neutral float-right" title="Panorama Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../01-getting-started/setup.html" class="btn btn-neutral float-left" title="Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Palo Alto Networks
+        &#169; Copyright 2020, Palo Alto Networks.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
