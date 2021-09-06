@@ -84,7 +84,7 @@ Now, you should see the variables exported in your shell, which you can verify u
 
 .. code-block:: bash
 
-   PANOS_HOSTNAME=panorama.panlabs.org
+   PANOS_HOSTNAME=your-panorama-address
    PANOS_USERNAME=studentXX
    PANOS_PASSWORD=Ignite2020!
 
