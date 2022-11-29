@@ -63,7 +63,7 @@ module "web" {
   web_ssh_key      = "admin:${file(var.public_key_file)}"
   web_subnet_id    = module.vpc.web_subnet
   web_ip           = "10.5.2.5"
-  web_image        = "debian-9"
+  web_image        = "debian-10"
 }
 
 module "db" {
@@ -75,7 +75,7 @@ module "db" {
   db_ssh_key      = "admin:${file(var.public_key_file)}"
   db_subnet_id    = module.vpc.db_subnet
   db_ip           = "10.5.3.5"
-  db_image        = "debian-9"
+  db_image        = "debian-10"
 }
 
 ## Add firewall module here.
